@@ -1,11 +1,10 @@
 import {useEffect} from "react";
 import consoleWarning from "../util/consoleWarning";
-import withAuth from "../util/withAuth";
 
 import Head from "next/head";
 import Header from "./Header";
 
-export default withAuth(props => {
+export default props => {
 
     useEffect(consoleWarning, []);
     
@@ -32,4 +31,4 @@ export default withAuth(props => {
             `}</style>
         </>
     );
-});
+};
