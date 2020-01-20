@@ -12,14 +12,15 @@ export default props => {
         <>
             <Head>
                 <title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
-                <link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700,900&display=swap" />
             </Head>
-            {props.header ? <Header /> : <></>}
+            {props.header ? <Header user={props.user} /> : <></>}
             <main>
                 {props.children}
             </main>
 
             <style jsx global>{`
+                @import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
+
                 body {
                     font-family: Rubik, sans-serif;
                     margin: 0;
