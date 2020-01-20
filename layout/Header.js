@@ -53,7 +53,7 @@ export default props => (
             }
 
             .user img {
-                border-bottom: solid 1px ${theme.borderGrey};
+                border: solid 1px ${theme.borderGrey};
                 border-radius: 50%;
                 height: 2.5em;
                 width: 2.5em;
