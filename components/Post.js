@@ -1,6 +1,10 @@
 import theme from "../theme";
 import Link from "next/link";
 import {useState} from "react";
+import timeAgo from "javascript-time-ago";
+import TimeAgo from "react-time-ago";
+import timeAgoEn from "javascript-time-ago/locale/en";
+timeAgo.locale(timeAgoEn);
 
 export default props => {
     const post = props.data;
@@ -9,15 +13,21 @@ export default props => {
 
     return (
         <article>
-            <Link href="/u/[user]" as={`/u/${post.author.username}`}>
-                <div className="author">
-                    <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
-                    <div className="authorInner">
-                        <p className="name">{post.author.name}</p>
-                        <p className="username">@{post.author.username}</p>
+            <div className="top">
+                <Link href="/u/[user]" as={`/u/${post.author.username}`}>
+                    <div className="author">
+                        <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
+                        <div className="authorInner">
+                            <p className="name">{post.author.name}</p>
+                            <p className="username">@{post.author.username}</p>
+                        </div>
                     </div>
+                </Link>
+
+                <div className="date">
+                    <p><TimeAgo date={post.date} /></p>
                 </div>
-            </Link>
+            </div>
 
             <div className="content">
                 <p>{post.content}</p>
@@ -45,9 +55,14 @@ export default props => {
                     box-sizing: border-box;
                 }
 
+                .top {
+                    display: flex;
+                }
+
                 .author {
                     display: flex;
                     cursor: pointer;
+                    flex-grow: 1;
                 }
 
                 .author img {
@@ -70,6 +85,14 @@ export default props => {
                 .author .username {
                     font-size: 10px;
                     font-weight: 300;
+                    color: ${theme.grey4};
+                }
+
+                .date p {
+                    margin: 0;
+                    color: ${theme.grey4};
+                    font-size: 10px;
+                    font-weight: 500;
                 }
 
                 .buttons {

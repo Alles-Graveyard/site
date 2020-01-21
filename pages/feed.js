@@ -12,6 +12,7 @@ export default withAuth(props => {
                 username: "archie"
             },
             content: "This is an example post!",
+            date: new Date(),
             liked: true,
             boosted: false
         }} />
