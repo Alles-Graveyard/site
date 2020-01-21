@@ -42,7 +42,7 @@ export default props => {
                         setBoosted(true);
                     }
                 }}></i>
-                {props.moreButton ? <Link href="/p/[post]" as={`/p/${post.id}`}><i className="fas fa-plus"></i></Link> : <></>}
+                {!props.detailed ? <Link href="/p/[post]" as={`/p/${post.id}`}><i className="fas fa-plus"></i></Link> : <></>}
             </div>
 
             <style jsx>{`
