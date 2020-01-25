@@ -1,21 +1,34 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import Post from "../components/Post";
+import axios from "axios";
+import config from "../config";
 
-export default withAuth(props => {
+const feedPage = props => {
   return (
     <Page header padding centerContainer user={props.user}>
-        <Post data={{
-            id: "000000",
-            author: {
-                name: "Archie Baer",
-                username: "archie"
-            },
-            content: "This is an example post!",
-            date: new Date(),
-            liked: true,
-            boosted: false
-        }} />
+      {props.feed.map((p) => (
+        <Post key={p.id} data={p} />
+      ))}
     </Page>
   );
-});
+};
+
+feedPage.getInitialProps = async ctx => {
+  var apiReq;
+  try {
+      apiReq = await axios.get(`${config.apiUrl}/feed`, {
+          headers: {
+              authorization: ctx.user.sessionToken
+          }
+      });
+  } catch (err) {
+      return {feed: []};
+  }
+  
+  return {
+      feed: apiReq.data
+  };
+};
+
+export default withAuth(feedPage);

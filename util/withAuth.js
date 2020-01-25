@@ -30,6 +30,7 @@ export default WrappedComponent => {
         }
 
         //Child getIntialProps
+        ctx.user = user;
         const childProps = WrappedComponent.getInitialProps ? await WrappedComponent.getInitialProps(ctx) : {};
         
         //Return Props

@@ -25,7 +25,7 @@ export default props => {
                 </Link>
 
                 <div className="date">
-                    <p><TimeAgo date={post.date} /></p>
+                    <p><TimeAgo date={new Date(post.date)} /></p>
                 </div>
             </div>
 
