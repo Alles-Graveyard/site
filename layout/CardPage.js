@@ -2,34 +2,30 @@ import Page from "./Page";
 import theme from "../theme";
 
 export default ({logo, ...props}) => (
-    <Page header style={{background: theme.greyF, padding: "0px"}} {...props}>
-        <div className="container">
-            <main>
-                {
-                    logo ? (
-                        <img src="/a00.png" className="allesLogo" />
-                    ) : <></>
-                }
-                {props.children}
-            </main>
-        </div>
+    <Page header style={{
+        background: theme.greyF,
+        padding: "0px",
+        display: "flex",
+        flexFlow: "column"
+    }} {...props}>
+        <main>
+            {
+                logo ? (
+                    <img src="/a00.png" className="allesLogo" />
+                ) : <></>
+            }
+            {props.children}
+        </main>
 
         <style jsx>{`
             main {
                 background: white;
                 max-width: 400px;
                 min-height: 500px;
-                margin: 0 auto;
+                margin: auto;
                 border-radius: 10px;
                 box-sizing: border-box;
                 padding: 30px;
-            }
-
-            .container {
-                display: flex;
-                flex-flow: column;
-                justify-content: center;
-                height: 100%;
             }
 
             @media screen and (max-height: 650px) {
@@ -38,12 +34,12 @@ export default ({logo, ...props}) => (
                 }
 
                 main {
-                    min-height: 100%;
+                    flex-grow: 1;
                     border-radius: 0;
                 }
             }
 
-            @media screen and (max-width: 400px) {
+            @media screen and (max-width: 650px) {
                 main {
                     width: 100%;
                     border-radius: 0;
