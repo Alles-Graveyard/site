@@ -23,7 +23,7 @@ export default ({secondary, wide, ...props}) => (
             button:disabled {
                 border-color: ${theme.borderGrey};
                 background: ${theme.disabledBackground};
-                color: ${theme.greyText};
+                color: ${theme.grey4};
                 cursor: default;
             }
 
