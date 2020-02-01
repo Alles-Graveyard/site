@@ -6,7 +6,7 @@ export default props => (
         <style jsx>{`
             p {
                 margin: 0;
-                color: ${theme.greyText};
+                color: ${theme.grey4};
                 font-size: 12px;
                 text-transform: uppercase;
             }
