@@ -35,6 +35,8 @@ export default withAuth(props => {
           position: relative;
           top: -100px;
           margin-bottom: -100px;
+          box-sizing: border-box;
+          background: white;
         }
 
         h1.name {
