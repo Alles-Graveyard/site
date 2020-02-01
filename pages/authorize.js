@@ -3,7 +3,7 @@ import withAuth from "../util/withAuth";
 
 const oauthPage = props => {
     return (
-        <Page header padding user={props.user} title="Authorize">
+        <Page header user={props.user} title="Authorize">
             <p>Auth Page</p>
         </Page>
     );

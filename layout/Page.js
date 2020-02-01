@@ -9,12 +9,12 @@ export default props => {
     useEffect(consoleWarning, []);
     
     return (
-        <>
+        <div className="pageContainer">
             <Head>
                 <title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
             </Head>
             {props.header ? <Header user={props.user} /> : <></>}
-            <main>
+            <main style={props.style}>
                 {props.children}
             </main>
 
@@ -27,10 +27,17 @@ export default props => {
                     margin: 0;
                 }
 
+                .pageContainer {
+                    display: flex;
+                    flex-flow: column;
+                    min-height: 100vh;
+                }
+
                 main {
-                    padding: ${props.padding ? "20px" : "0px"};
+                    padding: 20px;
+                    flex-grow: 1;
                 }
             `}</style>
-        </>
+        </div>
     );
 };
