@@ -6,6 +6,7 @@ import monYearDate from "../util/monYearDate";
 
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
+  console.log(props.user);
 
   useEffect(() => {
     if (props.user.plus.status === "active") {
@@ -31,7 +32,12 @@ export default withAuth(props => {
 
           <div>
             <i className="fas fa-plus-circle"></i>
-            <p>{props.user.plus.status === "active" ? (plusDate ? `Since ${plusDate}` : "Active") : props.user.plus.status === "expired" ? "Expired" : "Try Alles+"}</p>
+            <p>{props.user.plus.status === "active" ? (plusDate ? <>Since <b>{plusDate}</b></> : "Active") : props.user.plus.status === "expired" ? "Expired" : "Try Alles+"}</p>
+          </div>
+
+          <div>
+            <i className="fas fa-gem"></i>
+            <p><b>{props.user.rubies}</b> {props.user.rubies === 1 ? "Ruby" : "Rubies"}</p>
           </div>
 
         </div>
