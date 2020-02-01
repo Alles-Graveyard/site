@@ -29,8 +29,6 @@ export default props => {
 
                 main {
                     padding: ${props.padding ? "20px" : "0px"};
-                    max-width: ${props.centerContainer ? "600px" : "unset"};
-                    margin: ${props.centerContainer ? "auto" : "unset"};
                 }
             `}</style>
         </>
