@@ -1,12 +1,10 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
-import {useState} from "react";
 import theme from "../theme";
 
 export default withAuth(props => {
-  console.log(props.user);
   return (
-    <Page header style={{background: theme.greyF}} user={props.user}>
+    <Page title="My Account" header style={{background: theme.greyF}} user={props.user}>
 
       <section className="user">
         <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />

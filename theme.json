@@ -3,9 +3,8 @@
     "borderGrey": "#80808040",
     "disabledBackground": "#f0f0f080",
     "error": "#ff0000",
+    "font": "Rubik, sans-serif",
     "grey4": "#404040",
     "grey8": "#808080",
-    "greyF": "#f0f0f0",
-    "heart": "#ff1f57",
-    "boost": "#13ad7c"
+    "greyF": "#f0f0f0"
 }

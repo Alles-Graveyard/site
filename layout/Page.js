@@ -18,15 +18,7 @@ export default props => {
                 {props.children}
             </main>
 
-            <style jsx global>{`
-                @import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
-                @import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
-
-                body {
-                    font-family: Rubik, sans-serif;
-                    margin: 0;
-                }
-
+            <style jsx>{`
                 .pageContainer {
                     display: flex;
                     flex-flow: column;
@@ -36,6 +28,16 @@ export default props => {
                 main {
                     padding: 20px;
                     flex-grow: 1;
+                }
+            `}</style>
+
+            <style jsx global>{`
+                @import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
+                @import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
+
+                body {
+                    font-family: Rubik, sans-serif;
+                    margin: 0;
                 }
             `}</style>
         </div>
