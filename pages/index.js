@@ -104,6 +104,11 @@ export default withAuth(props => {
 
         .quickInfo div p {
           margin: 0;
+          color: ${theme.grey4};
+        }
+
+        .quickInfo div b {
+          color: black;
         }
       `}</style>
     </Page>
