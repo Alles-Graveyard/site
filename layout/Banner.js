@@ -5,14 +5,14 @@ export default props => {
     const [closed, setClosed] = useState(true);
 
     useEffect(() => {
-        setClosed(!props.children);
-    }, [props.children]);
+        setClosed(!props.message);
+    }, [props.update]);
 
     return closed ? (
         <></>
     ) : (
         <div className="banner">
-            <p>{props.children}</p>
+            <p>{props.message}</p>
             <i className="fas fa-times" onClick={() => {
                 setClosed(true);
             }}></i>

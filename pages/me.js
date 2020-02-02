@@ -12,7 +12,7 @@ import axios from "axios";
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
   const [loading, setLoading] = useState(false);
-  const [banner, setBanner] = useState("");
+  const [banner, setBanner] = useState({});
 
   useEffect(() => {
     if (props.user.plus.status === "active") {
@@ -20,6 +20,13 @@ export default withAuth(props => {
       setPlusDate(monYearDate(new Date(props.user.plus.since)));
     }
   }, []);
+
+  const showBanner = message => {
+    setBanner({
+      message,
+      update: Math.random()
+    });
+  };
 
   const changePassword = e => {
     e.preventDefault();
@@ -39,22 +46,22 @@ export default withAuth(props => {
           authorization: props.user.sessionToken
         }
       }).then(() => {
-        setBanner("Password successfully updated.");
+        showBanner("Password successfully updated.");
         setLoading(false);
         form.reset();
       }).catch(error => {
         if (error.response) {
           const {err} = error.response.data;
-          if (err === "passwordRequirements") setBanner("Passwords must be between 6 and 128 characters long.");
-          if (err === "oldPasswordIncorrect") setBanner("The old password you entered is incorrect.");
+          if (err === "passwordRequirements") showBanner("Passwords must be between 6 and 128 characters long.");
+          if (err === "oldPasswordIncorrect") showBanner("The old password you entered is incorrect.");
         } else {
-          setBanner("Something went wrong.");
+          showBanner("Something went wrong.");
         }
         setLoading(false);
       });
     } else {
       setLoading(false);
-      setBanner("New passwords do not match");
+      showBanner("New passwords do not match");
     }
 
   };

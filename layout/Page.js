@@ -20,7 +20,7 @@ export default props => {
                 {props.children}
             </main>
 
-            <Banner>{props.banner}</Banner>
+            <Banner message={props.banner.message} update={props.banner.update} />
 
             <style jsx>{`
                 .pageContainer {
