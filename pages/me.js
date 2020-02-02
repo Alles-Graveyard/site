@@ -99,7 +99,10 @@ export default withAuth(props => {
     <Page title="My Account" header style={{background: theme.greyF}} banner={banner} user={props.user}>
 
       <section className="user">
-        <img className="profilePicture" src={`https://avatar.alles.cx/user/${props.user.id}`} onClick={() => avatarUploadInput.current.click()} />
+        <div className="profilePicture" onClick={() => avatarUploadInput.current.click()}>
+          <img className="overlay" src="/add-overlay.png" />
+          <img className="picture" src={`https://avatar.alles.cx/user/${props.user.id}`} />
+        </div>
         <h1 className="name">{props.user.name}{props.user.plus.status === "active" ? <sup>+</sup> : <></>}</h1>
         <h2 className="username">@{props.user.username}</h2>
 
@@ -182,15 +185,34 @@ export default withAuth(props => {
           width: 200px;
           position: relative;
           top: -100px;
+          margin: 0 auto;
           margin-bottom: -100px;
           box-sizing: border-box;
           background: white;
           cursor: pointer;
-          transition: border-radius 0.1s;
+          overflow: hidden;
         }
 
-        .profilePicture:hover {
-          border-radius: 40%;
+        .profilePicture img {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          transition: 0.1s;
+        }
+
+        .profilePicture:hover img.picture {
+          filter: blur(1px);
+        }
+
+        .profilePicture img.overlay {
+          z-index: 1;
+          opacity: 0;
+        }
+
+        .profilePicture:hover img.overlay {
+          opacity: 1;
         }
 
         h1.name {
