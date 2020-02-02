@@ -109,6 +109,12 @@ export default withAuth(props => {
         .quickInfo div b {
           color: black;
         }
+
+        @media screen and (max-width: 600px) {
+          .quickInfo {
+            display: block;
+          }
+        }
       `}</style>
     </Page>
   );
