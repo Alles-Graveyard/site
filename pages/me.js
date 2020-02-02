@@ -95,7 +95,7 @@ export default withAuth(props => {
           <img className="overlay" src="/add-overlay.png" />
           <img className="picture" src={`https://avatar.alles.cx/user/${props.user.id}`} />
         </div>
-        <h1 className="name">{props.user.name}{props.user.plus.status === "active" ? <sup>+</sup> : <></>}</h1>
+        <h1 className="name">{props.user.name}{props.user.plus.active ? <sup>+</sup> : <></>}</h1>
         <h2 className="username">@{props.user.username}</h2>
 
         <input
