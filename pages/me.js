@@ -54,6 +54,7 @@ export default withAuth(props => {
           const {err} = error.response.data;
           if (err === "passwordRequirements") showBanner("Passwords must be between 6 and 128 characters long.");
           if (err === "oldPasswordIncorrect") showBanner("The old password you entered is incorrect.");
+          if (err === "badPassword") showBanner("You can't change your password to this.");
         } else {
           showBanner("Something went wrong.");
         }
