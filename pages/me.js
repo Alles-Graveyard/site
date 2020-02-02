@@ -1,11 +1,13 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import theme from "../theme";
+import config from "../config";
 import {useState, useEffect} from "react";
 import monYearDate from "../util/monYearDate";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import axios from "axios";
 
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
@@ -21,8 +23,38 @@ export default withAuth(props => {
 
   const changePassword = e => {
     e.preventDefault();
-    if (loading) return;
+    const oldPassword = e.target.oldPassword.value;
+    const newPassword = e.target.newPassword.value;
+    const newPassword2 = e.target.newPassword2.value;
+    if (loading || !oldPassword || !newPassword || !newPassword2) return;
     setLoading(true);
+
+    if (newPassword === newPassword2) {
+      axios.post(`${config.apiUrl}/password`, {
+        oldPassword,
+        newPassword
+      }, {
+        headers: {
+          authorization: props.user.sessionToken
+        }
+      }).then(res => {
+        setBanner("Password successfully updated.");
+        setLoading(false);
+      }).catch(error => {
+        if (error.response) {
+          const {err} = error.response.data;
+          if (err === "passwordRequirements") setBanner("Passwords must be between 6 and 128 characters long.");
+          if (err === "oldPasswordIncorrect") setBanner("The old password you entered is incorrect.");
+        } else {
+          setBanner("Something went wrong.");
+        }
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+      setBanner("New passwords do not match");
+    }
+
   };
 
   return (
@@ -167,7 +199,8 @@ export default withAuth(props => {
         }
 
         .box h2 {
-          font-weight: 400;
+          font-weight: 500;
+          color: ${theme.grey4};
           margin: 0;
           margin-top: 20px;
           font-size: 18px;

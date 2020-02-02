@@ -27,11 +27,11 @@ export default withRouter(props => {
         axios.post(`${config.apiUrl}/login`, {
           username,
           password
-        }).then((res) => {
+        }).then(res => {
           Cookies.set("sessionToken", res.data.token);
           const redirectUrl = props.router.query.redirect;
           router.push(redirectUrl ? redirectUrl : "/");
-        }).catch((err) => {
+        }).catch(err => {
           if (err.response && err.response.status === 401) {
             setFormError("Your username or password is incorrect.");
             setFormLoading(false);
