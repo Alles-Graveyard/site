@@ -6,7 +6,6 @@ export default ({wide, ...props}) => (
         <style jsx>{`
             input {
                 ${wide ? "width: 100%;" : ""}
-                width: 100%;
                 border: solid 1px ${theme.borderGrey};
                 padding: 10px;
                 font-size: 1em;
