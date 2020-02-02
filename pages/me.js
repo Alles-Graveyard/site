@@ -12,7 +12,7 @@ import axios from "axios";
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
   const [loading, setLoading] = useState(false);
-  const [banner, setBanner] = useState(0);
+  const [banner, setBanner] = useState("");
 
   useEffect(() => {
     if (props.user.plus.status === "active") {
@@ -30,6 +30,7 @@ export default withAuth(props => {
     setLoading(true);
 
     if (newPassword === newPassword2) {
+      const form = e.target;
       axios.post(`${config.apiUrl}/password`, {
         oldPassword,
         newPassword
@@ -37,9 +38,10 @@ export default withAuth(props => {
         headers: {
           authorization: props.user.sessionToken
         }
-      }).then(res => {
+      }).then(() => {
         setBanner("Password successfully updated.");
         setLoading(false);
+        form.reset();
       }).catch(error => {
         if (error.response) {
           const {err} = error.response.data;
