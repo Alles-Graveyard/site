@@ -172,7 +172,7 @@ export default withAuth(props => {
           font-size: 18px;
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 700px) {
           .quickInfo {
             display: block;
           }
