@@ -2,25 +2,17 @@ import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import theme from "../theme";
 import config from "../config";
-import {useState, useEffect, createRef} from "react";
-import monYearDate from "../util/monYearDate";
+import {useState, createRef} from "react";
+import axios from "axios";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
-import axios from "axios";
+import Link from "next/link";
 
 export default withAuth(props => {
-  const [plusDate, setPlusDate] = useState();
   const [loading, setLoading] = useState(false);
   const [banner, setBanner] = useState({});
   const avatarUploadInput = createRef();
-
-  useEffect(() => {
-    if (props.user.plus.status === "active") {
-      //Format Alles+ "since" date
-      setPlusDate(monYearDate(new Date(props.user.plus.since)));
-    }
-  }, []);
 
   //Show Banner
   const showBanner = message => {
@@ -117,20 +109,26 @@ export default withAuth(props => {
 
         <div className="quickInfo">
 
-          <div>
-            <i className="fas fa-coins"></i>
-            <p><b>{props.user.au}</b>au</p>
-          </div>
+          <Link href="/au">
+            <div>
+              <i className="fas fa-coins"></i>
+              <p><b>{props.user.au}</b>au</p>
+            </div>
+          </Link>
 
-          <div>
-            <i className="fas fa-plus-circle"></i>
-            <p>{props.user.plus.status === "active" ? (plusDate ? <>Since <b style={{whiteSpace: "nowrap"}}>{plusDate}</b></> : "Active") : props.user.plus.status === "expired" ? "Expired" : "Try Alles+"}</p>
-          </div>
+          <Link href="/plus">
+            <div>
+              <i className="fas fa-bolt"></i>
+              <p>{props.user.plus.active ? <>Alles+ is <b>Active</b></> : <>Try <b>Alles+</b></>}</p>
+            </div>
+          </Link>
 
-          <div>
-            <i className="fas fa-gem"></i>
-            <p><b>{props.user.rubies}</b> {props.user.rubies === 1 ? "Ruby" : "Rubies"}</p>
-          </div>
+          <Link href="/rubies">
+            <div>
+              <i className="fas fa-gem"></i>
+              <p><b>{props.user.rubies}</b> {props.user.rubies === 1 ? "Ruby" : "Rubies"}</p>
+            </div>
+          </Link>
 
         </div>
       </section>
@@ -240,6 +238,7 @@ export default withAuth(props => {
           width: 170px;
           padding: 10px;
           box-sizing: border-box;
+          cursor: pointer;
         }
 
         .quickInfo div:hover {
