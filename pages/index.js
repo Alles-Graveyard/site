@@ -6,7 +6,6 @@ import monYearDate from "../util/monYearDate";
 
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
-  console.log(props.user);
 
   useEffect(() => {
     if (props.user.plus.status === "active") {

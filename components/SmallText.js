@@ -8,7 +8,6 @@ export default props => (
                 margin: 0;
                 color: ${theme.grey4};
                 font-size: 12px;
-                text-transform: uppercase;
             }
         `}</style>
     </>

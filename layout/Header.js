@@ -7,9 +7,13 @@ export default props => (
             <Link href="/"><a className="home">Alles</a></Link>
         </div>
 
-        <Link href="/me">
-            <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
-        </Link>
+        {
+            props.user ?
+            <Link href="/me">
+                <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
+            </Link>
+            : <></>
+        }
 
         <style jsx>{`
             header {

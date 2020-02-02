@@ -3,9 +3,9 @@ import nextCookie from "next-cookies";
 import axios from "axios";
 import Router from "next/router";
 
-export default WrappedComponent => {
+export default (WrappedComponent, allowGuest) => {
     const Wrapper = props => {
-        if (props.user) {
+        if (props.user || allowGuest) {
             return <WrappedComponent {...props} />;
         } else {
             return <p>Unauthorized</p>;
@@ -16,7 +16,7 @@ export default WrappedComponent => {
         const user = await auth(ctx);
 
         //Unauthorized Redirect
-        if (!user) {
+        if (!user && !allowGuest) {
             const redirectUrl = `/login?redirect=${encodeURIComponent(ctx.asPath)}`;
 
             // https://github.com/zeit/next.js/blob/canary/examples/with-cookie-auth/utils/auth.js#L16

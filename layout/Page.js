@@ -1,5 +1,6 @@
 import {useEffect} from "react";
 import consoleWarning from "../util/consoleWarning";
+import theme from "../theme";
 
 import Head from "next/head";
 import Header from "./Header";
@@ -38,6 +39,14 @@ export default props => {
                 body {
                     font-family: Rubik, sans-serif;
                     margin: 0;
+                }
+
+                a {
+                    color: ${theme.accent};
+                }
+
+                a.nocolor {
+                    color: inherit;
                 }
             `}</style>
         </div>
