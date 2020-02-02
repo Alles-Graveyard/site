@@ -41,8 +41,8 @@ export default withRouter(props => {
           }
         });
       }}>
-        <Input name="username" placeholder="Username" />
-        <Input name="password" placeholder="Password" type="password" />
+        <Input wide name="username" placeholder="Username" />
+        <Input wide name="password" placeholder="Password" type="password" />
         <Button disabled={formLoading} wide>Sign in</Button>
       </form>
       <SmallText>Come and talk to us in <a href="https://discord.gg/6Z27nuh" className="nocolor">our discord server</a> to learn more about Alles. We use cookies to keep you signed in.</SmallText>
