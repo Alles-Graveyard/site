@@ -4,6 +4,7 @@ import theme from "../theme";
 
 import Head from "next/head";
 import Header from "./Header";
+import Banner from "./Banner";
 
 export default props => {
 
@@ -18,6 +19,8 @@ export default props => {
             <main style={props.style}>
                 {props.children}
             </main>
+
+            <Banner>{props.banner}</Banner>
 
             <style jsx>{`
                 .pageContainer {

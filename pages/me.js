@@ -10,6 +10,7 @@ import Button from "../components/Button";
 export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
   const [loading, setLoading] = useState(false);
+  const [banner, setBanner] = useState(0);
 
   useEffect(() => {
     if (props.user.plus.status === "active") {
@@ -25,7 +26,7 @@ export default withAuth(props => {
   };
 
   return (
-    <Page title="My Account" header style={{background: theme.greyF}} user={props.user}>
+    <Page title="My Account" header style={{background: theme.greyF}} banner={banner} user={props.user}>
 
       <section className="user">
         <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
