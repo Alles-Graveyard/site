@@ -2,7 +2,7 @@ import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import theme from "../theme";
 import config from "../config";
-import {useState, useEffect} from "react";
+import {useState, useEffect, createRef} from "react";
 import monYearDate from "../util/monYearDate";
 
 import Input from "../components/Input";
@@ -13,6 +13,7 @@ export default withAuth(props => {
   const [plusDate, setPlusDate] = useState();
   const [loading, setLoading] = useState(false);
   const [banner, setBanner] = useState({});
+  const avatarUploadInput = createRef();
 
   useEffect(() => {
     if (props.user.plus.status === "active") {
@@ -21,6 +22,7 @@ export default withAuth(props => {
     }
   }, []);
 
+  //Show Banner
   const showBanner = message => {
     setBanner({
       message,
@@ -28,6 +30,32 @@ export default withAuth(props => {
     });
   };
 
+  //Upload Avatar
+  const avatarUpload = e => {
+    setLoading(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("avatar", file);
+    axios.post("/api/avatar", formData, {
+      headers: {
+        authorization: props.user.sessionToken
+      }
+    }).then(() => {
+      showBanner("Avatar updated successfully.");
+      setLoading(false);
+    }).catch(error => {
+      if (error.response) {
+        const {err} = error.response.data;
+        if (err === "avatarTooBig" || error.response.status === 413) showBanner("The avatar you selected is too big.");
+        if (err === "badFileType") showBanner("Your avatar must be a png or jpg file.");
+      } else {
+        showBanner("Something went wrong.");
+      }
+      setLoading(false);
+    });
+  };
+
+  //Change Password
   const changePassword = e => {
     e.preventDefault();
     const oldPassword = e.target.oldPassword.value;
@@ -71,9 +99,18 @@ export default withAuth(props => {
     <Page title="My Account" header style={{background: theme.greyF}} banner={banner} user={props.user}>
 
       <section className="user">
-        <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
+        <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" onClick={() => avatarUploadInput.current.click()} />
         <h1 className="name">{props.user.name}{props.user.plus.status === "active" ? <sup>+</sup> : <></>}</h1>
         <h2 className="username">@{props.user.username}</h2>
+
+        <input
+          type="file"
+          ref={avatarUploadInput}
+          style={{display: "none"}}
+          accept="image/png, image/jpeg"
+          onChange={avatarUpload}
+          disabled={loading}
+        />
 
         <div className="quickInfo">
 
@@ -148,6 +185,12 @@ export default withAuth(props => {
           margin-bottom: -100px;
           box-sizing: border-box;
           background: white;
+          cursor: pointer;
+          transition: border-radius 0.1s;
+        }
+
+        .profilePicture:hover {
+          border-radius: 40%;
         }
 
         h1.name {
