@@ -10,7 +10,7 @@ export default props => (
         {
             props.user ?
             <Link href="/me">
-                <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" />
+                <img className="profilePicture" src={`https://avatar.alles.cx/user/${props.user.id}`} />
             </Link>
             : <></>
         }

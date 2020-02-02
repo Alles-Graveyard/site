@@ -99,7 +99,7 @@ export default withAuth(props => {
     <Page title="My Account" header style={{background: theme.greyF}} banner={banner} user={props.user}>
 
       <section className="user">
-        <img className="profilePicture" src="https://pbs.twimg.com/profile_images/1180922399790944257/3lC1YOEY_400x400.png" onClick={() => avatarUploadInput.current.click()} />
+        <img className="profilePicture" src={`https://avatar.alles.cx/user/${props.user.id}`} onClick={() => avatarUploadInput.current.click()} />
         <h1 className="name">{props.user.name}{props.user.plus.status === "active" ? <sup>+</sup> : <></>}</h1>
         <h2 className="username">@{props.user.username}</h2>
 
