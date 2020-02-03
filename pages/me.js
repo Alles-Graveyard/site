@@ -188,7 +188,7 @@ export default withAuth(props => {
         }
 
         .profilePicture {
-          border: solid 10px white;
+          border: solid 10px ${theme.greyF};
           border-radius: 50%;
           height: 200px;
           width: 200px;
