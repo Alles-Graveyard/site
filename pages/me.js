@@ -28,7 +28,7 @@ export default withAuth(props => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("avatar", file);
-    axios.post("/api/avatar", formData, {
+    axios.post(`${config.apiUrl}/api/avatar`, formData, {
       headers: {
         authorization: props.user.sessionToken
       }
