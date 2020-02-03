@@ -38,8 +38,13 @@ export default withAuth(props => {
     }).catch(error => {
       if (error.response) {
         const {err} = error.response.data;
-        if (err === "avatarTooBig" || error.response.status === 413) showBanner("The avatar you selected is too big.");
-        if (err === "badFileType") showBanner("Your avatar must be a png or jpg file.");
+        if (err === "avatarTooBig" || error.response.status === 413) {
+          showBanner("The avatar you selected is too big.");
+        } else if (err === "badFileType") {
+          showBanner("Your avatar must be a png or jpg file.");
+        } else {
+          showBanner("Something went wrong.");
+        }
       } else {
         showBanner("Something went wrong.");
       }
@@ -72,9 +77,15 @@ export default withAuth(props => {
       }).catch(error => {
         if (error.response) {
           const {err} = error.response.data;
-          if (err === "passwordRequirements") showBanner("Passwords must be between 6 and 128 characters long.");
-          if (err === "oldPasswordIncorrect") showBanner("The old password you entered is incorrect.");
-          if (err === "badPassword") showBanner("You can't change your password to this.");
+          if (err === "passwordRequirements") {
+            showBanner("Passwords must be between 6 and 128 characters long.");
+          } else if (err === "oldPasswordIncorrect") {
+            showBanner("The old password you entered is incorrect.");
+          } else if (err === "badPassword") {
+            showBanner("You can't change your password to this.");
+          } else {
+            showBanner("Something went wrong.");
+          }
         } else {
           showBanner("Something went wrong.");
         }
