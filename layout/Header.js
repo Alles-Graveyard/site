@@ -20,6 +20,7 @@ export default props => (
                 display: flex;
                 padding: 10px;
                 border-bottom: solid 1px ${theme.borderGrey};
+                flex-shrink: 0;
             }
 
             .headerMain {
