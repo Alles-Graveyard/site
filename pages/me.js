@@ -146,6 +146,13 @@ export default withAuth(props => {
       </section>
 
       <section>
+        <h1 className="sectionTitle">Apps</h1>
+        <Link href="/pulsar"><a className="mainLink">Pulsar Clients</a></Link>
+        <Link href="/oauth"><a className="mainLink">Authorized OAuth Applications</a></Link>
+        <a href="https://dev.alles.cx" className="mainLink">Create an Application</a>
+      </section>
+
+      <section>
         <h1 className="sectionTitle">Security</h1>
         <div className="box">
           <h1>Change your Password</h1>
@@ -174,12 +181,14 @@ export default withAuth(props => {
         h1.sectionTitle {
           border-left: solid 5px;
           padding-left: 10px;
+          padding-right: 5px;
           transition: 0.1s;
         }
 
         section:hover h1.sectionTitle {
           border-color: ${theme.accent};
           padding-left: 15px;
+          padding-right: 0px;
         }
 
         section.user {
@@ -290,6 +299,24 @@ export default withAuth(props => {
           margin: 0;
           margin-top: 20px;
           font-size: 18px;
+        }
+
+        a.mainLink {
+          display: block;
+          padding: 10px;
+          border: 1px;
+          cursor: pointer;
+          color: black;
+          text-decoration: none;
+          border: 1px transparent;
+          border-style: solid none;
+          margin: 0;
+          transition: 0.1s;
+        }
+
+        a.mainLink:hover {
+          border-color: ${theme.borderGrey};
+          color: ${theme.accent};
         }
 
         @media screen and (max-width: 700px) {
