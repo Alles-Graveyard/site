@@ -100,7 +100,7 @@ export default withAuth(props => {
   };
 
   return (
-    <Page title="My Account" header style={{background: theme.greyF}} banner={banner} user={props.user}>
+    <Page title="My Account" header banner={banner} user={props.user}>
 
       <section className="user">
         <div className="profilePicture" onClick={() => avatarUploadInput.current.click()}>

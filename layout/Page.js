@@ -32,6 +32,7 @@ export default props => {
                 main {
                     padding: 20px;
                     flex-grow: 1;
+                    background: ${theme.greyF};
                 }
             `}</style>
 

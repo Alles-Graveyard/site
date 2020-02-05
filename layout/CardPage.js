@@ -3,7 +3,6 @@ import theme from "../theme";
 
 export default ({logo, ...props}) => (
     <Page header style={{
-        background: theme.greyF,
         padding: "0px",
         display: "flex",
         flexFlow: "column"
