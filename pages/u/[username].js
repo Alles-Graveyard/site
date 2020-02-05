@@ -3,7 +3,7 @@ import withAuth from "../../util/withAuth";
 import theme from "../../theme";
 import config from "../../config";
 import axios from "axios";
-import {withRouter} from "next/router";
+import { withRouter } from "next/router";
 import nextCookie from "next-cookies";
 
 import Link from "next/link";
@@ -11,13 +11,9 @@ import Link from "next/link";
 const userPage = props => {
 	return props.requestedUser ? (
 		<Page title={`@${props.requestedUser.username}`} header user={props.user}>
-			<section className="banner">
-
-			</section>
+			<section className="banner"></section>
 			<section className="user">
-				<div
-					className="profilePicture"
-				>
+				<div className="profilePicture">
 					<img
 						className="picture"
 						src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
@@ -28,6 +24,14 @@ const userPage = props => {
 					{props.requestedUser.plus ? <sup>+</sup> : <></>}
 				</h1>
 				<h2 className="username">@{props.requestedUser.username}</h2>
+				<h2 className="counts">
+					<span>
+						<b>{props.requestedUser.followers}</b> Followers
+					</span>
+					<span>
+						<b>{props.requestedUser.rubies}</b> Rubies
+					</span>
+				</h2>
 				<h2 className="tagline">{props.requestedUser.about}</h2>
 			</section>
 
@@ -100,20 +104,36 @@ const userPage = props => {
 					font-weight: 500;
 				}
 
+				h2.username {
+					font-size: 15px;
+					font-weight: 400;
+					margin: 0;
+					margin-bottom: 5px;
+					color: ${theme.accent};
+				}
+
+				h2.counts {
+					font-size: 12px;
+					font-weight: 400;
+					margin: 0;
+					margin-bottom: 10px;
+					color: ${theme.grey4};
+				}
+
+				h2.counts span {
+					margin: 0 10px;
+				}
+
+				h2.counts b {
+					color: black;
+				}
+
 				h2.tagline {
 					font-size: 15px;
 					font-weight: 400;
 					margin: 0;
 					margin-bottom: 20px;
 					color: ${theme.grey4};
-				}
-
-				h2.username {
-					font-size: 15px;
-					font-weight: 400;
-					margin: 0;
-					margin-bottom: 10px;
-					color: ${theme.accent};
 				}
 
 				@media screen and (max-width: 450px) {
@@ -134,22 +154,25 @@ const userPage = props => {
 };
 
 userPage.getInitialProps = async ctx => {
-	const {username} = ctx.query;
+	const { username } = ctx.query;
 	const { sessionToken } = nextCookie(ctx);
 	if (!sessionToken) return;
 
 	var apiReq;
 	try {
-		apiReq = await axios.get(`${config.apiUrl}/user?username=${encodeURIComponent(username)}`, {
-			headers: {
-				authorization: sessionToken
+		apiReq = await axios.get(
+			`${config.apiUrl}/user?username=${encodeURIComponent(username)}`,
+			{
+				headers: {
+					authorization: sessionToken
+				}
 			}
-		});
+		);
 	} catch (err) {
 		return;
 	}
 
-    return {
+	return {
 		requestedUser: apiReq.data
 	};
 };
