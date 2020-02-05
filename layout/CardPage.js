@@ -1,5 +1,4 @@
 import Page from "./Page";
-import theme from "../theme";
 
 export default ({ logo, ...props }) => (
 	<Page
