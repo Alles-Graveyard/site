@@ -59,7 +59,7 @@ const userPage = props => {
 					margin-bottom: 0;
 					border-bottom-left-radius: 0;
 					border-bottom-right-radius: 0;
-					background: blue;
+					background: ${theme.accent};
 				}
 
 				section.user {
