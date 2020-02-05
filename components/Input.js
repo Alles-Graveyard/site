@@ -1,9 +1,9 @@
 import theme from "../theme";
 
-export default ({wide, ...props}) => (
-    <>
-        <input {...props} />
-        <style jsx>{`
+export default ({ wide, ...props }) => (
+	<>
+		<input {...props} />
+		<style jsx>{`
             input {
                 ${wide ? "width: 100%;" : ""}
                 border: solid 1px ${theme.borderGrey};
@@ -15,5 +15,5 @@ export default ({wide, ...props}) => (
                 font-family: ${theme.font};
             }
         `}</style>
-    </>
+	</>
 );

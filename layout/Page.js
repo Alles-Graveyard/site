@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import consoleWarning from "../util/consoleWarning";
 import theme from "../theme";
 
@@ -7,52 +7,53 @@ import Header from "./Header";
 import Banner from "./Banner";
 
 export default props => {
+	useEffect(consoleWarning, []);
 
-    useEffect(consoleWarning, []);
-    
-    return (
-        <div className="pageContainer">
-            <Head>
-                <title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
-            </Head>
-            {props.header ? <Header user={props.user} /> : <></>}
-            <main style={props.style}>
-                {props.children}
-            </main>
+	return (
+		<div className="pageContainer">
+			<Head>
+				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
+			</Head>
+			{props.header ? <Header user={props.user} /> : <></>}
+			<main style={props.style}>{props.children}</main>
 
-            {props.banner ? <Banner message={props.banner.message} update={props.banner.update} /> : <></>}
+			{props.banner ? (
+				<Banner message={props.banner.message} update={props.banner.update} />
+			) : (
+				<></>
+			)}
 
-            <style jsx>{`
-                .pageContainer {
-                    display: flex;
-                    flex-flow: column;
-                    min-height: 100vh;
-                }
+			<style jsx>{`
+				.pageContainer {
+					display: flex;
+					flex-flow: column;
+					min-height: 100vh;
+				}
 
-                main {
-                    padding: 20px;
-                    flex-grow: 1;
-                    background: ${theme.greyF};
-                }
-            `}</style>
+				main {
+					padding: 20px;
+					flex-grow: 1;
+					background: ${theme.greyF};
+				}
+			`}</style>
 
-            <style jsx global>{`
-                @import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
-                @import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
+			<style jsx global>{`
+				@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
+				@import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
 
-                body {
-                    font-family: Rubik, sans-serif;
-                    margin: 0;
-                }
+				body {
+					font-family: Rubik, sans-serif;
+					margin: 0;
+				}
 
-                a {
-                    color: ${theme.accent};
-                }
+				a {
+					color: ${theme.accent};
+				}
 
-                a.nocolor {
-                    color: inherit;
-                }
-            `}</style>
-        </div>
-    );
+				a.nocolor {
+					color: inherit;
+				}
+			`}</style>
+		</div>
+	);
 };
