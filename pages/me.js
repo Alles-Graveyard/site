@@ -143,7 +143,7 @@ export default withAuth(props => {
 						<div>
 							<i className="fas fa-coins"></i>
 							<p>
-								<b>{props.user.au}</b>au
+								<b>{props.user.au}</b> Au
 							</p>
 						</div>
 					</Link>
