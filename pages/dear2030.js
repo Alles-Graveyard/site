@@ -12,8 +12,8 @@ export default withAuth(props => {
 	const [textareaHeight, setTextareaHeight] = useState(0);
 	const [buttonConfirm, setConfirm] = useState(false);
 	const [completed, setCompleted] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [formError, setFormError] = useState();
+	const [loading, setLoading] = useState(false);
+	const [formError, setFormError] = useState();
 	const textareaRef = createRef();
 
 	useEffect(() => {
@@ -28,26 +28,33 @@ export default withAuth(props => {
 	const send = () => {
 		const content = textareaRef.current.value;
 		if (buttonConfirm) {
-            setLoading(true);
-            axios.post(`${config.apiUrl}/2030`, {
-                content
-            }, {
-                headers: {
-                    authorization: props.user.sessionToken
-                }
-            }).then(() => {
-                setCompleted(true);
-            }).catch(error => {
-                if (error.response) {
-                    const {err} = error.response.data;
-                    if (err === "alreadyDone") {
-                        setFormError("You've already sent a letter.");
-                    } else {
-                        setFormError("Something went wrong.");
-                    }
-                }
-                setLoading(false);
-            });
+			setLoading(true);
+			axios
+				.post(
+					`${config.apiUrl}/2030`,
+					{
+						content
+					},
+					{
+						headers: {
+							authorization: props.user.sessionToken
+						}
+					}
+				)
+				.then(() => {
+					setCompleted(true);
+				})
+				.catch(error => {
+					if (error.response) {
+						const { err } = error.response.data;
+						if (err === "alreadyDone") {
+							setFormError("You've already sent a letter.");
+						} else {
+							setFormError("Something went wrong.");
+						}
+					}
+					setLoading(false);
+				});
 		} else {
 			setConfirm(true);
 		}
@@ -68,13 +75,13 @@ export default withAuth(props => {
 							defaultValue={`Dear ${props.user.nickname},\n\n\n\nSee you in 10 years!\nFrom ${props.user.nickname}`}
 							onChange={() => setTextareaHeight(0)}
 							style={{ height: textareaHeight }}
-                            ref={textareaRef}
-                            maxLength="5000"
+							ref={textareaRef}
+							maxLength="5000"
 						></textarea>
 
 						<SmallText>Once you send the letter, you can't edit it.</SmallText>
 						<Button
-                            disabled={loading}
+							disabled={loading}
 							style={{
 								marginLeft: "auto",
 								display: "block"
@@ -83,7 +90,11 @@ export default withAuth(props => {
 						>
 							{!buttonConfirm ? "Send" : "Are you sure?"}
 						</Button>
-                        {formError ? <p style={{ color: theme.error }}>{formError}</p> : <></>}
+						{formError ? (
+							<p style={{ color: theme.error }}>{formError}</p>
+						) : (
+							<></>
+						)}
 					</>
 				) : (
 					<>
