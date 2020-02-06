@@ -53,11 +53,14 @@ export default withRouter(props => {
 				</Button>
 			</form>
 			<SmallText>
-				Come and talk to us in{" "}
-				<a href="https://discord.gg/6Z27nuh" className="nocolor">
-					our discord server
-				</a>{" "}
-				to learn more about Alles. We use cookies to keep you signed in.
+				If you'd like to get early-access to Alles,{" "}
+				<a
+					href="https://twitter.com/AllesHQ/status/1221935058157744129"
+					className="nocolor"
+				>
+					request access on Twitter
+				</a>
+				.
 			</SmallText>
 			{formError ? <p style={{ color: theme.error }}>{formError}</p> : <></>}
 		</Page>
