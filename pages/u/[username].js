@@ -11,162 +11,167 @@ import Link from "next/link";
 import Button from "../../components/Button";
 
 const userPage = props => {
-	const [followed, setFollowed] = useState(props.requestedUser.followed);
+	if (props.requestedUser) {
+		const [followed, setFollowed] = useState(props.requestedUser.followed);
 
-	const toggleFollow = () => {
-		setFollowed(!followed);
-		axios
-			.post(
-				`${config.apiUrl}/${followed ? "unfollow" : "follow"}/${
-					props.requestedUser.id
-				}`,
-				{},
-				{
-					headers: {
-						authorization: props.user.sessionToken
+		const toggleFollow = () => {
+			setFollowed(!followed);
+			axios
+				.post(
+					`${config.apiUrl}/${followed ? "unfollow" : "follow"}/${
+						props.requestedUser.id
+					}`,
+					{},
+					{
+						headers: {
+							authorization: props.user.sessionToken
+						}
 					}
-				}
-			)
-			.catch(() => {});
-	};
+				)
+				.catch(() => {});
+		};
 
-	return props.requestedUser ? (
-		<Page title={`@${props.requestedUser.username}`} header user={props.user}>
-			<section className="banner"></section>
-			<section className="user">
-				<div className="profilePicture">
-					<img
-						className="picture"
-						src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
-					/>
-				</div>
-				<h1 className="name">
-					{props.requestedUser.name}
-					{props.requestedUser.plus ? <sup>+</sup> : <></>}
-				</h1>
-				<h2 className="username">@{props.requestedUser.username}</h2>
-				<h2 className="counts">
-					<span>
-						<b>{props.requestedUser.followers}</b> Followers
-					</span>
-					<span>
-						<b>{props.requestedUser.rubies}</b> Rubies
-					</span>
-				</h2>
-				<h2 className="tagline">{props.requestedUser.about}</h2>
-				<Button
-					style={{ margin: "5px 10px", padding: 5 }}
-					secondary={followed}
-					onClick={toggleFollow}
-				>
-					{!followed ? "Follow" : "Unfollow"}
-				</Button>
-				<Button style={{ margin: "5px 10px", padding: 5 }}>Message</Button>
-			</section>
+		return (
+			<Page title={`@${props.requestedUser.username}`} header user={props.user}>
+				<section className="banner"></section>
+				<section className="user">
+					<div className="profilePicture">
+						<img
+							className="picture"
+							src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
+						/>
+					</div>
+					<h1 className="name">
+						{props.requestedUser.name}
+						{props.requestedUser.plus ? <sup>+</sup> : <></>}
+					</h1>
+					<h2 className="username">@{props.requestedUser.username}</h2>
+					<h2 className="counts">
+						<span>
+							<b>{props.requestedUser.followers}</b> Followers
+						</span>
+						<span>
+							<b>{props.requestedUser.rubies}</b> Rubies
+						</span>
+					</h2>
+					<h2 className="tagline">{props.requestedUser.about}</h2>
+					<Button
+						style={{ margin: "5px 10px", padding: 5 }}
+						secondary={followed}
+						onClick={toggleFollow}
+					>
+						{!followed ? "Follow" : "Unfollow"}
+					</Button>
+					<Button style={{ margin: "5px 10px", padding: 5 }}>Message</Button>
+				</section>
 
-			<style jsx>{`
-				section {
-					background: white;
-					max-width: 600px;
-					margin: 20px auto;
-					border-radius: 10px;
-					padding: 20px;
-					box-sizing: border-box;
-				}
+				<style jsx>{`
+					section {
+						background: white;
+						max-width: 600px;
+						margin: 20px auto;
+						border-radius: 10px;
+						padding: 20px;
+						box-sizing: border-box;
+					}
 
-				section.banner {
-					height: 150px;
-					margin-bottom: 0;
-					border-bottom-left-radius: 0;
-					border-bottom-right-radius: 0;
-					background: ${theme.accent};
-				}
+					section.banner {
+						height: 150px;
+						margin-bottom: 0;
+						border-bottom-left-radius: 0;
+						border-bottom-right-radius: 0;
+						background: ${theme.accent};
+					}
 
-				section.user {
-					padding-top: 0;
-					text-align: center;
-					margin-top: 10px;
-					border-top-left-radius: 0;
-					border-top-right-radius: 0;
-				}
+					section.user {
+						padding-top: 0;
+						text-align: center;
+						margin-top: 10px;
+						border-top-left-radius: 0;
+						border-top-right-radius: 0;
+					}
 
-				.profilePicture {
-					border: solid 10px ${theme.greyF};
-					border-radius: 50%;
-					height: 200px;
-					width: 200px;
-					position: relative;
-					top: -100px;
-					margin: 0 auto;
-					margin-bottom: -100px;
-					box-sizing: border-box;
-					background: white;
-					overflow: hidden;
-				}
-
-				.profilePicture img {
-					position: absolute;
-					left: 0;
-					top: 0;
-					width: 100%;
-					height: 100%;
-					transition: 0.1s;
-				}
-
-				h1.name {
-					font-size: 30px;
-					margin: 0;
-					margin-top: 10px;
-					font-weight: 500;
-				}
-
-				h2.username {
-					font-size: 15px;
-					font-weight: 400;
-					margin: 0;
-					margin-bottom: 5px;
-					color: ${theme.accent};
-				}
-
-				h2.counts {
-					font-size: 12px;
-					font-weight: 400;
-					margin: 0;
-					margin-bottom: 10px;
-					color: ${theme.grey4};
-				}
-
-				h2.counts span {
-					margin: 0 10px;
-				}
-
-				h2.counts b {
-					color: black;
-				}
-
-				h2.tagline {
-					font-size: 15px;
-					font-weight: 400;
-					margin: 0;
-					margin-bottom: 20px;
-					color: ${theme.grey4};
-				}
-
-				@media screen and (max-width: 450px) {
 					.profilePicture {
-						height: 120px;
-						width: 120px;
-						top: -60px;
-						margin-bottom: -80px;
+						border: solid 10px ${theme.greyF};
+						border-radius: 50%;
+						height: 200px;
+						width: 200px;
+						position: relative;
+						top: -100px;
+						margin: 0 auto;
+						margin-bottom: -100px;
+						box-sizing: border-box;
+						background: white;
+						overflow: hidden;
 					}
-				}
-			`}</style>
-		</Page>
-	) : (
-		<Page title="My Account" header user={props.user}>
-			<p>Invalid User</p>
-		</Page>
-	);
+
+					.profilePicture img {
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 100%;
+						height: 100%;
+						transition: 0.1s;
+					}
+
+					h1.name {
+						font-size: 30px;
+						margin: 0;
+						margin-top: 10px;
+						font-weight: 500;
+					}
+
+					h2.username {
+						font-size: 15px;
+						font-weight: 400;
+						margin: 0;
+						margin-bottom: 5px;
+						color: ${theme.accent};
+					}
+
+					h2.counts {
+						font-size: 12px;
+						font-weight: 400;
+						margin: 0;
+						margin-bottom: 10px;
+						color: ${theme.grey4};
+					}
+
+					h2.counts span {
+						margin: 0 10px;
+					}
+
+					h2.counts b {
+						color: black;
+					}
+
+					h2.tagline {
+						font-size: 15px;
+						font-weight: 400;
+						margin: 0;
+						margin-bottom: 20px;
+						color: ${theme.grey4};
+					}
+
+					@media screen and (max-width: 450px) {
+						.profilePicture {
+							height: 120px;
+							width: 120px;
+							top: -60px;
+							margin-bottom: -80px;
+						}
+					}
+				`}</style>
+			</Page>
+		);
+	} else {
+		//User does not exist
+		return (
+			<Page title="My Account" header user={props.user}>
+				<p>Invalid User</p>
+			</Page>
+		);
+	}
 };
 
 userPage.getInitialProps = async ctx => {
