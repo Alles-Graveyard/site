@@ -51,10 +51,12 @@ const userPage = props => {
 					<h2 className="username">@{props.requestedUser.username}</h2>
 					<h2 className="counts">
 						<span>
-							<b>{props.requestedUser.followers}</b> {props.requestedUser.followers === 1 ? "Follower" : "Followers"}
+							<b>{props.requestedUser.followers}</b>{" "}
+							{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
 						</span>
 						<span>
-							<b>{props.requestedUser.rubies}</b> {props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
+							<b>{props.requestedUser.rubies}</b>{" "}
+							{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
 						</span>
 					</h2>
 					<h2 className="tagline">{props.requestedUser.about}</h2>
@@ -193,7 +195,7 @@ userPage.getInitialProps = async ctx => {
 	var apiReq;
 	try {
 		apiReq = await axios.get(
-			`${config.apiUrl}/user?username=${encodeURIComponent(username)}`,
+			`${config.apiUrl}/user?username=${encodeURIComponent(username.toLowerCase())}`,
 			{
 				headers: {
 					authorization: sessionToken
