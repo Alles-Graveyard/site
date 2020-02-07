@@ -35,6 +35,10 @@ export default ({ secondary, wide, ...props }) => (
 			button:active:enabled {
 				opacity: 0.5;
 			}
+
+			button::-moz-focus-inner {
+				border: 0;
+			}
 		`}</style>
 	</>
 );

@@ -5,10 +5,31 @@ import config from "../../config";
 import axios from "axios";
 import { withRouter } from "next/router";
 import nextCookie from "next-cookies";
+import { useState } from "react";
 
 import Link from "next/link";
+import Button from "../../components/Button";
 
 const userPage = props => {
+	const [followed, setFollowed] = useState(props.requestedUser.followed);
+
+	const toggleFollow = () => {
+		setFollowed(!followed);
+		axios
+			.post(
+				`${config.apiUrl}/${followed ? "unfollow" : "follow"}/${
+					props.requestedUser.id
+				}`,
+				{},
+				{
+					headers: {
+						authorization: props.user.sessionToken
+					}
+				}
+			)
+			.catch(() => {});
+	};
+
 	return props.requestedUser ? (
 		<Page title={`@${props.requestedUser.username}`} header user={props.user}>
 			<section className="banner"></section>
@@ -33,6 +54,14 @@ const userPage = props => {
 					</span>
 				</h2>
 				<h2 className="tagline">{props.requestedUser.about}</h2>
+				<Button
+					style={{ margin: "5px 10px", padding: 5 }}
+					secondary={followed}
+					onClick={toggleFollow}
+				>
+					{!followed ? "Follow" : "Unfollow"}
+				</Button>
+				<Button style={{ margin: "5px 10px", padding: 5 }}>Message</Button>
 			</section>
 
 			<style jsx>{`
@@ -43,19 +72,6 @@ const userPage = props => {
 					border-radius: 10px;
 					padding: 20px;
 					box-sizing: border-box;
-				}
-
-				h1.sectionTitle {
-					border-left: solid 5px;
-					padding-left: 10px;
-					padding-right: 5px;
-					transition: 0.1s;
-				}
-
-				section:hover h1.sectionTitle {
-					border-color: ${theme.accent};
-					padding-left: 15px;
-					padding-right: 0px;
 				}
 
 				section.banner {
