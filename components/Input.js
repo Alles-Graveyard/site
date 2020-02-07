@@ -13,6 +13,12 @@ export default ({ wide, ...props }) => (
                 margin: 10px 0px;
                 border-radius: 5px;
                 font-family: ${theme.font};
+                transition: all 0.2s;
+                transition-timing-function: ease-in-out;
+            }
+            
+            input:focus {
+            	border-color: black;
             }
         `}</style>
 	</>

@@ -16,7 +16,7 @@ export default withRouter(props => {
 
 	return (
 		<Page title="Log in" logo>
-			<h1>Sign in to Alles</h1>
+			<h1 style={{ textAlign: "center" }}>Sign in to Alles</h1>
 			<form
 				onSubmit={e => {
 					e.preventDefault();
