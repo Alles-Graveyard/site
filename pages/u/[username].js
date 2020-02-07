@@ -51,10 +51,10 @@ const userPage = props => {
 					<h2 className="username">@{props.requestedUser.username}</h2>
 					<h2 className="counts">
 						<span>
-							<b>{props.requestedUser.followers}</b> Followers
+							<b>{props.requestedUser.followers}</b> {props.requestedUser.followers === 1 ? "Follower" : "Followers"}
 						</span>
 						<span>
-							<b>{props.requestedUser.rubies}</b> Rubies
+							<b>{props.requestedUser.rubies}</b> {props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
 						</span>
 					</h2>
 					<h2 className="tagline">{props.requestedUser.about}</h2>
