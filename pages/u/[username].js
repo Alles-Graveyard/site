@@ -12,6 +12,7 @@ import Button from "../../components/Button";
 
 const userPage = props => {
 	if (props.requestedUser) {
+		const self = props.requestedUser.id === props.user.id;
 		const [followed, setFollowed] = useState(props.requestedUser.followed);
 
 		const toggleFollow = () => {
@@ -55,14 +56,22 @@ const userPage = props => {
 						</span>
 					</h2>
 					<h2 className="tagline">{props.requestedUser.about}</h2>
-					<Button
-						style={{ margin: "5px 10px", padding: 5 }}
-						secondary={followed}
-						onClick={toggleFollow}
-					>
-						{!followed ? "Follow" : "Unfollow"}
-					</Button>
-					<Button style={{ margin: "5px 10px", padding: 5 }}>Message</Button>
+					{self ? (
+						<></>
+					) : (
+						<>
+							<Button
+								style={{ margin: "5px 10px", padding: 5 }}
+								secondary={!followed}
+								onClick={toggleFollow}
+							>
+								{!followed ? "Follow" : "Following"}
+							</Button>
+							<Button style={{ margin: "5px 10px", padding: 5 }} secondary>
+								Message
+							</Button>
+						</>
+					)}
 				</section>
 
 				<style jsx>{`
