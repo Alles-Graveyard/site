@@ -32,6 +32,8 @@ const userPage = props => {
 				.catch(() => {});
 		};
 
+		const userButtonStyle = { margin: "5px 10px", padding: 5, width: 100 };
+
 		return (
 			<Page title={`@${props.requestedUser.username}`} header user={props.user}>
 				<section className="banner"></section>
@@ -61,13 +63,13 @@ const userPage = props => {
 					) : (
 						<>
 							<Button
-								style={{ margin: "5px 10px", padding: 5 }}
+								style={userButtonStyle}
 								secondary={!followed}
 								onClick={toggleFollow}
 							>
 								{!followed ? "Follow" : "Following"}
 							</Button>
-							<Button style={{ margin: "5px 10px", padding: 5 }} secondary>
+							<Button style={userButtonStyle} secondary>
 								Message
 							</Button>
 						</>
