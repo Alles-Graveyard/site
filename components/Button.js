@@ -15,10 +15,9 @@ export default ({ secondary, wide, ...props }) => (
 				border: solid 1px ${!secondary ? theme.accent : theme.borderGrey};
 				color: ${!secondary ? "white" : "unset"};
 				cursor: pointer;
-				transition: background 0.1s;
 				border-radius: 5px;
 				font-family: ${theme.font};
-				transition: all 0.2s;
+				transition: all 0.1s;
 				transition-timing-function: ease-in-out;
 			}
 
