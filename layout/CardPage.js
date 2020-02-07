@@ -24,6 +24,7 @@ export default ({ logo, ...props }) => (
 				border-radius: 10px;
 				box-sizing: border-box;
 				padding: 30px;
+				border: solid 1px #80808040;
 			}
 
 			@media screen and (max-height: 650px) {

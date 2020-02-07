@@ -18,6 +18,8 @@ export default ({ secondary, wide, ...props }) => (
 				transition: background 0.1s;
 				border-radius: 5px;
 				font-family: ${theme.font};
+				transition: all 0.2s;
+				transition-timing-function: ease-in-out;
 			}
 
 			button:disabled {
