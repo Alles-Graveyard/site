@@ -4,7 +4,6 @@ import { withRouter } from "next/router";
 import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";
-import nextCookie from "next-cookies";
 
 import Button from "../components/Button";
 import SmallText from "../components/SmallText";
@@ -147,6 +146,7 @@ const AuthPage = props => {
 };
 
 AuthPage.getInitialProps = async ctx => {
+	console.log(ctx);
 	//Basic query parameter checks
 	if (!ctx.query.client_id)
 		return {
@@ -170,7 +170,7 @@ AuthPage.getInitialProps = async ctx => {
 	}
 
 	//Get application data
-	const sessionToken = nextCookie(ctx).sessionToken;
+	const sessionToken = ctx.user.sessionToken;
 	var res;
 	try {
 		res = await axios.get(
