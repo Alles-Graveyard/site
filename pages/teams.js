@@ -10,11 +10,13 @@ const teamsPage = props => {
 		<Page title="Teams" header user={props.user}>
 			<section>
 				<h1>Your Teams</h1>
-				{props.teams.map(t => (
+				{props.teams.length > 0 ? props.teams.map(t => (
 					<WideLink href="/t/[team].js" as={`/t/${t.teamid}`} map={t.id}>
 						{t.name}
 					</WideLink>
-				))}
+				)) : (
+					<p>It seems you have no teams right now.</p>
+				)}
 			</section>
 
 			<style jsx>{`
