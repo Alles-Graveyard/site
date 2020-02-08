@@ -195,7 +195,9 @@ userPage.getInitialProps = async ctx => {
 	var apiReq;
 	try {
 		apiReq = await axios.get(
-			`${config.apiUrl}/user?username=${encodeURIComponent(username.toLowerCase())}`,
+			`${config.apiUrl}/user?username=${encodeURIComponent(
+				username.toLowerCase()
+			)}`,
 			{
 				headers: {
 					authorization: sessionToken

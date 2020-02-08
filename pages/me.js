@@ -7,6 +7,7 @@ import axios from "axios";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import WideLink from "../components/WideLink";
 import Link from "next/link";
 
 export default withAuth(props => {
@@ -179,15 +180,11 @@ export default withAuth(props => {
 
 			<section>
 				<h1 className="sectionTitle">Apps</h1>
-				<Link href="/pulsar">
-					<a className="mainLink">Pulsar Clients</a>
-				</Link>
-				<Link href="/oauth">
-					<a className="mainLink">Authorized OAuth Applications</a>
-				</Link>
-				<a href="https://dev.alles.cx" className="mainLink">
+				<WideLink href="/pulsar">Pulsar Clients</WideLink>
+				<WideLink href="/oauth">Authorized OAuth Applications</WideLink>
+				<WideLink href="https://dev.alles.cx" basic>
 					Create an Application
-				</a>
+				</WideLink>
 			</section>
 
 			<section>
@@ -339,24 +336,6 @@ export default withAuth(props => {
 					margin: 0;
 					margin-top: 20px;
 					font-size: 18px;
-				}
-
-				a.mainLink {
-					display: block;
-					padding: 10px;
-					border: 1px;
-					cursor: pointer;
-					color: black;
-					text-decoration: none;
-					border: 1px transparent;
-					border-style: solid none;
-					margin: 0;
-					transition: 0.1s;
-				}
-
-				a.mainLink:hover {
-					border-color: ${theme.borderGrey};
-					color: ${theme.accent};
 				}
 
 				@media screen and (max-width: 700px) {
