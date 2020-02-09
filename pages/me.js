@@ -57,6 +57,60 @@ export default withAuth(props => {
 			});
 	};
 
+	//Update Profile
+	const updateProfile = e => {
+		e.preventDefault();
+		const oldPassword = e.target.oldPassword.value;
+		const newPassword = e.target.newPassword.value;
+		const newPassword2 = e.target.newPassword2.value;
+		if (loading || !oldPassword || !newPassword || !newPassword2) return;
+		setLoading(true);
+
+		if (newPassword === newPassword2) {
+			const form = e.target;
+			axios
+				.post(
+					`${config.apiUrl}/password`,
+					{
+						oldPassword,
+						newPassword
+					},
+					{
+						headers: {
+							authorization: props.user.sessionToken
+						}
+					}
+				)
+				.then(() => {
+					showBanner("Password successfully updated.");
+					setLoading(false);
+					form.reset();
+				})
+				.catch(error => {
+					if (error.response) {
+						const { err } = error.response.data;
+						if (err === "passwordRequirements") {
+							showBanner(
+								"Passwords must be between 6 and 128 characters long."
+							);
+						} else if (err === "oldPasswordIncorrect") {
+							showBanner("The old password you entered is incorrect.");
+						} else if (err === "badPassword") {
+							showBanner("You can't change your password to this.");
+						} else {
+							showBanner("Something went wrong.");
+						}
+					} else {
+						showBanner("Something went wrong.");
+					}
+					setLoading(false);
+				});
+		} else {
+			setLoading(false);
+			showBanner("New passwords do not match");
+		}
+	};
+
 	//Change Password
 	const changePassword = e => {
 		e.preventDefault();
@@ -175,6 +229,22 @@ export default withAuth(props => {
 							</p>
 						</div>
 					</Link>
+				</div>
+			</section>
+
+			<section>
+				<h1 className="sectionTitle">Basic Settings</h1>
+				<div className="box">
+					<h1>Your Profile</h1>
+					<form onSubmit={updateProfile}>
+						<h2>Your Name</h2>
+						<Input wide name="name" placeholder="Jessica Adams" />
+						<h2>Nickname</h2>
+						<Input wide name="nickname" placeholder="Jessica" />
+						<h2>About</h2>
+						<Input wide name="about" placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!" />
+						<Button wide disabled={loading}>Update</Button>
+					</form>
 				</div>
 			</section>
 
