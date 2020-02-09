@@ -60,68 +60,48 @@ export default withAuth(props => {
 	//Update Profile
 	const updateProfile = e => {
 		e.preventDefault();
-		const oldPassword = e.target.oldPassword.value;
-		const newPassword = e.target.newPassword.value;
-		const newPassword2 = e.target.newPassword2.value;
-		if (loading || !oldPassword || !newPassword || !newPassword2) return;
+		const form = e.target;
+		const fullname = form.name.value.trim();
+		const nickname = form.nickname.value.trim();
+		const about = form.about.value.trim();
+		if (loading || !fullname || !nickname || !about) return;
 		setLoading(true);
 
-		if (newPassword === newPassword2) {
-			const form = e.target;
-			axios
-				.post(
-					`${config.apiUrl}/password`,
-					{
-						oldPassword,
-						newPassword
-					},
-					{
-						headers: {
-							authorization: props.user.sessionToken
-						}
+		axios
+			.post(
+				`${config.apiUrl}/me`,
+				{
+					name: fullname,
+					nickname,
+					about
+				},
+				{
+					headers: {
+						authorization: props.user.sessionToken
 					}
-				)
-				.then(() => {
-					showBanner("Password successfully updated.");
-					setLoading(false);
-					form.reset();
-				})
-				.catch(error => {
-					if (error.response) {
-						const { err } = error.response.data;
-						if (err === "passwordRequirements") {
-							showBanner(
-								"Passwords must be between 6 and 128 characters long."
-							);
-						} else if (err === "oldPasswordIncorrect") {
-							showBanner("The old password you entered is incorrect.");
-						} else if (err === "badPassword") {
-							showBanner("You can't change your password to this.");
-						} else {
-							showBanner("Something went wrong.");
-						}
-					} else {
-						showBanner("Something went wrong.");
-					}
-					setLoading(false);
-				});
-		} else {
-			setLoading(false);
-			showBanner("New passwords do not match");
-		}
+				}
+			)
+			.then(() => {
+				showBanner("Profile updated.");
+				setLoading(false);
+			})
+			.catch(() => {
+				showBanner("Something went wrong.");
+				setLoading(false);
+			});
 	};
 
 	//Change Password
 	const changePassword = e => {
 		e.preventDefault();
-		const oldPassword = e.target.oldPassword.value;
-		const newPassword = e.target.newPassword.value;
-		const newPassword2 = e.target.newPassword2.value;
+		const form = e.target;
+		const oldPassword = form.oldPassword.value;
+		const newPassword = form.newPassword.value;
+		const newPassword2 = form.newPassword2.value;
 		if (loading || !oldPassword || !newPassword || !newPassword2) return;
 		setLoading(true);
 
 		if (newPassword === newPassword2) {
-			const form = e.target;
 			axios
 				.post(
 					`${config.apiUrl}/password`,
@@ -238,12 +218,32 @@ export default withAuth(props => {
 					<h1>Your Profile</h1>
 					<form onSubmit={updateProfile}>
 						<h2>Your Name</h2>
-						<Input wide name="name" placeholder="Jessica Adams" />
+						<Input
+							wide
+							name="name"
+							maxLength="50"
+							placeholder="Jessica Adams"
+							defaultValue={props.user.name}
+						/>
 						<h2>Nickname</h2>
-						<Input wide name="nickname" placeholder="Jessica" />
+						<Input
+							wide
+							name="nickname"
+							maxLength="50"
+							placeholder="Jessica"
+							defaultValue={props.user.nickname}
+						/>
 						<h2>About</h2>
-						<Input wide name="about" placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!" />
-						<Button wide disabled={loading}>Update</Button>
+						<Input
+							wide
+							name="about"
+							maxLength="125"
+							placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
+							defaultValue={props.user.about}
+						/>
+						<Button wide disabled={loading}>
+							Update
+						</Button>
 					</form>
 				</div>
 			</section>
