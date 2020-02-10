@@ -8,7 +8,7 @@ export default withAuth(props => {
 			<p>
 				This page isn't done yet. Go to{" "}
 				<Link href="/me">
-					<a>your account page</a>
+					<a className="normal">your account page</a>
 				</Link>{" "}
 				to manage settings.
 			</p>

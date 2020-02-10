@@ -175,39 +175,45 @@ export default withAuth(props => {
 
 				<div className="quickInfo">
 					<Link href="/au">
-						<div>
-							<i className="fas fa-coins"></i>
-							<p>
-								<b>{props.user.au}</b> Au
-							</p>
-						</div>
+						<a>
+							<div>
+								<i className="fas fa-coins"></i>
+								<p>
+									<b>{props.user.au}</b> Au
+								</p>
+							</div>
+						</a>
 					</Link>
 
 					<Link href="/plus">
-						<div>
-							<i className="fas fa-bolt"></i>
-							<p>
-								{props.user.plus.active ? (
-									<>
-										Alles+ is <b>Active</b>
-									</>
-								) : (
-									<>
-										Try <b>Alles+</b>
-									</>
-								)}
-							</p>
-						</div>
+						<a>
+							<div>
+								<i className="fas fa-bolt"></i>
+								<p>
+									{props.user.plus.active ? (
+										<>
+											Alles+ is <b>Active</b>
+										</>
+									) : (
+										<>
+											Try <b>Alles+</b>
+										</>
+									)}
+								</p>
+							</div>
+						</a>
 					</Link>
 
 					<Link href="/rubies">
-						<div>
-							<i className="fas fa-gem"></i>
-							<p>
-								<b>{props.user.rubies}</b>{" "}
-								{props.user.rubies === 1 ? "Ruby" : "Rubies"}
-							</p>
-						</div>
+						<a>
+							<div>
+								<i className="fas fa-gem"></i>
+								<p>
+									<b>{props.user.rubies}</b>{" "}
+									{props.user.rubies === 1 ? "Ruby" : "Rubies"}
+								</p>
+							</div>
+						</a>
 					</Link>
 				</div>
 			</section>

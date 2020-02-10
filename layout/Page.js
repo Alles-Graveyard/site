@@ -47,11 +47,17 @@ export default props => {
 				}
 
 				a {
+					color: inherit;
+					text-decoration: none;
+				}
+
+				a.normal {
 					color: ${theme.accent};
+					text-decoration: underline;
 				}
 
 				a.nocolor {
-					color: inherit;
+					text-decoration: underline;
 				}
 			`}</style>
 		</div>

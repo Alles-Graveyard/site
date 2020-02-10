@@ -11,10 +11,9 @@ export default props => (
 
 		{props.user ? (
 			<Link href="/me">
-				<img
-					className="profilePicture"
-					src={`https://avatar.alles.cx/user/${props.user.id}`}
-				/>
+				<a className="profilePicture">
+					<img src={`https://avatar.alles.cx/user/${props.user.id}`} />
+				</a>
 			</Link>
 		) : (
 			<></>
@@ -36,7 +35,7 @@ export default props => (
 				vertical-align: middle;
 			}
 
-			a {
+			a.home {
 				color: inherit;
 				text-decoration: none;
 				padding: 0 10px;
@@ -47,12 +46,15 @@ export default props => (
 				font-weight: 700;
 			}
 
-			.profilePicture {
+			a.profilePicture {
+				margin: auto 0 auto 5px;
+			}
+
+			a.profilePicture img {
 				border: solid 1px ${theme.borderGrey};
 				border-radius: 50%;
 				height: 2.5em;
 				width: 2.5em;
-				margin: auto 0 auto 5px;
 				cursor: pointer;
 			}
 		`}</style>
