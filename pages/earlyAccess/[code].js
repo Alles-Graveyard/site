@@ -17,34 +17,50 @@ const activationPage = props => {
 		<Page title="Activate your Account" logo>
 			<h1>Account Activation</h1>
 			{props.reservation ? (
-				<form
-					onSubmit={e => {
-						e.preventDefault();
-						setFormError("");
-						const password = e.target.password.value;
-						if (!password || formLoading) return;
-						setFormLoading(true);
-						axios
-							.post(`${config.apiUrl}/reservation`, {
-								password,
-								code: props.reservation.code
-							})
-							.then(res => {
-								Cookies.set("sessionToken", res.data.token);
-								router.push("/");
-							})
-							.catch(() => {
-								setFormError("Something went wrong.");
-								setFormLoading(false);
-							});
-					}}
-				>
-					<Input wide value={props.reservation.username} readOnly />
-					<Input wide name="password" placeholder="Password" type="password" />
-					<Button disabled={formLoading} wide>
-						Activate
-					</Button>
-				</form>
+				<>
+					<p>
+						All that's left to do is enter the password that you'd like to use,
+						then your account will be ready. If you'd like to change your
+						username, please{" "}
+						<a href="https://alleshq.com/contact" className="normal">
+							contact us
+						</a>
+						.
+					</p>
+					<form
+						onSubmit={e => {
+							e.preventDefault();
+							setFormError("");
+							const password = e.target.password.value;
+							if (!password || formLoading) return;
+							setFormLoading(true);
+							axios
+								.post(`${config.apiUrl}/reservation`, {
+									password,
+									code: props.reservation.code
+								})
+								.then(res => {
+									Cookies.set("sessionToken", res.data.token);
+									router.push("/");
+								})
+								.catch(() => {
+									setFormError("Something went wrong.");
+									setFormLoading(false);
+								});
+						}}
+					>
+						<Input wide value={props.reservation.username} readOnly />
+						<Input
+							wide
+							name="password"
+							placeholder="Password"
+							type="password"
+						/>
+						<Button disabled={formLoading} wide>
+							Activate
+						</Button>
+					</form>
+				</>
 			) : (
 				<p>The specified reservation code is invalid.</p>
 			)}
