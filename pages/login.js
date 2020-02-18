@@ -31,7 +31,7 @@ export default withRouter(props => {
 							password
 						})
 						.then(res => {
-							Cookies.set("sessionToken", res.data.token);
+							Cookies.set("sessionToken", res.data.token, { domain: location.host });
 							const redirectUrl = props.router.query.redirect;
 							router.push(redirectUrl ? redirectUrl : "/");
 						})
