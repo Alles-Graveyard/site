@@ -16,7 +16,6 @@ export default ({ secondary, wide, ...props }) => (
 				color: ${!secondary ? "white" : "unset"};
 				cursor: pointer;
 				border-radius: 5px;
-				font-family: ${theme.font};
 				transition: all 0.1s;
 				transition-timing-function: ease-in-out;
 			}

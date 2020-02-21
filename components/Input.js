@@ -12,7 +12,6 @@ export default ({ wide, ...props }) => (
                 box-sizing: border-box;
                 margin: 10px 0px;
                 border-radius: 5px;
-                font-family: ${theme.font};
                 transition: all 0.1s;
                 transition-timing-function: ease-in-out;
             }

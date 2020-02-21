@@ -42,8 +42,11 @@ export default props => {
 				@import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
 
 				body {
-					font-family: Rubik, sans-serif;
 					margin: 0;
+				}
+
+				body, input, button {
+					font-family: Rubik, sans-serif;
 				}
 
 				a {
