@@ -160,7 +160,7 @@ export default withAuth(props => {
 				</div>
 				<h1 className="name">
 					{props.user.name}
-					{props.user.plus.active ? <sup>+</sup> : <></>}
+					{props.user.plus ? <sup>+</sup> : <></>}
 				</h1>
 				<h2 className="username">@{props.user.username}</h2>
 
@@ -190,7 +190,7 @@ export default withAuth(props => {
 							<div>
 								<i className="fas fa-bolt"></i>
 								<p>
-									{props.user.plus.active ? (
+									{props.user.plus ? (
 										<>
 											Alles+ is <b>Active</b>
 										</>

@@ -12,7 +12,7 @@ const teamsPage = props => {
 				<h1>Your Teams</h1>
 				{props.teams.length > 0 ? (
 					props.teams.map(t => (
-						<WideLink href="/t/[team].js" as={`/t/${t.teamid}`} map={t.id}>
+						<WideLink href="/t/[team].js" as={`/t/${t.slug}`} map={t.id}>
 							{t.name}
 						</WideLink>
 					))

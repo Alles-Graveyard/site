@@ -13,13 +13,13 @@ import Button from "../../components/Button";
 const userPage = props => {
 	if (props.requestedUser) {
 		const self = props.requestedUser.id === props.user.id;
-		const [followed, setFollowed] = useState(props.requestedUser.followed);
+		const [isFollowing, setIsFollowing] = useState(props.requestedUser.isFollowing);
 
 		const toggleFollow = () => {
-			setFollowed(!followed);
+			setIsFollowing(!isFollowing);
 			axios
 				.post(
-					`${config.apiUrl}/${followed ? "unfollow" : "follow"}/${
+					`${config.apiUrl}/${isFollowing ? "unfollow" : "follow"}/${
 						props.requestedUser.id
 					}`,
 					{},
@@ -66,10 +66,10 @@ const userPage = props => {
 						<>
 							<Button
 								style={userButtonStyle}
-								secondary={!followed}
+								secondary={!isFollowing}
 								onClick={toggleFollow}
 							>
-								{!followed ? "Follow" : "Following"}
+								{!isFollowing ? "Follow" : "Following"}
 							</Button>
 							<Button style={userButtonStyle} secondary>
 								Message

@@ -18,7 +18,8 @@ export default ({ logo, ...props }) => (
 		<style jsx>{`
 			main {
 				background: white;
-				max-width: 400px;
+				width: 400px;
+				max-width: 100%;
 				min-height: 500px;
 				margin: auto;
 				border-radius: 10px;

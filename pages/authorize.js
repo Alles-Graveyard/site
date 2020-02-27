@@ -146,7 +146,6 @@ const AuthPage = props => {
 };
 
 AuthPage.getInitialProps = async ctx => {
-	console.log(ctx);
 	//Basic query parameter checks
 	if (!ctx.query.client_id)
 		return {
