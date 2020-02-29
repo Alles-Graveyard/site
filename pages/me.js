@@ -46,7 +46,7 @@ export default withAuth(props => {
 					if (err === "avatarTooBig" || error.response.status === 413) {
 						showBanner("The avatar you selected is too big.");
 					} else if (err === "badFileType") {
-						showBanner("Your avatar must be a png or jpg file.");
+						showBanner("Your avatar must be a png file.");
 					} else {
 						showBanner("Something went wrong.");
 					}
@@ -168,7 +168,7 @@ export default withAuth(props => {
 					type="file"
 					ref={avatarUploadInput}
 					style={{ display: "none" }}
-					accept="image/png, image/jpeg"
+					accept="image/png"
 					onChange={avatarUpload}
 					disabled={loading}
 				/>
