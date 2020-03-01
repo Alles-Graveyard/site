@@ -1,6 +1,6 @@
 import Page from "../layout/CardPage";
 import { useState } from "react";
-import router, { withRouter } from "next/router";
+import { withRouter } from "next/router";
 import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
@@ -33,7 +33,7 @@ export default withRouter(props => {
 						.then(res => {
 							Cookies.set("sessionToken", res.data.token, { domain: location.host });
 							const redirectUrl = props.router.query.redirect;
-							router.push(redirectUrl ? redirectUrl : "/");
+							window.location.href = redirectUrl ? redirectUrl : "/";
 						})
 						.catch(err => {
 							if (err.response && err.response.status === 401) {
