@@ -72,7 +72,7 @@ const AuthPage = props => {
 					<SmallText>
 						CREATED BY{" "}
 						<a
-							href={`https://alles.cx/t/${props.application.team.teamid}`}
+							href={`https://alles.cx/t/${props.application.team.slug}`}
 							style={{ color: theme.accent }}
 							target="_blank"
 						>
