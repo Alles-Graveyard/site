@@ -177,7 +177,7 @@ const userPage = props => {
 	} else {
 		//User does not exist
 		return (
-			<Page title="My Account" header user={props.user}>
+			<Page header user={props.user}>
 				<p>Invalid User</p>
 			</Page>
 		);
