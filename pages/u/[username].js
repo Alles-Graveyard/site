@@ -71,9 +71,6 @@ const userPage = props => {
 							>
 								{!isFollowing ? "Follow" : "Following"}
 							</Button>
-							<Button style={userButtonStyle} secondary>
-								Message
-							</Button>
 						</>
 					)}
 				</section>
