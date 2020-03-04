@@ -168,7 +168,7 @@ const userPage = props => {
 							height: 120px;
 							width: 120px;
 							top: -60px;
-							margin-bottom: -80px;
+							margin-bottom: -60px;
 						}
 					}
 				`}</style>
