@@ -13,7 +13,9 @@ import Button from "../../components/Button";
 const userPage = props => {
 	if (props.requestedUser) {
 		const self = props.requestedUser.id === props.user.id;
-		const [isFollowing, setIsFollowing] = useState(props.requestedUser.isFollowing);
+		const [isFollowing, setIsFollowing] = useState(
+			props.requestedUser.isFollowing
+		);
 
 		const toggleFollow = () => {
 			setIsFollowing(!isFollowing);

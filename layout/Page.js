@@ -45,7 +45,9 @@ export default props => {
 					margin: 0;
 				}
 
-				body, input, button {
+				body,
+				input,
+				button {
 					font-family: Rubik, sans-serif;
 				}
 
