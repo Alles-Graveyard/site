@@ -9,11 +9,13 @@ const error = ({ statusCode }) => (
 	<Page header title={statusCode ? statusCode : "Error"}>
 		<h1>{statusCode ? statusCode : "Error"}</h1>
 		<div className="info">
-			<p>{
-				statusCode ? (
-					errors[statusCode] ? errors[statusCode] : "Something went wrong."
-				) : "An error occurred on the client"
-			}</p>
+			<p>
+				{statusCode
+					? errors[statusCode]
+						? errors[statusCode]
+						: "Something went wrong."
+					: "An error occurred on the client"}
+			</p>
 		</div>
 
 		<style jsx>{`
