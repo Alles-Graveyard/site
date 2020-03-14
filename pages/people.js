@@ -9,6 +9,14 @@ import {withRouter} from "next/router";
 const people = props => {
 	return (
 		<Page header user={props.user} title="Users">
+			<NavArrows
+				before={
+					props.users.length > 0 && !props.firstPage ? props.users[0].username : null
+				}
+				after={
+					props.users.length > 0 && !props.lastPage ? props.users[props.users.length - 1].username : null
+				}
+			/>
 			{props.users.map(u => (
 				<Link href="/u/[id]" as={`/u/${u.username}`} key={u.id}>
 					<a className="user">
@@ -49,6 +57,7 @@ const people = props => {
 					font-weight: 400;
 					margin: auto 0;
 					color: ${theme.grey4};
+					text-align: right;
 				}
 
 				.user img {
@@ -85,10 +94,65 @@ people.getInitialProps = async ctx => {
 	} catch (err) {
 		return;
 	}
+	console.log(apiReq.data);
 
-	return {
-		users: apiReq.data
-	};
+	return apiReq.data;
 };
 
 export default withRouter(withAuth(people));
+
+//Navigation Arrows
+const NavArrows = ({before, after}) => (
+	<div>
+		{
+			before ? (
+				<a href={`/people?before=${before}`}>
+					<i className="fas fa-arrow-left"></i>
+				</a>
+			) : (
+				<a className="disabled">
+					<i className="fas fa-arrow-left"></i>
+				</a>
+			)
+		}
+		{
+			after ? (
+				<a href={`/people?after=${after}`}>
+					<i className="fas fa-arrow-right"></i>
+				</a>
+			) : (
+				<a className="disabled">
+					<i className="fas fa-arrow-right"></i>
+				</a>
+			)
+		}
+
+		<style jsx>{`
+			div {
+				display: flex;
+				justify-content: center;
+			}
+
+			a {
+				display: block;
+				background: white;
+				width: 30px;
+				height: 30px;
+				margin: 0 10px;
+				display: flex;
+				border: solid 1px ${theme.borderGrey};
+				border-radius: 50%;
+			}
+
+			a.disabled {
+				background: none;
+				color: ${theme.grey4};
+			}
+
+			i {
+				margin: auto;
+				display: block;
+			}
+		`}</style>
+	</div>
+);
