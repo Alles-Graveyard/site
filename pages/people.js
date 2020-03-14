@@ -46,7 +46,8 @@ const people = props => {
 					display: flex;
 					background: #ffffff;
 					padding: 20px;
-					margin: 20px 0;
+					margin: 20px auto;
+					max-width: 800px;
 					border-radius: 20px;
 					border: solid 1px ${theme.borderGrey};
 				}
