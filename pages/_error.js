@@ -5,7 +5,7 @@ const errors = {
 };
 
 const error = ({ statusCode }) => (
-	<Page header>
+	<Page header title={statusCode}>
 		<h1>{statusCode}</h1>
 		<div className="info">
 			<p>{errors[statusCode] ? errors[statusCode] : "Something went wrong."}</p>
