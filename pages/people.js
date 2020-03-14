@@ -110,7 +110,6 @@ people.getInitialProps = async ctx => {
 	} catch (err) {
 		return;
 	}
-	console.log(apiReq.data);
 
 	return apiReq.data;
 };
