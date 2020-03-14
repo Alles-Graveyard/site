@@ -1,14 +1,19 @@
 import Page from "../layout/Page";
 const errors = {
-	500: "Something broke :(",
-	404: "The page you were looking for doesn't exist!"
+	200: "Nothing went wrong: You found the error page!",
+	404: "The page you were looking for doesn't exist!",
+	500: "Something broke :("
 };
 
 const error = ({ statusCode }) => (
-	<Page header title={statusCode}>
-		<h1>{statusCode}</h1>
+	<Page header title={statusCode ? statusCode : "Error"}>
+		<h1>{statusCode ? statusCode : "Error"}</h1>
 		<div className="info">
-			<p>{errors[statusCode] ? errors[statusCode] : "Something went wrong."}</p>
+			<p>{
+				statusCode ? (
+					errors[statusCode] ? errors[statusCode] : "Something went wrong."
+				) : "An error occurred on the client"
+			}</p>
 		</div>
 
 		<style jsx>{`
@@ -28,6 +33,7 @@ const error = ({ statusCode }) => (
 				max-width: 600px;
 				margin: 0 auto;
 				border-radius: 10px;
+				text-align: center;
 			}
 
 			.info p {
