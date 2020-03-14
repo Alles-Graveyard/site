@@ -1,7 +1,10 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import theme from "../theme";
+import config from "../config";
 import Link from "next/link";
+import axios from "axios";
+import {withRouter} from "next/router";
 
 const people = props => {
 	return (
@@ -31,6 +34,10 @@ const people = props => {
 					border: solid 1px ${theme.borderGrey};
 				}
 
+                .user:hover, .user:hover img {
+                    border-color: ${theme.grey8};
+                }
+
 				.user h1 {
 					font-size: 20px;
 					font-weight: 500;
@@ -49,6 +56,7 @@ const people = props => {
 					width: 30px;
 					border-radius: 50%;
 					margin-right: 10px;
+					border: solid 1px ${theme.borderGrey};
 				}
 
 				.user .left {
@@ -60,23 +68,27 @@ const people = props => {
 	);
 };
 
-people.getInitialProps = ctx => {
-	return {
-		users: [
+people.getInitialProps = async ctx => {
+	const { before, after } = ctx.query;
+	const { sessionToken } = ctx.user;
+
+	var apiReq;
+	try {
+		apiReq = await axios.get(
+			`${config.apiUrl}/users${after ? `?after=${encodeURIComponent(after)}` : before ? `?before=${before}` : ""}`,
 			{
-				id: "00000000-0000-0000-0000-000000000000",
-				username: "archie",
-				name: "Archie Baer",
-				plus: true
-			},
-			{
-				id: "b990537f-8037-49b7-a9df-b4b2a36b7911",
-				username: "dante",
-				name: "Dante Issaias",
-				plus: true
+				headers: {
+					authorization: sessionToken
+				}
 			}
-		]
+		);
+	} catch (err) {
+		return;
+	}
+
+	return {
+		users: apiReq.data
 	};
 };
 
-export default withAuth(people);
+export default withRouter(withAuth(people));
