@@ -169,7 +169,7 @@ AuthPage.getInitialProps = async ctx => {
 	}
 
 	//Get application data
-	const {sessionToken} = ctx.user;
+	const { sessionToken } = ctx.user;
 	var res;
 	try {
 		res = await axios.get(

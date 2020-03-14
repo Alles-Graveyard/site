@@ -4,38 +4,38 @@ import theme from "../theme";
 import config from "../config";
 import Link from "next/link";
 import axios from "axios";
-import {withRouter} from "next/router";
+import { withRouter } from "next/router";
 
 const people = props => {
-	const backwardsBtn = props.users.length > 0 && !props.firstPage ? props.users[0].username : null;
-	const forwardsBtn = props.users.length > 0 && !props.lastPage ? props.users[props.users.length - 1].username : null;
+	const backwardsBtn =
+		props.users.length > 0 && !props.firstPage ? props.users[0].username : null;
+	const forwardsBtn =
+		props.users.length > 0 && !props.lastPage
+			? props.users[props.users.length - 1].username
+			: null;
 	return (
 		<Page header user={props.user} title="Users">
 			{props.users.length > 0 ? (
-				<><NavArrows
-				before={backwardsBtn}
-				after={forwardsBtn}
-			/>
-			{props.users.map(u => (
-				<Link href="/u/[id]" as={`/u/${u.username}`} key={u.id}>
-					<a className="user">
-						<div className="left">
-							<img src={`https://avatar.alles.cx/user/${u.id}`} />
-							<h1>
-								{u.name}
-								{props.user.plus ? <sup>+</sup> : <></>}
-							</h1>
-						</div>
-						<h2>@{u.username}</h2>
-					</a>
-				</Link>
-			))}
-			<NavArrows
-				before={backwardsBtn}
-				after={forwardsBtn}
-			/></>
+				<>
+					<NavArrows before={backwardsBtn} after={forwardsBtn} />
+					{props.users.map(u => (
+						<Link href="/u/[id]" as={`/u/${u.username}`} key={u.id}>
+							<a className="user">
+								<div className="left">
+									<img src={`https://avatar.alles.cx/user/${u.id}`} />
+									<h1>
+										{u.name}
+										{props.user.plus ? <sup>+</sup> : <></>}
+									</h1>
+								</div>
+								<h2>@{u.username}</h2>
+							</a>
+						</Link>
+					))}
+					<NavArrows before={backwardsBtn} after={forwardsBtn} />
+				</>
 			) : (
-				<div style={{textAlign: "center"}}>
+				<div style={{ textAlign: "center" }}>
 					<h1>Error</h1>
 					<p>No users were found.</p>
 				</div>
@@ -51,9 +51,10 @@ const people = props => {
 					border: solid 1px ${theme.borderGrey};
 				}
 
-                .user:hover, .user:hover img {
-                    border-color: ${theme.grey8};
-                }
+				.user:hover,
+				.user:hover img {
+					border-color: ${theme.grey8};
+				}
 
 				.user h1 {
 					font-size: 20px;
@@ -93,7 +94,13 @@ people.getInitialProps = async ctx => {
 	var apiReq;
 	try {
 		apiReq = await axios.get(
-			`${config.apiUrl}/users${after ? `?after=${encodeURIComponent(after)}` : before ? `?before=${before}` : ""}`,
+			`${config.apiUrl}/users${
+				after
+					? `?after=${encodeURIComponent(after)}`
+					: before
+					? `?before=${before}`
+					: ""
+			}`,
 			{
 				headers: {
 					authorization: sessionToken
@@ -111,30 +118,26 @@ people.getInitialProps = async ctx => {
 export default withRouter(withAuth(people));
 
 //Navigation Arrows
-const NavArrows = ({before, after}) => (
+const NavArrows = ({ before, after }) => (
 	<div>
-		{
-			before ? (
-				<a href={`/people?before=${before}`}>
-					<i className="fas fa-arrow-left"></i>
-				</a>
-			) : (
-				<a className="disabled">
-					<i className="fas fa-arrow-left"></i>
-				</a>
-			)
-		}
-		{
-			after ? (
-				<a href={`/people?after=${after}`}>
-					<i className="fas fa-arrow-right"></i>
-				</a>
-			) : (
-				<a className="disabled">
-					<i className="fas fa-arrow-right"></i>
-				</a>
-			)
-		}
+		{before ? (
+			<a href={`/people?before=${before}`}>
+				<i className="fas fa-arrow-left"></i>
+			</a>
+		) : (
+			<a className="disabled">
+				<i className="fas fa-arrow-left"></i>
+			</a>
+		)}
+		{after ? (
+			<a href={`/people?after=${after}`}>
+				<i className="fas fa-arrow-right"></i>
+			</a>
+		) : (
+			<a className="disabled">
+				<i className="fas fa-arrow-right"></i>
+			</a>
+		)}
 
 		<style jsx>{`
 			div {
