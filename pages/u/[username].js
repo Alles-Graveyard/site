@@ -186,7 +186,6 @@ const userPage = props => {
 userPage.getInitialProps = async ctx => {
 	const { username } = ctx.query;
 	const { sessionToken } = ctx.user;
-	if (!sessionToken) return;
 
 	var apiReq;
 	try {
