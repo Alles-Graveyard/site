@@ -6,8 +6,6 @@ import axios from "axios";
 import { withRouter } from "next/router";
 import nextCookie from "next-cookies";
 import { useState } from "react";
-
-import Link from "next/link";
 import Button from "../../components/Button";
 
 const userPage = props => {
