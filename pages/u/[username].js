@@ -4,7 +4,6 @@ import theme from "../../theme";
 import config from "../../config";
 import axios from "axios";
 import { withRouter } from "next/router";
-import nextCookie from "next-cookies";
 import { useState } from "react";
 import Button from "../../components/Button";
 
@@ -186,7 +185,7 @@ const userPage = props => {
 
 userPage.getInitialProps = async ctx => {
 	const { username } = ctx.query;
-	const { sessionToken } = nextCookie(ctx);
+	const { sessionToken } = ctx.user;
 	if (!sessionToken) return;
 
 	var apiReq;
