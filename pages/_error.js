@@ -4,7 +4,7 @@ const errors = {
 	404: "The page you were looking for doesn't exist!"
 };
 
-const error = ({statusCode}) => (
+const error = ({ statusCode }) => (
 	<Page header>
 		<h1>{statusCode}</h1>
 		<div className="info">
@@ -29,7 +29,7 @@ const error = ({statusCode}) => (
 				margin: 0 auto;
 				border-radius: 10px;
 			}
-			
+
 			.info p {
 				margin: 0;
 			}
@@ -53,11 +53,11 @@ const error = ({statusCode}) => (
 	</Page>
 );
 
-error.getInitialProps = ({res, err}) => {
+error.getInitialProps = ({ res, err }) => {
 	const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
 	return {
 		statusCode
 	};
-}
+};
 
 export default error;
