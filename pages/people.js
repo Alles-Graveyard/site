@@ -19,7 +19,7 @@ const people = props => {
 				<>
 					<NavArrows before={backwardsBtn} after={forwardsBtn} />
 					{props.users.map(u => (
-						<Link href="/u/[id]" as={`/u/${u.username}`} key={u.id}>
+						<Link href="/u/[username]" as={`/u/${u.username}`} key={u.id}>
 							<a className="user">
 								<div className="left">
 									<img src={`https://avatar.alles.cx/user/${u.id}`} />
