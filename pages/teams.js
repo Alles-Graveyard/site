@@ -42,7 +42,7 @@ teamsPage.getInitialProps = async ctx => {
 		}
 	});
 
-	return { teams: res.data };
+	return {teams: res.data};
 };
 
 export default withAuth(teamsPage);

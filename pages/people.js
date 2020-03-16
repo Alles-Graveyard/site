@@ -4,7 +4,7 @@ import theme from "../theme";
 import config from "../config";
 import Link from "next/link";
 import axios from "axios";
-import { withRouter } from "next/router";
+import {withRouter} from "next/router";
 
 const people = props => {
 	const backwardsBtn =
@@ -35,7 +35,7 @@ const people = props => {
 					<NavArrows before={backwardsBtn} after={forwardsBtn} />
 				</>
 			) : (
-				<div style={{ textAlign: "center" }}>
+				<div style={{textAlign: "center"}}>
 					<h1>Error</h1>
 					<p>No users were found.</p>
 				</div>
@@ -90,8 +90,8 @@ const people = props => {
 };
 
 people.getInitialProps = async ctx => {
-	const { before, after } = ctx.query;
-	const { sessionToken } = ctx.user;
+	const {before, after} = ctx.query;
+	const {sessionToken} = ctx.user;
 
 	var apiReq;
 	try {
@@ -119,7 +119,7 @@ people.getInitialProps = async ctx => {
 export default withRouter(withAuth(people));
 
 //Navigation Arrows
-const NavArrows = ({ before, after }) => (
+const NavArrows = ({before, after}) => (
 	<div>
 		{before ? (
 			<a href={`/people?before=${before}`}>

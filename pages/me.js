@@ -2,7 +2,7 @@ import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import theme from "../theme";
 import config from "../config";
-import { useState, createRef } from "react";
+import {useState, createRef} from "react";
 import axios from "axios";
 
 import Input from "../components/Input";
@@ -42,7 +42,7 @@ export default withAuth(props => {
 			})
 			.catch(error => {
 				if (error.response) {
-					const { err } = error.response.data;
+					const {err} = error.response.data;
 					if (err === "avatarTooBig" || error.response.status === 413) {
 						showBanner("The avatar you selected is too big.");
 					} else if (err === "badFileType") {
@@ -122,7 +122,7 @@ export default withAuth(props => {
 				})
 				.catch(error => {
 					if (error.response) {
-						const { err } = error.response.data;
+						const {err} = error.response.data;
 						if (err === "passwordRequirements") {
 							showBanner(
 								"Passwords must be between 6 and 128 characters long."
@@ -167,7 +167,7 @@ export default withAuth(props => {
 				<input
 					type="file"
 					ref={avatarUploadInput}
-					style={{ display: "none" }}
+					style={{display: "none"}}
 					accept="image/png"
 					onChange={avatarUpload}
 					disabled={loading}

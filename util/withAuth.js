@@ -21,12 +21,12 @@ export default (WrappedComponent, allowGuest) => {
 
 			// https://github.com/zeit/next.js/blob/canary/examples/with-cookie-auth/utils/auth.js#L16
 			if (typeof window === "undefined") {
-				ctx.res.writeHead(302, { Location: redirectUrl });
+				ctx.res.writeHead(302, {Location: redirectUrl});
 				ctx.res.end();
 			} else {
 				Router.push(redirectUrl);
 			}
-			return { user: null };
+			return {user: null};
 		}
 
 		//Child getIntialProps
@@ -46,7 +46,7 @@ export default (WrappedComponent, allowGuest) => {
 };
 
 const auth = async ctx => {
-	const { sessionToken } = nextCookie(ctx);
+	const {sessionToken} = nextCookie(ctx);
 	if (!sessionToken) return;
 	var apiReq;
 	try {

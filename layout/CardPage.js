@@ -1,6 +1,6 @@
 import Page from "./Page";
 
-export default ({ logo, ...props }) => (
+export default ({logo, ...props}) => (
 	<Page
 		header
 		style={{

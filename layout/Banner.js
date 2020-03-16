@@ -1,5 +1,5 @@
 import theme from "../theme";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
 export default props => {
 	const [closed, setClosed] = useState(true);

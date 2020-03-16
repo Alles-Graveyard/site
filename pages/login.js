@@ -1,6 +1,6 @@
 import Page from "../layout/CardPage";
-import { useState } from "react";
-import { withRouter } from "next/router";
+import {useState} from "react";
+import {withRouter} from "next/router";
 import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
@@ -16,7 +16,7 @@ export default withRouter(props => {
 
 	return (
 		<Page title="Log in" logo>
-			<h1 style={{ textAlign: "center" }}>Sign in to Alles</h1>
+			<h1 style={{textAlign: "center"}}>Sign in to Alles</h1>
 			<form
 				onSubmit={e => {
 					e.preventDefault();
@@ -64,7 +64,7 @@ export default withRouter(props => {
 				</a>
 				.
 			</SmallText>
-			{formError ? <p style={{ color: theme.error }}>{formError}</p> : <></>}
+			{formError ? <p style={{color: theme.error}}>{formError}</p> : <></>}
 		</Page>
 	);
 });

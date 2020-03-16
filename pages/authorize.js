@@ -1,6 +1,6 @@
 import Page from "../layout/CardPage";
-import { useState, useEffect } from "react";
-import { withRouter } from "next/router";
+import {useState, useEffect} from "react";
+import {withRouter} from "next/router";
 import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";
@@ -64,16 +64,14 @@ const AuthPage = props => {
 				<>
 					<h1>Sign in with Alles</h1>
 					<p>
-						<span style={{ color: theme.accent }}>
-							{props.application.name}
-						</span>{" "}
+						<span style={{color: theme.accent}}>{props.application.name}</span>{" "}
 						allows you to {props.application.description}
 					</p>
 					<SmallText>
 						CREATED BY{" "}
 						<a
 							href={`https://alles.cx/t/${props.application.team.slug}`}
-							style={{ color: theme.accent }}
+							style={{color: theme.accent}}
 							target="_blank"
 						>
 							{props.application.team.name.toUpperCase()}
@@ -89,7 +87,7 @@ const AuthPage = props => {
 					</SmallText>
 					{props.scopes.length > 0 ? (
 						<>
-							<p style={{ marginBottom: 0 }}>This application wants to:</p>
+							<p style={{marginBottom: 0}}>This application wants to:</p>
 							<div className="scopes">
 								{props.scopes.map(s => (
 									<div key={s}>
@@ -152,9 +150,9 @@ AuthPage.getInitialProps = async ctx => {
 			error: "A 'client_id' must be specified with the ID of the application"
 		};
 	if (ctx.query.response_type !== "code")
-		return { error: "'response_type' must be set to 'code'" };
+		return {error: "'response_type' must be set to 'code'"};
 	if (!ctx.query.redirect_uri)
-		return { error: "A 'redirect_uri' must be specified" };
+		return {error: "A 'redirect_uri' must be specified"};
 
 	const state = ctx.query.state ? ctx.query.state : "";
 	const scopes = (ctx.query.scope ? ctx.query.scope.split(" ") : []).filter(
@@ -165,11 +163,11 @@ AuthPage.getInitialProps = async ctx => {
 	//Verify Scopes
 	for (const scope of scopes) {
 		if (typeof config.scopes[scope] === "undefined")
-			return { error: `'${scope}' is not a valid scope` };
+			return {error: `'${scope}' is not a valid scope`};
 	}
 
 	//Get application data
-	const { sessionToken } = ctx.user;
+	const {sessionToken} = ctx.user;
 	var res;
 	try {
 		res = await axios.get(

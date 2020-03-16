@@ -1,6 +1,6 @@
 import theme from "../theme";
 
-export default ({ wide, ...props }) => (
+export default ({wide, ...props}) => (
 	<>
 		<input {...props} />
 		<style jsx>{`

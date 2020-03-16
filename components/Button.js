@@ -1,6 +1,6 @@
 import theme from "../theme";
 
-export default ({ secondary, wide, ...props }) => (
+export default ({secondary, wide, ...props}) => (
 	<>
 		<button {...props} />
 		<style jsx>{`

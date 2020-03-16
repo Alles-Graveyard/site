@@ -8,7 +8,7 @@ export default withAuth(props => {
 				WARNING! THIS PAGE IS FOR DEBUGGING PURPOSES ONLY! DO NOT GIVE THIS
 				INFORMATION TO <b>ANYONE</b>.
 			</p>
-			<p style={{ whiteSpace: "pre-wrap" }}>
+			<p style={{whiteSpace: "pre-wrap"}}>
 				{JSON.stringify(props.user, null, "   ")}
 			</p>
 		</Page>

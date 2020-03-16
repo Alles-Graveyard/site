@@ -3,8 +3,8 @@ import withAuth from "../../util/withAuth";
 import theme from "../../theme";
 import config from "../../config";
 import axios from "axios";
-import { withRouter } from "next/router";
-import { useState } from "react";
+import {withRouter} from "next/router";
+import {useState} from "react";
 import Button from "../../components/Button";
 
 const userPage = props => {
@@ -31,7 +31,7 @@ const userPage = props => {
 				.catch(() => {});
 		};
 
-		const userButtonStyle = { margin: "5px 10px", padding: 5, width: 100 };
+		const userButtonStyle = {margin: "5px 10px", padding: 5, width: 100};
 
 		return (
 			<Page title={`@${props.requestedUser.username}`} header user={props.user}>
@@ -184,8 +184,8 @@ const userPage = props => {
 };
 
 userPage.getInitialProps = async ctx => {
-	const { username } = ctx.query;
-	const { sessionToken } = ctx.user;
+	const {username} = ctx.query;
+	const {sessionToken} = ctx.user;
 
 	var apiReq;
 	try {
