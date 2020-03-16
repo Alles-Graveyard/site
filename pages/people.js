@@ -50,6 +50,7 @@ const people = props => {
 					max-width: 800px;
 					border-radius: 20px;
 					border: solid 1px ${theme.borderGrey};
+					overflow: auto;
 				}
 
 				.user:hover,
