@@ -34,6 +34,14 @@ const people = props => {
 					<p>No users were found.</p>
 				</div>
 			)}
+
+			<style jsx>{`
+				a {
+					max-width: 800px;
+					margin: 20px auto;
+					display: block;
+				}
+			`}</style>
 		</Page>
 	);
 };

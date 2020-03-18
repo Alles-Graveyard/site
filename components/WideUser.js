@@ -16,8 +16,7 @@ export default props => (
 				display: flex;
 				background: #ffffff;
 				padding: 20px;
-				margin: 20px auto;
-				max-width: 800px;
+				margin: 20px 0;
 				border-radius: 20px;
 				border: solid 1px ${theme.borderGrey};
 				overflow: hidden;
