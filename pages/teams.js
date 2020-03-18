@@ -1,7 +1,6 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
 import config from "../config";
-import theme from "../theme";
 import axios from "axios";
 import WideLink from "../components/WideLink";
 
@@ -9,10 +8,10 @@ const teamsPage = props => {
 	return (
 		<Page title="Teams" header user={props.user}>
 			<section>
-				<h1>Your Teams</h1>
+				<h1>My Teams</h1>
 				{props.teams.length > 0 ? (
 					props.teams.map(t => (
-						<WideLink href="/t/[team].js" as={`/t/${t.slug}`} map={t.id}>
+						<WideLink href="/t/[team].js" as={`/t/${t.slug}`} key={t.id}>
 							{t.name}
 						</WideLink>
 					))

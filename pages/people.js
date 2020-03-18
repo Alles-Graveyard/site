@@ -5,6 +5,7 @@ import config from "../config";
 import Link from "next/link";
 import axios from "axios";
 import {withRouter} from "next/router";
+import WideUser from "../components/WideUser";
 
 const people = props => {
 	const backwardsBtn =
@@ -20,15 +21,8 @@ const people = props => {
 					<NavArrows before={backwardsBtn} after={forwardsBtn} />
 					{props.users.map(u => (
 						<Link href="/u/[username]" as={`/u/${u.username}`} key={u.id}>
-							<a className="user">
-								<div className="left">
-									<img src={`https://avatar.alles.cx/user/${u.id}`} />
-									<h1>
-										{u.name}
-										{props.user.plus ? <sup>+</sup> : <></>}
-									</h1>
-								</div>
-								<h2>@{u.username}</h2>
+							<a>
+								<WideUser user={u} />
 							</a>
 						</Link>
 					))}
@@ -40,52 +34,6 @@ const people = props => {
 					<p>No users were found.</p>
 				</div>
 			)}
-
-			<style jsx>{`
-				.user {
-					display: flex;
-					background: #ffffff;
-					padding: 20px;
-					margin: 20px auto;
-					max-width: 800px;
-					border-radius: 20px;
-					border: solid 1px ${theme.borderGrey};
-					overflow: hidden;
-				}
-
-				.user:hover,
-				.user:hover img {
-					border-color: ${theme.grey8};
-				}
-
-				.user h1 {
-					font-size: 20px;
-					font-weight: 500;
-					margin: auto 0;
-				}
-
-				.user h2 {
-					font-size: 15px;
-					font-weight: 400;
-					margin: auto 0;
-					color: ${theme.grey4};
-					text-align: right;
-				}
-
-				.user img {
-					height: 30px;
-					width: 30px;
-					border-radius: 50%;
-					margin-right: 10px;
-					border: solid 1px ${theme.borderGrey};
-					flex-shrink: 0;
-				}
-
-				.user .left {
-					display: flex;
-					flex-grow: 1;
-				}
-			`}</style>
 		</Page>
 	);
 };
