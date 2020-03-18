@@ -78,6 +78,7 @@ const people = props => {
 					border-radius: 50%;
 					margin-right: 10px;
 					border: solid 1px ${theme.borderGrey};
+					flex-shrink: 0;
 				}
 
 				.user .left {
