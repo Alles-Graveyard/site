@@ -13,6 +13,7 @@ export default props => {
 		<div className="pageContainer">
 			<Head>
 				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</Head>
 			{props.header ? <Header user={props.user} /> : <></>}
 			<main style={props.style}>{props.children}</main>
