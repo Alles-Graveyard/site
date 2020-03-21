@@ -49,7 +49,7 @@ export default props => {
 				body,
 				input,
 				button {
-					font-family: Rubik, sans-serif;
+					font-family: Rubik;
 				}
 
 				a {
