@@ -50,7 +50,7 @@ const teamPage = props => {
 							<h3>Your Roles:</h3>
 							<div className="roles">
 								{props.team.roles.length > 0 ? (
-									props.team.roles.map(r => <span>{r}</span>)
+									props.team.roles.map(r => <span key={r}>{r}</span>)
 								) : (
 									<p>You have no roles.</p>
 								)}
