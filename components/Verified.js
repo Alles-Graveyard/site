@@ -5,7 +5,7 @@ export default () => (
 		viewBox="0 0 24 24"
 		style={{
 			display: "inline-block",
-			height: "1.5em",
+			height: "1em",
 			verticalAlign: "middle",
 			fill: theme.accent
 		}}
