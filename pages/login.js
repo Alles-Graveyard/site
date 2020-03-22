@@ -19,15 +19,33 @@ export default withAuth(
 			return (
 				<Page title="Sign in" logo user={props.user}>
 					<h1 style={{textAlign: "center"}}>Already signed in</h1>
-					<p>You're already signed in as <span style={{color: theme.accent}}>{props.user.name}</span>. You can <Link href="/accounts"><a className="normal">switch accounts</a></Link>, or continue back to the redirect url.</p>
-					<Button wide onClick={() => {
-						const redirectUrl = props.router.query.redirect;
-						window.location.href = redirectUrl ? redirectUrl : "/";
-					}}>Continue</Button>
+					<p>
+						You're already signed in as{" "}
+						<span style={{color: theme.accent}}>{props.user.name}</span>. You
+						can{" "}
+						<Link href="/accounts">
+							<a className="normal">switch accounts</a>
+						</Link>
+						, or continue back to the redirect url.
+					</p>
+					<Button
+						wide
+						onClick={() => {
+							const redirectUrl = props.router.query.redirect;
+							window.location.href = redirectUrl ? redirectUrl : "/";
+						}}
+					>
+						Continue
+					</Button>
 
 					<br />
 					<br />
-					<SmallText>Developer? This page puts the session token in a cookie that can be accessed by all pages on this domain. If you're trying to self-host a site that would normally be on a .alles.cx subdomain, you'll need to manually set the cookie.</SmallText>
+					<SmallText>
+						Developer? This page puts the session token in a cookie that can be
+						accessed by all pages on this domain. If you're trying to self-host
+						a site that would normally be on a .alles.cx subdomain, you'll need
+						to manually set the cookie.
+					</SmallText>
 				</Page>
 			);
 		} else {

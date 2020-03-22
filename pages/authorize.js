@@ -78,7 +78,7 @@ const AuthPage = props => {
 						</a>
 						{props.application.team.verified ? (
 							<>
-								&nbsp;
+								{" "}
 								<Verified />
 							</>
 						) : (
