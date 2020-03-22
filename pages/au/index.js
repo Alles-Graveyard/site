@@ -3,35 +3,41 @@ import withAuth from "../../util/withAuth";
 import theme from "../../theme";
 import moment from "moment";
 import Link from "next/link";
+import axios from "axios";
+import config from "../../config";
 
 const auPage = props => {
 	return (
-		<Page header user={props.user}>
+		<Page header user={props.user} title="Au Accounts">
 			<main>
 				<h1>Your Au Accounts</h1>
 
-				{props.accounts.map(acc => (
-					<section key={acc.id}>
-						<h2>{acc.name}</h2>
-						<h3 title={acc.id}>{acc.id.substr(0, 8)}</h3>
-						<p>
-							Balance: <span>{acc.balance}au</span>
-						</p>
-						<p>Created at: {moment(acc.createdAt).format("LL")}</p>
-						{acc.team ? (
+				{props.accounts.length > 0 ? (
+					props.accounts.map(acc => (
+						<section key={acc.id}>
+							<h2>{acc.name}</h2>
+							<h3 title={acc.id}>{acc.id.substr(0, 8)}</h3>
 							<p>
-								Owner:{" "}
-								<span>
-									<Link href="/t/[slug]" as={`/t/${acc.team}`}>
-										<a>${acc.team}</a>
-									</Link>
-								</span>
+								Balance: <span>{acc.balance}au</span>
 							</p>
-						) : (
-							<></>
-						)}
-					</section>
-				))}
+							<p>Created at: {moment(acc.createdAt).format("LL")}</p>
+							{acc.team ? (
+								<p>
+									Owner:{" "}
+									<span>
+										<Link href="/t/[slug]" as={`/t/${acc.team}`}>
+											<a>${acc.team}</a>
+										</Link>
+									</span>
+								</p>
+							) : (
+								<></>
+							)}
+						</section>
+					))
+				) : (
+					<p>You have no Au accounts :(</p>
+				)}
 			</main>
 
 			<style jsx>{`
@@ -76,24 +82,21 @@ const auPage = props => {
 	);
 };
 
-auPage.getInitialProps = ctx => {
-	return {
-		accounts: [
-			{
-				id: "b05ef1c2-11f0-4970-9d5d-f890257e7304",
-				name: "Archie's Personal Account",
-				balance: 10000,
-				createdAt: new Date(1584879798666)
-			},
-			{
-				id: "8b989042-e146-4027-9703-f1b86dfaffe5",
-				name: "Alles Vault",
-				balance: 50000,
-				team: "alles",
-				createdAt: new Date(0)
+auPage.getInitialProps = async ctx => {
+	try {
+		const apiReq = await axios.get(`${config.apiUrl}/au/accounts`, {
+			headers: {
+				authorization: ctx.user.sessionToken
 			}
-		]
-	};
+		});
+		return {
+			accounts: apiReq.data.accounts
+		};
+	} catch (err) {
+		return {
+			accounts: null
+		};
+	}
 };
 
 export default withAuth(auPage);
