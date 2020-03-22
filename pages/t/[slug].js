@@ -55,7 +55,7 @@ const teamPage = props => {
 
                     h1 {
                         margin: 0;
-                        font-size: 50px;
+                        font-size: 40px;
                     }
 
                     h2 {
