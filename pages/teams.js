@@ -35,13 +35,15 @@ const teamsPage = props => {
 };
 
 teamsPage.getInitialProps = async ctx => {
-	const res = await axios.get(`${config.apiUrl}/teams`, {
-		headers: {
-			authorization: ctx.user.sessionToken
-		}
-	});
-
-	return {teams: res.data};
+	return {
+		teams: (
+			await axios.get(`${config.apiUrl}/teams`, {
+				headers: {
+					authorization: ctx.user.sessionToken
+				}
+			})
+		).data
+	};
 };
 
 export default withAuth(teamsPage);

@@ -50,9 +50,8 @@ people.getInitialProps = async ctx => {
 	const {before, after} = ctx.query;
 	const {sessionToken} = ctx.user;
 
-	var apiReq;
-	try {
-		apiReq = await axios.get(
+	return (
+		await axios.get(
 			`${config.apiUrl}/users${
 				after
 					? `?after=${encodeURIComponent(after)}`
@@ -65,12 +64,8 @@ people.getInitialProps = async ctx => {
 					authorization: sessionToken
 				}
 			}
-		);
-	} catch (err) {
-		return;
-	}
-
-	return apiReq.data;
+		)
+	).data;
 };
 
 export default withRouter(withAuth(people));

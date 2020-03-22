@@ -187,25 +187,26 @@ userPage.getInitialProps = async ctx => {
 	const {username} = ctx.query;
 	const {sessionToken} = ctx.user;
 
-	var apiReq;
 	try {
-		apiReq = await axios.get(
-			`${config.apiUrl}/user?username=${encodeURIComponent(
-				username.toLowerCase()
-			)}`,
-			{
-				headers: {
-					authorization: sessionToken
-				}
-			}
-		);
+		return {
+			requestedUser: (
+				await axios.get(
+					`${config.apiUrl}/user?username=${encodeURIComponent(
+						username.toLowerCase()
+					)}`,
+					{
+						headers: {
+							authorization: sessionToken
+						}
+					}
+				)
+			).data
+		};
 	} catch (err) {
-		return;
+		return {
+			requestedUser: null
+		};
 	}
-
-	return {
-		requestedUser: apiReq.data
-	};
 };
 
 export default withAuth(withRouter(userPage));

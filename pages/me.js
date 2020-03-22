@@ -443,16 +443,14 @@ const homepage = props => {
 };
 
 homepage.getInitialProps = async ctx => {
-	const auAccounts = (
-		await axios.get(`${config.apiUrl}/au/accounts`, {
-			headers: {
-				authorization: ctx.user.sessionToken
-			}
-		})
-	).data.accounts;
-
 	return {
-		auAccounts
+		auAccounts: (
+			await axios.get(`${config.apiUrl}/au/accounts`, {
+				headers: {
+					authorization: ctx.user.sessionToken
+				}
+			})
+		).data.accounts
 	};
 };
 

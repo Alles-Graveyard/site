@@ -4,7 +4,6 @@ import theme from "../../theme";
 import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
-import {useState} from "react";
 import Verified from "../../components/Verified";
 
 const teamPage = props => {
@@ -127,23 +126,26 @@ teamPage.getInitialProps = async ctx => {
 	const {slug} = ctx.query;
 	const {sessionToken} = ctx.user;
 
-	var apiReq;
 	try {
-		apiReq = await axios.get(
-			`${config.apiUrl}/team?slug=${encodeURIComponent(slug.toLowerCase())}`,
-			{
-				headers: {
-					authorization: sessionToken
-				}
-			}
-		);
+		return {
+			team: (
+				await axios.get(
+					`${config.apiUrl}/team?slug=${encodeURIComponent(
+						slug.toLowerCase()
+					)}`,
+					{
+						headers: {
+							authorization: sessionToken
+						}
+					}
+				)
+			).data
+		};
 	} catch (err) {
-		return;
+		return {
+			team: null
+		};
 	}
-
-	return {
-		team: apiReq.data
-	};
 };
 
 export default withAuth(withRouter(teamPage));

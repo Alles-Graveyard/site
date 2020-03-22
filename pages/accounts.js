@@ -78,13 +78,15 @@ const accountsPage = props => {
 };
 
 accountsPage.getInitialProps = async ctx => {
-	const res = await axios.get(`${config.apiUrl}/accounts`, {
-		headers: {
-			authorization: ctx.user.sessionToken
-		}
-	});
-
-	return {accounts: res.data};
+	return {
+		accounts: (
+			await axios.get(`${config.apiUrl}/accounts`, {
+				headers: {
+					authorization: ctx.user.sessionToken
+				}
+			})
+		).data
+	};
 };
 
 export default withAuth(accountsPage);
