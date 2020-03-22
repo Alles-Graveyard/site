@@ -10,7 +10,7 @@ import Button from "../components/Button";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
 
-export default withAuth(props => {
+const homepage = props => {
 	const [loading, setLoading] = useState(false);
 	const [banner, setBanner] = useState({});
 	const avatarUploadInput = createRef();
@@ -178,9 +178,13 @@ export default withAuth(props => {
 						<a>
 							<div>
 								<i className="fas fa-coins"></i>
-								<p>
-									<b>{props.user.au}</b> Au
-								</p>
+								{props.auAccounts.length > 0 ? (
+									<p>
+										<b>{props.auAccounts[0].balance / 1000}k</b> Au
+									</p>
+								) : (
+									<p>No Au</p>
+								)}
 							</div>
 						</a>
 					</Link>
@@ -373,6 +377,7 @@ export default withAuth(props => {
 					padding: 10px;
 					box-sizing: border-box;
 					cursor: pointer;
+					border-radius: 10px;
 				}
 
 				.quickInfo div:hover {
@@ -435,4 +440,20 @@ export default withAuth(props => {
 			`}</style>
 		</Page>
 	);
-});
+};
+
+homepage.getInitialProps = async ctx => {
+	const auAccounts = (
+		await axios.get(`${config.apiUrl}/au/accounts`, {
+			headers: {
+				authorization: ctx.user.sessionToken
+			}
+		})
+	).data.accounts;
+
+	return {
+		auAccounts
+	};
+};
+
+export default withAuth(homepage);
