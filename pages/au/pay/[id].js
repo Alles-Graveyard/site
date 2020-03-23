@@ -15,8 +15,9 @@ const paymentPage = props => {
 			props.accounts.length > 0 ? props.accounts[0].id : null
 		);
 		const [amount, setAmount] = useState(
-			config.inputBounds.auTransactionAmount.min
+			props.amount ? props.amount : config.inputBounds.auTransactionAmount.min
 		);
+		const [formError, setFormError] = useState("");
 
 		const formElemStyle = {
 			width: 150,
@@ -69,7 +70,32 @@ const paymentPage = props => {
 								.
 							</p>
 
-							<form>
+							<form
+								onSubmit={e => {
+									e.preventDefault();
+									console.log(amount);
+									if (
+										isNaN(amount) ||
+										Number(amount) <
+											config.inputBounds.auTransactionAmount.min ||
+										Number(amount) > config.inputBounds.auTransactionAmount.max
+									)
+										return setFormError("Amount is invalid");
+
+									axios
+										.post(`${config.apiUrl}/au/pay/${props.toAccount.id}`, {
+											amount,
+											meta: props.meta,
+											redirectUrl: props.redirectUrl
+										})
+										.then(res => {
+											console.log(res.data.id);
+										})
+										.catch(() => {
+											setFormError("Something went wrong.");
+										});
+								}}
+							>
 								{props.amount ? (
 									<p>
 										You are going to pay <span>{amount}au</span>.
@@ -90,6 +116,12 @@ const paymentPage = props => {
 
 								<Button style={formElemStyle}>Pay</Button>
 							</form>
+
+							{formError ? (
+								<p style={{color: theme.error}}>{formError}</p>
+							) : (
+								<></>
+							)}
 						</>
 					) : (
 						<p>You don't have any Au accounts</p>
