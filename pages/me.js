@@ -451,6 +451,8 @@ homepage.getInitialProps = async ctx => {
 				}
 			})
 		).data.accounts
+			.map(acc => (acc.team ? null : acc))
+			.filter(Boolean)
 	};
 };
 
