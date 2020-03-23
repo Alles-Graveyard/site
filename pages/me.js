@@ -146,8 +146,8 @@ const homepage = props => {
 	};
 
 	//Au Balance
-	const auBalance = props.auAccounts[0].balance;
-	const auDisplay = formatAu(auBalance);
+	const auBalance = props.auAccounts.length > 0 ? props.auAccounts[0].balance : null;
+	const auDisplay = auBalance !== null ? formatAu(auBalance) : null;
 
 	return (
 		<Page title="My Account" header banner={banner} user={props.user}>
