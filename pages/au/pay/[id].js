@@ -18,6 +18,8 @@ const paymentPage = props => {
 			props.amount ? props.amount : config.inputBounds.auTransactionAmount.min
 		);
 		const [formError, setFormError] = useState("");
+		const [formBusy, setFormBusy] = useState(false);
+		const [paymentComplete, setComplete] = useState(false);
 
 		const formElemStyle = {
 			width: 150,
@@ -48,83 +50,101 @@ const paymentPage = props => {
 					<p className="date">
 						Created at {moment(props.toAccount.createdAt).format("LL")}
 					</p>
-					{props.accounts.length > 0 ? (
-						<>
-							<select onChange={e => setAccount(e.target.value)}>
-								{props.accounts.map(acc => (
-									<option key={acc.id} value={acc.id}>
-										{acc.name}
-									</option>
-								))}
-							</select>
-							<p>
-								This account has a balance of{" "}
-								<span>
-									{
-										props.accounts[
-											props.accounts.map(acc => acc.id).indexOf(account)
-										].balance
-									}
-									au
-								</span>
-								.
-							</p>
-
-							<form
-								onSubmit={e => {
-									e.preventDefault();
-									console.log(amount);
-									if (
-										isNaN(amount) ||
-										Number(amount) <
-											config.inputBounds.auTransactionAmount.min ||
-										Number(amount) > config.inputBounds.auTransactionAmount.max
-									)
-										return setFormError("Amount is invalid");
-
-									axios
-										.post(`${config.apiUrl}/au/pay/${props.toAccount.id}`, {
-											amount,
-											meta: props.meta,
-											redirectUrl: props.redirectUrl
-										})
-										.then(res => {
-											console.log(res.data.id);
-										})
-										.catch(() => {
-											setFormError("Something went wrong.");
-										});
-								}}
-							>
-								{props.amount ? (
-									<p>
-										You are going to pay <span>{amount}au</span>.
-									</p>
-								) : (
-									<>
-										<h3>How many Au will you pay?</h3>
-										<Input
-											type="number"
-											defaultValue={config.inputBounds.auTransactionAmount.min}
-											min={config.inputBounds.auTransactionAmount.min}
-											max={config.inputBounds.auTransactionAmount.max}
-											onChange={e => setAmount(e.target.value)}
-											style={formElemStyle}
-										/>
-									</>
-								)}
-
-								<Button style={formElemStyle}>Pay</Button>
-							</form>
-
-							{formError ? (
-								<p style={{color: theme.error}}>{formError}</p>
-							) : (
-								<></>
-							)}
-						</>
+					
+					{paymentComplete ? (
+						<p>You have completed this transaction.</p>
 					) : (
-						<p>You don't have any Au accounts</p>
+						props.accounts.length > 0 ? (
+							<>
+								<select onChange={e => setAccount(e.target.value)}>
+									{props.accounts.map(acc => (
+										<option key={acc.id} value={acc.id}>
+											{acc.name}
+										</option>
+									))}
+								</select>
+								<p>
+									This account has a balance of{" "}
+									<span>
+										{
+											props.accounts[
+												props.accounts.map(acc => acc.id).indexOf(account)
+											].balance
+										}
+										au
+									</span>
+									.
+								</p>
+
+								<form
+									onSubmit={e => {
+										e.preventDefault();
+										if (formBusy) return;
+
+										if (
+											isNaN(amount) ||
+											Number(amount) <
+												config.inputBounds.auTransactionAmount.min ||
+											Number(amount) > config.inputBounds.auTransactionAmount.max
+										)
+											return setFormError("Amount is invalid");
+
+										setFormError("");
+										setFormBusy(true);
+										axios
+											.post(`${config.apiUrl}/au/pay/${props.toAccount.id}`, {
+												amount: Number(amount),
+												meta: props.meta,
+												redirect: props.redirectUrl,
+												from: account
+											}, {
+												headers: {
+													authorization: props.user.sessionToken
+												}
+											})
+											.then(res => {
+												if (props.redirectUrl) {
+													location.href = `${props.redirectUrl}?transactionId=${encodeURIComponent(res.data.id)}`;
+												} else {
+													setComplete(true);
+												}
+											})
+											.catch(() => {
+												setFormError("Something went wrong.");
+												setFormBusy(false);
+											});
+									}}
+								>
+									{props.amount ? (
+										<p>
+											You are going to pay <span>{amount}au</span>.
+										</p>
+									) : (
+										<>
+											<h3>How many Au will you pay?</h3>
+											<Input
+												type="number"
+												defaultValue={config.inputBounds.auTransactionAmount.min}
+												min={config.inputBounds.auTransactionAmount.min}
+												max={config.inputBounds.auTransactionAmount.max}
+												onChange={e => setAmount(e.target.value)}
+												style={formElemStyle}
+											/>
+										</>
+									)}
+
+									<Button style={formElemStyle} disabled={formBusy}>Pay</Button>
+								</form>
+
+								{formError ? (
+									<p style={{color: theme.error}}>{formError}</p>
+								) : (
+									<></>
+								)}
+							</>
+						) : (
+							<p>You don't have any Au accounts</p>
+						)
 					)}
 				</section>
 
