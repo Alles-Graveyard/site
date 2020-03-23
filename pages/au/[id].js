@@ -55,7 +55,7 @@ const paymentPage = props => {
 					<p>
 						Your account secret can be used for making API requests. Learn how
 						to build applications that use Au by reading{" "}
-						<a className="normal" href="https://au.alles.cx/docs">
+						<a className="normal" href="https://github.com/alleshq/au-api">
 							the API docs
 						</a>
 						.
