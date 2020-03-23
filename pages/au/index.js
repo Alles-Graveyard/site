@@ -5,6 +5,7 @@ import moment from "moment";
 import Link from "next/link";
 import axios from "axios";
 import config from "../../config";
+import formatAu from "../../util/formatAu";
 
 const auPage = props => {
 	return (
@@ -18,7 +19,7 @@ const auPage = props => {
 							<h2>{acc.name}</h2>
 							<h3 title={acc.id}>{acc.id.substr(0, 8)}</h3>
 							<p>
-								Balance: <span>{acc.balance}au</span>
+								Balance: <span>{formatAu(acc.balance)}</span> Au
 							</p>
 							<p>Created at: {moment(acc.createdAt).format("LL")}</p>
 							{acc.team ? (

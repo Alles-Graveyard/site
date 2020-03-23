@@ -8,6 +8,7 @@ import moment from "moment";
 import {useState} from "react";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+import formatAu from "../../../util/formatAu";
 
 const paymentPage = props => {
 	if (props.toAccount) {
@@ -65,14 +66,13 @@ const paymentPage = props => {
 							<p>
 								This account has a balance of{" "}
 								<span>
-									{
+									{formatAu(
 										props.accounts[
 											props.accounts.map(acc => acc.id).indexOf(account)
 										].balance
-									}
-									au
-								</span>
-								.
+									)}
+								</span>{" "}
+								Au.
 							</p>
 
 							<form

@@ -4,7 +4,7 @@ import theme from "../theme";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-
+import formatAu from "../util/formatAu";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import WideLink from "../components/WideLink";
@@ -147,12 +147,7 @@ const homepage = props => {
 
 	//Au Balance
 	const auBalance = props.auAccounts[0].balance;
-	const auDisplay =
-		auBalance < 1000
-			? auBalance
-			: auBalance < 100000
-			? Math.floor(auBalance / 100) / 10 + "k"
-			: Math.floor(auBalance / 1000) + "k";
+	const auDisplay = formatAu(auBalance);
 
 	return (
 		<Page title="My Account" header banner={banner} user={props.user}>
