@@ -146,7 +146,8 @@ const homepage = props => {
 	};
 
 	//Au Balance
-	const auBalance = props.auAccounts.length > 0 ? props.auAccounts[0].balance : null;
+	const auBalance =
+		props.auAccounts.length > 0 ? props.auAccounts[0].balance : null;
 	const auDisplay = auBalance !== null ? formatAu(auBalance) : null;
 
 	return (
