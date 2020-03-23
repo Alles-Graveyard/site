@@ -12,7 +12,9 @@ import Link from "next/link";
 
 const paymentPage = props => {
 	if (props.account && props.account.hasAccess) {
+		const [secret, setSecret] = useState(props.account.secret);
 		const [showSecret, setShowSecret] = useState(false);
+		const [busy, setBusy] = useState(false);
 
 		return (
 			<Page title={props.account.name} header user={props.user}>
@@ -62,7 +64,7 @@ const paymentPage = props => {
 						readOnly
 						value={
 							showSecret
-								? props.account.secret
+								? secret
 								: "Secret Hidden: Your account secret gives applications full access to your Au Account. A malicious service could steal all of your Au."
 						}
 						style={{
@@ -75,6 +77,7 @@ const paymentPage = props => {
 						}}
 					></Textarea>
 					<Button
+						disabled={busy}
 						onClick={() => setShowSecret(!showSecret)}
 						style={{
 							display: "block",
@@ -84,6 +87,36 @@ const paymentPage = props => {
 						}}
 					>
 						{showSecret ? "Hide" : "Show"} Secret
+					</Button>
+					<Button
+						secondary
+						disabled={busy}
+						onClick={async () => {
+							setBusy(true);
+							const newSecret = (
+								await axios.post(
+									`${config.apiUrl}/au/secret/${encodeURIComponent(
+										props.account.id
+									)}`,
+									{},
+									{
+										headers: {
+											authorization: props.user.sessionToken
+										}
+									}
+								)
+							).data.secret;
+							setSecret(newSecret);
+							setBusy(false);
+						}}
+						style={{
+							display: "block",
+							margin: "10px auto",
+							width: 400,
+							maxWidth: "100%"
+						}}
+					>
+						Reset Secret
 					</Button>
 				</section>
 
