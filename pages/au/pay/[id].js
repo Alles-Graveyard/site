@@ -34,10 +34,15 @@ const paymentPage = props => {
 
 					{props.toAccount.hasAccess ? (
 						<>
-							<p className="hasAccess">You {props.toAccount.team ? "have access to" : "own"} this account.</p>
+							<p className="hasAccess">
+								You {props.toAccount.team ? "have access to" : "own"} this
+								account.
+							</p>
 							<h4>{props.toAccount.name}</h4>
 						</>
-					) : <></>}
+					) : (
+						<></>
+					)}
 
 					<p className="date">
 						Created at {moment(props.toAccount.createdAt).format("LL")}
