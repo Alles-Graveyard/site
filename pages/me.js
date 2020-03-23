@@ -145,6 +145,15 @@ const homepage = props => {
 		}
 	};
 
+	//Au Balance
+	const auBalance = props.auAccounts[0].balance;
+	const auDisplay =
+		auBalance < 1000
+			? auBalance
+			: auBalance < 100000
+			? Math.floor(auBalance / 100) / 10 + "k"
+			: Math.floor(auBalance / 1000) + "k";
+
 	return (
 		<Page title="My Account" header banner={banner} user={props.user}>
 			<section className="user">
@@ -180,7 +189,7 @@ const homepage = props => {
 								<i className="fas fa-coins"></i>
 								{props.auAccounts.length > 0 ? (
 									<p>
-										<b>{props.auAccounts[0].balance / 1000}k</b> Au
+										<b>{auDisplay}</b> Au
 									</p>
 								) : (
 									<p>No Au</p>
