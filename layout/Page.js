@@ -28,7 +28,6 @@ export default props => {
 				.pageContainer {
 					display: flex;
 					flex-flow: column;
-					min-height: 100vh;
 				}
 
 				main {
@@ -42,7 +41,13 @@ export default props => {
 				@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
 				@import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
 
-				body {
+				html,
+				body,
+				body > div:first-child,
+				div#__next,
+				div#__next > div,
+				div#__next > div > div {
+					height: 100%;
 					margin: 0;
 				}
 
