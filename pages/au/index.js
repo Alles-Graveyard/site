@@ -16,7 +16,11 @@ const auPage = props => {
 				{props.accounts.length > 0 ? (
 					props.accounts.map(acc => (
 						<section key={acc.id}>
-							<h2>{acc.name}</h2>
+							<h2>
+								<Link href="/au/[id]" as={`/au/${acc.id}`}>
+									<a>{acc.name}</a>
+								</Link>
+							</h2>
 							<h3 title={acc.id}>{acc.id.substr(0, 8)}</h3>
 							<p>
 								Balance: <span>{formatAu(acc.balance)}</span> Au

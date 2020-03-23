@@ -48,6 +48,7 @@ export default props => {
 
 				body,
 				input,
+				textarea,
 				button {
 					font-family: Rubik;
 				}
