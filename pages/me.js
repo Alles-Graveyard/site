@@ -4,7 +4,6 @@ import theme from "../theme";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-import formatAu from "../util/formatAu";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import WideLink from "../components/WideLink";
@@ -145,11 +144,6 @@ const homepage = props => {
 		}
 	};
 
-	//Au Balance
-	const auBalance =
-		props.auAccounts.length > 0 ? props.auAccounts[0].balance : null;
-	const auDisplay = auBalance !== null ? formatAu(auBalance) : null;
-
 	return (
 		<Page title="My Account" header banner={banner} user={props.user}>
 			<section className="user">
@@ -179,21 +173,6 @@ const homepage = props => {
 				/>
 
 				<div className="quickInfo">
-					<Link href="/au">
-						<a>
-							<div>
-								<i className="fas fa-coins"></i>
-								{props.auAccounts.length > 0 ? (
-									<p>
-										<b>{auDisplay}</b> Au
-									</p>
-								) : (
-									<p>No Au</p>
-								)}
-							</div>
-						</a>
-					</Link>
-
 					<Link href="/plus">
 						<a>
 							<div>
@@ -445,20 +424,6 @@ const homepage = props => {
 			`}</style>
 		</Page>
 	);
-};
-
-homepage.getInitialProps = async ctx => {
-	return {
-		auAccounts: (
-			await axios.get(`${config.apiUrl}/au/accounts`, {
-				headers: {
-					authorization: ctx.user.sessionToken
-				}
-			})
-		).data.accounts
-			.map(acc => (acc.team ? null : acc))
-			.filter(Boolean)
-	};
 };
 
 export default withAuth(homepage);
