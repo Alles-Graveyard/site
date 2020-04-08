@@ -56,6 +56,7 @@ export default props => (
 				height: 2.5em;
 				width: 2.5em;
 				cursor: pointer;
+				display: block;
 			}
 		`}</style>
 	</header>
