@@ -365,7 +365,7 @@ const homepage = props => {
 				}
 
 				.quickInfo div:hover {
-					background: ${theme.greyF};
+					background: #f7f7f7;
 				}
 
 				.quickInfo div i {
