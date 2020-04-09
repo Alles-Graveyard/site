@@ -10,7 +10,7 @@ export default props => {
 	useEffect(consoleWarning, []);
 
 	return (
-		<div className="pageContainer">
+		<div className="page">
 			<Head>
 				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,7 +25,7 @@ export default props => {
 			)}
 
 			<style jsx>{`
-				.pageContainer {
+				.page {
 					display: flex;
 					flex-flow: column;
 				}
@@ -45,8 +45,7 @@ export default props => {
 				body,
 				body > div:first-child,
 				div#__next,
-				div#__next > div,
-				div#__next > div > div {
+				.page {
 					height: 100%;
 					margin: 0;
 				}
