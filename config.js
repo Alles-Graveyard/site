@@ -4,7 +4,7 @@ export default {
 	apiUrl: `${dev ? "http://localhost" : "https://alles.cx"}/api/v1`,
 	dev,
 	scopes: {
-		"team-list": "Know what teams you are in"
+		"teams": "Know what teams you are in"
 	},
 	inputBounds: {
 		auTransactionAmount: {
