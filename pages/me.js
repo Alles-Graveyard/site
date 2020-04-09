@@ -36,7 +36,7 @@ const homepage = props => {
 				}
 			})
 			.then(() => {
-				showBanner("Avatar updated successfully.");
+				location.reload();
 				setLoading(false);
 			})
 			.catch(error => {
