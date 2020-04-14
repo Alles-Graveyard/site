@@ -173,7 +173,7 @@ const homepage = props => {
 				/>
 
 				<div className="quickInfo">
-				<a>
+				<a href="https://plus.alles.cx">
 					<div>
 						<i className="material-icons">add_circle</i>
 						<p>
