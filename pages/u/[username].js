@@ -1,11 +1,11 @@
 import Page from "../../layout/Page";
-import withAuth from "../../util/withAuth";
-import theme from "../../theme";
+import withAuth from "../../reactants/withAuth";
+import theme from "../../reactants/theme";
 import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {useState} from "react";
-import Button from "../../components/Button";
+import Button from "../../reactants/Button";
 
 const userPage = props => {
 	if (props.requestedUser) {
@@ -209,4 +209,4 @@ userPage.getInitialProps = async ctx => {
 	}
 };
 
-export default withAuth(withRouter(userPage));
+export default withAuth(withRouter(userPage), `${config.apiUrl}/me`);

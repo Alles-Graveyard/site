@@ -1,4 +1,4 @@
-import theme from "../theme";
+import theme from "../reactants/theme";
 import {useState, useEffect} from "react";
 
 export default props => {
@@ -14,11 +14,11 @@ export default props => {
 		<div className="banner">
 			<p>{props.message}</p>
 			<i
-				className="fas fa-times"
+				className="material-icons"
 				onClick={() => {
 					setClosed(true);
 				}}
-			></i>
+			>close</i>
 
 			<style jsx>{`
 				.banner {

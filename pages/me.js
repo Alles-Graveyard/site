@@ -1,11 +1,11 @@
 import Page from "../layout/Page";
-import withAuth from "../util/withAuth";
-import theme from "../theme";
+import withAuth from "../reactants/withAuth";
+import theme from "../reactants/theme";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Input from "../reactants/Input";
+import Button from "../reactants/Button";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ const homepage = props => {
 	const showBanner = message => {
 		setBanner({
 			message,
-			update: Math.random()
+			update: new Date().getTime()
 		});
 	};
 
@@ -173,29 +173,27 @@ const homepage = props => {
 				/>
 
 				<div className="quickInfo">
-					<Link href="/plus">
-						<a>
-							<div>
-								<i className="fas fa-bolt"></i>
-								<p>
-									{props.user.plus ? (
-										<>
-											Alles+ is <b>Active</b>
-										</>
-									) : (
-										<>
-											Try <b>Alles+</b>
-										</>
-									)}
-								</p>
-							</div>
-						</a>
-					</Link>
+				<a>
+					<div>
+						<i className="material-icons">add_circle</i>
+						<p>
+							{props.user.plus ? (
+								<>
+									Alles+ is <b>Active</b>
+								</>
+							) : (
+								<>
+									Try <b>Alles+</b>
+								</>
+							)}
+						</p>
+					</div>
+				</a>
 
 					<Link href="/rubies">
 						<a>
 							<div>
-								<i className="fas fa-gem"></i>
+							<i className="material-icons">emoji_events</i>
 								<p>
 									<b>{props.user.rubies}</b>{" "}
 									{props.user.rubies === 1 ? "Ruby" : "Rubies"}
@@ -426,4 +424,4 @@ const homepage = props => {
 	);
 };
 
-export default withAuth(homepage);
+export default withAuth(homepage, `${config.apiUrl}/me`);

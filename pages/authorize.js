@@ -1,14 +1,14 @@
 import Page from "../layout/CardPage";
 import {useState, useEffect} from "react";
 import {withRouter} from "next/router";
-import withAuth from "../util/withAuth";
+import withAuth from "../reactants/withAuth";
 import config from "../config";
 import axios from "axios";
 
-import Button from "../components/Button";
-import SmallText from "../components/SmallText";
-import Verified from "../components/Verified";
-import theme from "../theme";
+import Button from "../reactants/Button";
+import SmallText from "../reactants/SmallText";
+import Verified from "../reactants/Verified";
+import theme from "../reactants/theme";
 
 const AuthPage = props => {
 	const [loading, setLoading] = useState(false);
@@ -198,4 +198,4 @@ AuthPage.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(withRouter(AuthPage));
+export default withAuth(withRouter(AuthPage), `${config.apiUrl}/me`);

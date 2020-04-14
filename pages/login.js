@@ -1,15 +1,15 @@
 import Page from "../layout/CardPage";
 import {useState} from "react";
 import {withRouter} from "next/router";
-import withAuth from "../util/withAuth";
+import withAuth from "../reactants/withAuth";
 import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
-import theme from "../theme";
+import theme from "../reactants/theme";
 
-import Input from "../components/Input";
-import Button from "../components/Button";
-import SmallText from "../components/SmallText";
+import Input from "../reactants/Input";
+import Button from "../reactants/Button";
+import SmallText from "../reactants/SmallText";
 import Link from "next/link";
 
 export default withAuth(
@@ -113,5 +113,6 @@ export default withAuth(
 			);
 		}
 	}),
+	`${config.apiUrl}/me`,
 	true
 );

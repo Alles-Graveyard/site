@@ -1,5 +1,5 @@
 import Link from "next/link";
-import theme from "../theme";
+import theme from "../reactants/theme";
 
 export default props => (
 	<>

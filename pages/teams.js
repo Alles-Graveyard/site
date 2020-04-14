@@ -1,5 +1,5 @@
 import Page from "../layout/Page";
-import withAuth from "../util/withAuth";
+import withAuth from "../reactants/withAuth";
 import config from "../config";
 import axios from "axios";
 import WideLink from "../components/WideLink";
@@ -46,4 +46,4 @@ teamsPage.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(teamsPage);
+export default withAuth(teamsPage, `${config.apiUrl}/me`);

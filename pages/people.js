@@ -1,6 +1,6 @@
 import Page from "../layout/Page";
-import withAuth from "../util/withAuth";
-import theme from "../theme";
+import withAuth from "../reactants/withAuth";
+import theme from "../reactants/theme";
 import config from "../config";
 import Link from "next/link";
 import axios from "axios";
@@ -68,27 +68,27 @@ people.getInitialProps = async ctx => {
 	).data;
 };
 
-export default withRouter(withAuth(people));
+export default withRouter(withAuth(people, `${config.apiUrl}/me`));
 
 //Navigation Arrows
 const NavArrows = ({before, after}) => (
 	<div>
 		{before ? (
 			<a href={`/people?before=${before}`}>
-				<i className="fas fa-arrow-left"></i>
+				<i className="material-icons">navigate_before</i>
 			</a>
 		) : (
 			<a className="disabled">
-				<i className="fas fa-arrow-left"></i>
+				<i className="material-icons">navigate_before</i>
 			</a>
 		)}
 		{after ? (
 			<a href={`/people?after=${after}`}>
-				<i className="fas fa-arrow-right"></i>
+				<i className="material-icons">navigate_next</i>
 			</a>
 		) : (
 			<a className="disabled">
-				<i className="fas fa-arrow-right"></i>
+				<i className="material-icons">navigate_next</i>
 			</a>
 		)}
 

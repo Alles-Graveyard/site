@@ -1,10 +1,10 @@
 import Page from "../../layout/Page";
-import withAuth from "../../util/withAuth";
-import theme from "../../theme";
+import withAuth from "../../reactants/withAuth";
+import theme from "../../reactants/theme";
 import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
-import Verified from "../../components/Verified";
+import Verified from "../../reactants/Verified";
 
 const teamPage = props => {
 	if (props.team) {
@@ -148,4 +148,4 @@ teamPage.getInitialProps = async ctx => {
 	}
 };
 
-export default withAuth(withRouter(teamPage));
+export default withAuth(withRouter(teamPage), `${config.apiUrl}/me`);
