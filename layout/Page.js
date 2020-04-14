@@ -1,21 +1,19 @@
 import {useEffect} from "react";
-import consoleWarning from "../util/consoleWarning";
-import theme from "../theme";
+import consoleWarning from "../reactants/consoleWarning";
+import theme from "../reactants/theme";
 
-import Head from "next/head";
-import Header from "./Header";
+import Head from "../reactants/Head";
+import Header from "../reactants/Header";
 import Banner from "./Banner";
+import GlobalStyles from "../reactants/GlobalStyles";
 
 export default props => {
 	useEffect(consoleWarning, []);
 
 	return (
 		<div className="page">
-			<Head>
-				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-			</Head>
-			{props.header ? <Header user={props.user} /> : <></>}
+			<Head title={props.title ? `Alles • ${props.title}` : "Alles"} />
+			{props.header ? <Header title="Alles" userId={props.user ? props.user.id : null} /> : <></>}
 			<main style={props.style}>{props.children}</main>
 
 			{props.banner ? (
@@ -37,40 +35,7 @@ export default props => {
 				}
 			`}</style>
 
-			<style jsx global>{`
-				@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap");
-				@import url("https://use.fontawesome.com/releases/v5.12.0/css/all.css");
-
-				html,
-				body,
-				body > div:first-child,
-				div#__next,
-				.page {
-					height: 100%;
-					margin: 0;
-				}
-
-				body,
-				input,
-				textarea,
-				button {
-					font-family: Rubik;
-				}
-
-				a {
-					color: inherit;
-					text-decoration: none;
-				}
-
-				a.normal {
-					color: ${theme.accent};
-					text-decoration: underline;
-				}
-
-				a.nocolor {
-					text-decoration: underline;
-				}
-			`}</style>
+			<GlobalStyles />
 		</div>
 	);
 };
