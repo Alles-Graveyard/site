@@ -275,6 +275,7 @@ const homepage = props => {
 					border-radius: 10px;
 					padding: 20px;
 					box-sizing: border-box;
+					border: solid 1px ${theme.borderGrey};
 				}
 
 				h1.sectionTitle {
@@ -297,7 +298,7 @@ const homepage = props => {
 				}
 
 				.profilePicture {
-					border: solid 10px ${theme.greyF};
+					border: solid 1px ${theme.borderGrey};
 					border-radius: 50%;
 					height: 200px;
 					width: 200px;

@@ -1,4 +1,5 @@
 import Page from "../layout/Page";
+import theme from "../reactants/theme";
 const errors = {
 	200: "Nothing went wrong: You found the error page!",
 	404: "The page you were looking for doesn't exist!",
@@ -7,8 +8,8 @@ const errors = {
 
 const error = ({statusCode}) => (
 	<Page header title={statusCode ? statusCode : "Error"}>
-		<h1>{statusCode ? statusCode : "Error"}</h1>
-		<div className="info">
+		<main>
+			<h1>{statusCode ? statusCode : "Error"}</h1>
 			<p>
 				{statusCode
 					? errors[statusCode]
@@ -16,46 +17,27 @@ const error = ({statusCode}) => (
 						: "Something went wrong."
 					: "An error occurred on the client"}
 			</p>
-		</div>
+		</main>
 
 		<style jsx>{`
 			h1 {
-				background: #ffffff;
-				padding: 20px 50px 0 50px;
-				width: fit-content;
-				border-radius: 9999px 9999px 0 0;
-				margin: 50px auto 0 auto;
-				text-align: center;
+				margin: 0;
+				margin-bottom: 20px;
 			}
 
-			.info {
-				background: #ffffff;
-				padding: 50px;
-				width: fit-content;
-				max-width: 600px;
-				margin: 0 auto;
-				border-radius: 10px;
-				text-align: center;
-			}
-
-			.info p {
+			p {
 				margin: 0;
 			}
 
-			@media screen and (max-width: 400px) {
-				h1 {
-					width: 100%;
-					box-sizing: border-box;
-					border-radius: 20px 20px 0 0;
-					padding: 20px 0 0 0;
-				}
-
-				.info {
-					width: 100%;
-					box-sizing: border-box;
-					border-radius: 0 0 10px 10px;
-					padding: 20px 20px 50px 20px;
-				}
+			main {
+				background: #ffffff;
+				text-align: center;
+				padding: 50px;
+				width: 100%;
+				max-width: 300px;
+				margin: 0 auto;
+				border-radius: 10px;
+				border: solid 1px ${theme.borderGrey};
 			}
 		`}</style>
 	</Page>
