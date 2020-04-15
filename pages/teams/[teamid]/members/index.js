@@ -5,6 +5,7 @@ import {withRouter} from "next/router";
 import theme from "../../../../reactants/theme";
 import {useState} from "react";
 import Button from "../../../../reactants/Button";
+import axios from "axios";
 
 const membersPage = props => {
 	const [removeConfirm, setRemoveConfirm] = useState();
@@ -56,19 +57,25 @@ const membersPage = props => {
 										<td colSpan="3">
 											<div>
 												<p>
-													Remove <span>@
-													{
-														props.team.members[
-															Object.keys(props.team.members)[
-																props.team.members
-																	.map(member => member.id)
-																	.indexOf(removeConfirm)
-															]
-														].username
-													}</span> from this team?
+													Remove{" "}
+													<span>
+														@
+														{
+															props.team.members[
+																Object.keys(props.team.members)[
+																	props.team.members
+																		.map(member => member.id)
+																		.indexOf(removeConfirm)
+																]
+															].username
+														}
+													</span>{" "}
+													from this team?
 												</p>
-                                                <Button style={{margin: "0 10px"}}>Confirm</Button>
-                                                <Button secondary onClick={() => setRemoveConfirm()}>Cancel</Button>
+												<Button style={{margin: "0 10px"}}>Confirm</Button>
+												<Button secondary onClick={() => setRemoveConfirm()}>
+													Cancel
+												</Button>
 											</div>
 										</td>
 									</tr>
@@ -157,19 +164,19 @@ const membersPage = props => {
 						margin: 0 5px;
 					}
 
-                    tr.remove div {
-                        border: 1px ${theme.borderGrey};
-                        border-style: solid none;
-                        text-align: center;
-                    }
+					tr.remove div {
+						border: 1px ${theme.borderGrey};
+						border-style: solid none;
+						text-align: center;
+					}
 
-                    tr.remove p {
-                        margin-bottom: 5px;
-                    }
+					tr.remove p {
+						margin-bottom: 5px;
+					}
 
-                    tr.remove span {
-                        color: ${theme.accent};
-                    }
+					tr.remove span {
+						color: ${theme.accent};
+					}
 				`}</style>
 			</Page>
 		);
@@ -182,53 +189,27 @@ const membersPage = props => {
 	}
 };
 
-membersPage.getInitialProps = ctx => {
-	return {
-		team: {
-			id: "e51553f7-234b-4e3d-be4b-33ce38406e6d",
-			slug: "alles",
-			name: "Alles",
-			members: [
-				{
-					id: "00000000-0000-0000-0000-000000000000",
-					name: "Archie Baer",
-					username: "archie",
-					admin: true,
-					roles: []
-				},
-				{
-					id: "b9138df4-a681-4515-8d06-14505de15b6d",
-					name: "Marcel Braun",
-					username: "marcel",
-					admin: false,
-					roles: [
-						"claim-domains",
-						"pipe-alles-cc",
-						"a",
-						"b",
-						"c",
-						"d",
-						"e",
-						"f",
-						"g",
-						"h",
-						"i",
-						"j",
-						"k",
-						"l",
-						"m"
-					]
-				},
-				{
-					id: "b0d18612-1eff-4be2-b0bc-46ea4df28a96",
-					name: "Levi Scott Hicks",
-					username: "levi",
-					admin: false,
-					roles: ["pipe-alles-cc"]
-				}
-			]
-		}
-	};
+membersPage.getInitialProps = async ctx => {
+	try {
+		return {
+			team: (
+				await axios.get(
+					`${config.apiUrl}/team/${encodeURIComponent(
+						ctx.query.teamid
+					)}/members`,
+					{
+						headers: {
+							authorization: ctx.user.sessionToken
+						}
+					}
+				)
+			).data
+		};
+	} catch (err) {
+		return {
+			team: null
+		};
+	}
 };
 
 export default withAuth(withRouter(membersPage), `${config.apiUrl}/me`);
