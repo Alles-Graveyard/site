@@ -18,7 +18,9 @@ export default props => {
 				onClick={() => {
 					setClosed(true);
 				}}
-			>close</i>
+			>
+				close
+			</i>
 
 			<style jsx>{`
 				.banner {

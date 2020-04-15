@@ -173,27 +173,27 @@ const homepage = props => {
 				/>
 
 				<div className="quickInfo">
-				<a href="https://plus.alles.cx">
-					<div>
-						<i className="material-icons">add_circle</i>
-						<p>
-							{props.user.plus ? (
-								<>
-									Alles+ is <b>Active</b>
-								</>
-							) : (
-								<>
-									Try <b>Alles+</b>
-								</>
-							)}
-						</p>
-					</div>
-				</a>
+					<a href="https://plus.alles.cx">
+						<div>
+							<i className="material-icons">add_circle</i>
+							<p>
+								{props.user.plus ? (
+									<>
+										Alles+ is <b>Active</b>
+									</>
+								) : (
+									<>
+										Try <b>Alles+</b>
+									</>
+								)}
+							</p>
+						</div>
+					</a>
 
 					<Link href="/rubies">
 						<a>
 							<div>
-							<i className="material-icons">emoji_events</i>
+								<i className="material-icons">emoji_events</i>
 								<p>
 									<b>{props.user.rubies}</b>{" "}
 									{props.user.rubies === 1 ? "Ruby" : "Rubies"}
