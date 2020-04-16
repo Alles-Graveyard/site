@@ -109,7 +109,7 @@ export default withAuth(
 						</a>
 						.
 					</SmallText>
-					{formError ? <p style={{color: theme.error}}>{formError}</p> : <></>}
+					{formError ? <p style={{color: "red"}}>{formError}</p> : <></>}
 				</Page>
 			);
 		}
