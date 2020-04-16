@@ -55,16 +55,20 @@ const AuthPage = props => {
 			title="Authorize"
 			logo
 			user={props.user}
-			breadcrumbs={[
-				{
-					name: `$${props.application.team.slug}`,
-					href: "/t/[slug]",
-					as: `/t/${props.application.team.slug}`
-				},
-				{
-					name: props.application.name
-				}
-			]}
+			breadcrumbs={
+				!props.error
+					? [
+							{
+								name: `$${props.application.team.slug}`,
+								href: "/t/[slug]",
+								as: `/t/${props.application.team.slug}`
+							},
+							{
+								name: props.application.name
+							}
+					  ]
+					: []
+			}
 		>
 			{pageError ? ( // Page Error
 				<>
