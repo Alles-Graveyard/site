@@ -20,9 +20,8 @@ const AuthPage = props => {
 		var res;
 		try {
 			res = await axios.post(
-				`${config.apiUrl}/authorize`,
+				`${config.apiUrl}/application/${encodeURIComponent(props.application.id)}/authorize`,
 				{
-					application: props.application.id,
 					scopes: props.scopes.join(" "),
 					redirectUri: props.redirectUri
 				},

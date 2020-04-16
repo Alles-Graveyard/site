@@ -18,9 +18,9 @@ const userPage = props => {
 			setIsFollowing(!isFollowing);
 			axios
 				.post(
-					`${config.apiUrl}/${isFollowing ? "unfollow" : "follow"}/${
-						props.requestedUser.id
-					}`,
+					`${config.apiUrl}/users/${
+						props.requestedUser.username
+					}/${isFollowing ? "unfollow" : "follow"}`,
 					{},
 					{
 						headers: {
@@ -191,7 +191,7 @@ userPage.getInitialProps = async ctx => {
 		return {
 			requestedUser: (
 				await axios.get(
-					`${config.apiUrl}/user?username=${encodeURIComponent(
+					`${config.apiUrl}/users/${encodeURIComponent(
 						username.toLowerCase()
 					)}`,
 					{

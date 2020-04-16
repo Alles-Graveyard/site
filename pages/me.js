@@ -24,6 +24,7 @@ const homepage = props => {
 
 	//Upload Avatar
 	const avatarUpload = e => {
+		return showBanner("Avatar uploads are temporarily disabled.");
 		setLoading(true);
 		const file = e.target.files[0];
 		const formData = new FormData();
@@ -68,7 +69,7 @@ const homepage = props => {
 
 		axios
 			.post(
-				`${config.apiUrl}/me`,
+				`${config.apiUrl}/updateProfile`,
 				{
 					name: fullname,
 					nickname,

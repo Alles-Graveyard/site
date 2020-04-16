@@ -194,7 +194,7 @@ membersPage.getInitialProps = async ctx => {
 		return {
 			team: (
 				await axios.get(
-					`${config.apiUrl}/team/${encodeURIComponent(
+					`${config.apiUrl}/teams/${encodeURIComponent(
 						ctx.query.teamid
 					)}/members`,
 					{
