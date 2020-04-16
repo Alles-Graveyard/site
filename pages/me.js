@@ -146,7 +146,17 @@ const homepage = props => {
 	};
 
 	return (
-		<Page title="My Account" header banner={banner} user={props.user}>
+		<Page
+			title="My Account"
+			header
+			banner={banner}
+			user={props.user}
+			breadcrumbs={[
+				{
+					name: "me"
+				}
+			]}
+		>
 			<section className="user">
 				<div
 					className="profilePicture"

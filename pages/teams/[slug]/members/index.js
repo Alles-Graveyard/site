@@ -12,7 +12,21 @@ const membersPage = props => {
 
 	if (props.team) {
 		return (
-			<Page title="Team Members" header user={props.user}>
+			<Page
+				title="Team Members"
+				header
+				user={props.user}
+				breadcrumbs={[
+					{
+						name: `$${props.team.slug}`,
+						href: "/teams/[slug]",
+						as: `/teams/${props.team.slug}`
+					},
+					{
+						name: "members"
+					}
+				]}
+			>
 				<main>
 					<h1 className="name">{props.team.name}</h1>
 					<h2 className="slug">${props.team.slug}</h2>
@@ -195,7 +209,7 @@ membersPage.getInitialProps = async ctx => {
 			team: (
 				await axios.get(
 					`${config.apiUrl}/teams/${encodeURIComponent(
-						ctx.query.teamid
+						ctx.query.slug
 					)}/members`,
 					{
 						headers: {

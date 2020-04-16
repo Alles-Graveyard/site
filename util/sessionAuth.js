@@ -8,8 +8,7 @@ const fail = {
 
 module.exports = async authHeader => {
 	//Parse Header
-	if (typeof authHeader !== "string")
-		return fail;
+	if (typeof authHeader !== "string") return fail;
 	var token;
 	try {
 		token = jwt.verify(authHeader, credentials.jwtSecret);

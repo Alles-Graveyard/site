@@ -4,7 +4,15 @@ import withAuth from "../reactants/withAuth";
 
 export default withAuth(props => {
 	return (
-		<Page header user={props.user}>
+		<Page
+			header
+			user={props.user}
+			breadcrumbs={[
+				{
+					name: "debug"
+				}
+			]}
+		>
 			<p>
 				WARNING! THIS PAGE IS FOR DEBUGGING PURPOSES ONLY! DO NOT GIVE THIS
 				INFORMATION TO <b>ANYONE</b>.

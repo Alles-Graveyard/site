@@ -4,8 +4,8 @@ import sessionAuth from "../../../util/sessionAuth";
 import {Op} from "sequelize";
 
 export default async (req, res) => {
-    const {user} = await sessionAuth(req.headers.authorization);
-    if (!user) return res.status(401).json({err: "invalidSession"});
+	const {user} = await sessionAuth(req.headers.authorization);
+	if (!user) return res.status(401).json({err: "invalidSession"});
 
 	//Form Database Query
 	var dbQuery = {
@@ -23,7 +23,7 @@ export default async (req, res) => {
 		backwards = true;
 	}
 
-    //Get Users
+	//Get Users
 	const users = await db.User.findAll({
 		where: dbQuery,
 		attributes: ["id", "username", "name", "plus"],

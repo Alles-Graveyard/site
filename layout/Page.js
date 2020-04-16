@@ -14,7 +14,11 @@ export default props => {
 		<div className="page">
 			<Head title={props.title ? `Alles • ${props.title}` : "Alles"} />
 			{props.header ? (
-				<Header title="Alles" userId={props.user ? props.user.id : null} />
+				<Header
+					title="Alles"
+					userId={props.user ? props.user.id : null}
+					breadcrumbs={props.breadcrumbs}
+				/>
 			) : (
 				<></>
 			)}

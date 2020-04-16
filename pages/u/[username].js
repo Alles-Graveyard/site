@@ -18,9 +18,9 @@ const userPage = props => {
 			setIsFollowing(!isFollowing);
 			axios
 				.post(
-					`${config.apiUrl}/users/${
-						props.requestedUser.username
-					}/${isFollowing ? "unfollow" : "follow"}`,
+					`${config.apiUrl}/users/${props.requestedUser.username}/${
+						isFollowing ? "unfollow" : "follow"
+					}`,
 					{},
 					{
 						headers: {
@@ -34,7 +34,16 @@ const userPage = props => {
 		const userButtonStyle = {margin: "5px 10px", padding: 5, width: 100};
 
 		return (
-			<Page title={`@${props.requestedUser.username}`} header user={props.user}>
+			<Page
+				title={`@${props.requestedUser.username}`}
+				header
+				user={props.user}
+				breadcrumbs={[
+					{
+						name: `@${props.requestedUser.username}`
+					}
+				]}
+			>
 				<section className="banner"></section>
 				<section className="user">
 					<div className="profilePicture">

@@ -6,7 +6,16 @@ import WideLink from "../../components/WideLink";
 
 const teamsPage = props => {
 	return (
-		<Page title="Teams" header user={props.user}>
+		<Page
+			title="Teams"
+			header
+			user={props.user}
+			breadcrumbs={[
+				{
+					name: "teams"
+				}
+			]}
+		>
 			<section>
 				<h1>My Teams</h1>
 				{props.teams.length > 0 ? (

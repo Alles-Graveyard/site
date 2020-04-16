@@ -22,7 +22,16 @@ const accountsPage = props => {
 	};
 
 	return (
-		<Page title="Accounts" header user={props.user}>
+		<Page
+			title="Accounts"
+			header
+			user={props.user}
+			breadcrumbs={[
+				{
+					name: "accounts"
+				}
+			]}
+		>
 			<section>
 				<h1>My Accounts</h1>
 				<p>

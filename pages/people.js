@@ -15,7 +15,16 @@ const people = props => {
 			? props.users[props.users.length - 1].username
 			: null;
 	return (
-		<Page header user={props.user} title="Users">
+		<Page
+			header
+			user={props.user}
+			title="Users"
+			breadcrumbs={[
+				{
+					name: "people"
+				}
+			]}
+		>
 			{props.users.length > 0 ? (
 				<>
 					<NavArrows before={backwardsBtn} after={forwardsBtn} />

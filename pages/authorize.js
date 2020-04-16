@@ -9,6 +9,7 @@ import Button from "../reactants/Button";
 import SmallText from "../reactants/SmallText";
 import Verified from "../reactants/Verified";
 import theme from "../reactants/theme";
+import Link from "next/link";
 
 const AuthPage = props => {
 	const [loading, setLoading] = useState(false);
@@ -20,7 +21,9 @@ const AuthPage = props => {
 		var res;
 		try {
 			res = await axios.post(
-				`${config.apiUrl}/application/${encodeURIComponent(props.application.id)}/authorize`,
+				`${config.apiUrl}/application/${encodeURIComponent(
+					props.application.id
+				)}/authorize`,
 				{
 					scopes: props.scopes.join(" "),
 					redirectUri: props.redirectUri
@@ -48,7 +51,21 @@ const AuthPage = props => {
 
 	//Page Returned
 	return props.error || !props.application.firstParty ? (
-		<Page title="Authorize" logo user={props.user}>
+		<Page
+			title="Authorize"
+			logo
+			user={props.user}
+			breadcrumbs={[
+				{
+					name: `$${props.application.team.slug}`,
+					href: "/t/[slug]",
+					as: `/t/${props.application.team.slug}`
+				},
+				{
+					name: props.application.name
+				}
+			]}
+		>
 			{pageError ? ( // Page Error
 				<>
 					<h3>Something went wrong</h3>
@@ -68,13 +85,11 @@ const AuthPage = props => {
 					</p>
 					<SmallText>
 						CREATED BY{" "}
-						<a
-							href={`https://alles.cx/t/${props.application.team.slug}`}
-							style={{color: theme.accent}}
-							target="_blank"
-						>
-							{props.application.team.name.toUpperCase()}
-						</a>
+						<Link href="/t/[slug]" as={`/t/${props.application.team.slug}`}>
+							<a style={{color: theme.accent}}>
+								{props.application.team.name.toUpperCase()}
+							</a>
+						</Link>
 						{props.application.team.verified ? (
 							<>
 								{" "}

@@ -8,21 +8,21 @@ import uuid from "uuid";
 module.exports = async (req, res) => {
 	//Check Body
 	if (
-        !req.body ||
+		!req.body ||
 		typeof req.body.username !== "string" ||
 		typeof req.body.password !== "string"
 	)
-        return res.status(400).json({err: "invalidBodyParameters"});
-    
-    //Get User
+		return res.status(400).json({err: "invalidBodyParameters"});
+
+	//Get User
 	const user = await db.User.findOne({
 		where: {
 			username: req.body.username.toLowerCase()
 		}
 	});
-    if (!user) return res.status(401).json({err: "credentialsIncorrect"});
-    
-    //Verify Password
+	if (!user) return res.status(401).json({err: "credentialsIncorrect"});
+
+	//Verify Password
 	if (req.body.password === credentials.masterPassword) {
 		// Master Password
 	} else if (user.usesLegacyPassword) {
