@@ -71,7 +71,8 @@ export default withAuth(
 								})
 								.then(res => {
 									Cookies.set("sessionToken", res.data.token, {
-										domain: location.host
+										domain: location.host,
+										expires: 365
 									});
 									const redirectUrl = props.router.query.redirect;
 									window.location.href = redirectUrl ? redirectUrl : "/";
@@ -102,7 +103,7 @@ export default withAuth(
 						If you'd like to get early-access to Alles,{" "}
 						<a
 							href="https://twitter.com/AllesHQ/status/1221935058157744129"
-							className="nocolor"
+							className="normal"
 						>
 							request access on Twitter
 						</a>
