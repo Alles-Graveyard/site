@@ -6,9 +6,11 @@ import theme from "../../../../reactants/theme";
 import {useState} from "react";
 import Button from "../../../../reactants/Button";
 import axios from "axios";
+import {X, Edit2, Shield} from "react-feather";
 
 const membersPage = props => {
 	const [removeConfirm, setRemoveConfirm] = useState();
+	const iconBtnStyles = {margin: "0 5px"};
 
 	if (props.team) {
 		return (
@@ -49,18 +51,16 @@ const membersPage = props => {
 										</td>
 										<td>
 											{m.admin ? (
-												<i className="material-icons">security</i>
+												<Shield style={iconBtnStyles} />
 											) : (
 												<></>
 											)}
-											<i className="material-icons">edit</i>
+											<Edit2 style={iconBtnStyles} />
 											{props.team.members.length > 1 ? (
-												<i
-													className="material-icons"
+												<X
+													style={iconBtnStyles}
 													onClick={() => setRemoveConfirm(m.id)}
-												>
-													clear
-												</i>
+												/>
 											) : (
 												<></>
 											)}
@@ -172,10 +172,6 @@ const membersPage = props => {
 						color: ${theme.grey8};
 						text-align: right;
 						min-width: 120px;
-					}
-
-					.member td:nth-child(3) i {
-						margin: 0 5px;
 					}
 
 					tr.remove div {

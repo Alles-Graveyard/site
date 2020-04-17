@@ -6,6 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import {withRouter} from "next/router";
 import WideUser from "../components/WideUser";
+import {ChevronLeft, ChevronRight} from "react-feather";
 
 const people = props => {
 	const backwardsBtn =
@@ -83,21 +84,33 @@ export default withRouter(withAuth(people, `${config.apiUrl}/me`));
 const NavArrows = ({before, after}) => (
 	<div>
 		{before ? (
-			<a href={`/people?before=${before}`}>
-				<i className="material-icons">navigate_before</i>
-			</a>
+			<Link href={`/people?before=${before}`}>
+				<a>
+					<span>
+						<ChevronLeft />
+					</span>
+				</a>
+			</Link>
 		) : (
 			<a className="disabled">
-				<i className="material-icons">navigate_before</i>
+				<span>
+					<ChevronLeft />
+				</span>
 			</a>
 		)}
 		{after ? (
-			<a href={`/people?after=${after}`}>
-				<i className="material-icons">navigate_next</i>
-			</a>
+			<Link href={`/people?after=${after}`}>
+				<a>
+					<span>
+						<ChevronRight />
+					</span>
+				</a>
+			</Link>
 		) : (
 			<a className="disabled">
-				<i className="material-icons">navigate_next</i>
+				<span>
+					<ChevronRight />
+				</span>
 			</a>
 		)}
 
@@ -114,6 +127,7 @@ const NavArrows = ({before, after}) => (
 				height: 30px;
 				margin: 0 10px;
 				display: flex;
+				justify-content: center;
 				border: solid 1px ${theme.borderGrey};
 				border-radius: 50%;
 			}
@@ -123,9 +137,10 @@ const NavArrows = ({before, after}) => (
 				color: ${theme.grey4};
 			}
 
-			i {
-				margin: auto;
-				display: block;
+			span {
+				display: flex;
+				flex-flow: column;
+				justify-content: center;
 			}
 		`}</style>
 	</div>

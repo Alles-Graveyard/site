@@ -22,6 +22,7 @@
 		"randomstring": "^1.1.5",
 		"react": "16.12.0",
 		"react-dom": "16.12.0",
+		"react-feather": "^2.0.4",
 		"sequelize": "^5.21.6"
 	},
 	"devDependencies": {

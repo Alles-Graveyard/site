@@ -8,6 +8,7 @@ import Input from "../reactants/Input";
 import Button from "../reactants/Button";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
+import {PlusCircle, Triangle} from "react-feather";
 
 const homepage = props => {
 	const [loading, setLoading] = useState(false);
@@ -186,7 +187,7 @@ const homepage = props => {
 				<div className="quickInfo">
 					<a href="https://plus.alles.cx">
 						<div>
-							<i className="material-icons">add_circle</i>
+							<PlusCircle />
 							<p>
 								{props.user.plus ? (
 									<>
@@ -204,7 +205,7 @@ const homepage = props => {
 					<Link href="/rubies">
 						<a>
 							<div>
-								<i className="material-icons">emoji_events</i>
+								<Triangle />
 								<p>
 									<b>{props.user.rubies}</b>{" "}
 									{props.user.rubies === 1 ? "Ruby" : "Rubies"}
@@ -378,13 +379,9 @@ const homepage = props => {
 					background: #f7f7f7;
 				}
 
-				.quickInfo div i {
-					font-size: 20px;
-					margin-bottom: 10px;
-				}
-
 				.quickInfo div p {
 					margin: 0;
+					margin-top: 10px;
 					color: ${theme.grey4};
 				}
 
