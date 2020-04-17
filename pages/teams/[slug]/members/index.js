@@ -50,11 +50,7 @@ const membersPage = props => {
 											))}
 										</td>
 										<td>
-											{m.admin ? (
-												<Shield style={iconBtnStyles} />
-											) : (
-												<></>
-											)}
+											{m.admin ? <Shield style={iconBtnStyles} /> : <></>}
 											<Edit2 style={iconBtnStyles} />
 											{props.team.members.length > 1 ? (
 												<X
