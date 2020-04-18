@@ -5,4 +5,4 @@ services:
     build: .
     restart: always
     ports:
-      - 8001:3000
+      - 127.0.0.1:8001:3000
