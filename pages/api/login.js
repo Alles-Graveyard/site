@@ -49,9 +49,16 @@ module.exports = async (req, res) => {
 	}
 
 	//Create Session
+	var address;
+	if (req.connection.remoteAddress) {
+		address = req.connection.remoteAddress;
+	} else {
+		let ips = req.headers["x-forwarded-for"].split(", ");
+		address = ips[ips.length - 1];
+	}
 	const session = await db.Session.create({
 		id: uuid(),
-		address: req.headers["x-forwarded-for"] || req.connection.remoteAddress
+		address
 	});
 	session.setUser(user);
 
