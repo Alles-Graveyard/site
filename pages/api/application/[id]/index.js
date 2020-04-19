@@ -2,6 +2,7 @@ import db from "../../../../util/db";
 
 export default async (req, res) => {
 	//Get Application
+	if (typeof req.query.id !== "string") return res.status(400).json({err: "invalidApplication"});
 	const application = await db.Application.findOne({
 		where: {
 			id: req.query.id

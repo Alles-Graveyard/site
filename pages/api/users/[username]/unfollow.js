@@ -6,6 +6,7 @@ export default async (req, res) => {
 	if (!user) return res.status(401).json({err: "invalidSession"});
 
 	//Get User
+	if (typeof req.query.username !== "string") return res.status(400).json({err: "invalidUser"});
 	const u = await db.User.findOne({
 		where: {
 			username: req.query.username
