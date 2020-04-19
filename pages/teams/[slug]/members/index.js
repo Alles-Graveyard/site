@@ -7,11 +7,15 @@ import {useState} from "react";
 import Button from "../../../../reactants/Button";
 import axios from "axios";
 import {X, Edit2, Shield} from "react-feather";
+import Link from "next/link";
 
 const membersPage = props => {
 	const [removeConfirm, setRemoveConfirm] = useState();
 	const [banner, setBanner] = useState({});
-	const iconBtnStyles = {margin: "0 5px"};
+	const iconBtnStyles = {
+		padding: "0 5px",
+		cursor: "pointer"
+	};
 	
 	if (props.team) {
 		return (
@@ -53,7 +57,11 @@ const membersPage = props => {
 										</td>
 										<td>
 											{m.admin ? <Shield style={iconBtnStyles} /> : <></>}
-											<Edit2 style={iconBtnStyles} />
+											<Link href="/teams/[slug]/members/[username]" as={`/teams/${props.team.slug}/members/${m.username}`}>
+												<a>
+													<Edit2 style={iconBtnStyles} />
+												</a>
+											</Link>
 											{props.team.members.length > 1 ? (
 												<X
 													style={iconBtnStyles}
