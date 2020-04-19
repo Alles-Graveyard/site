@@ -83,40 +83,26 @@ const AuthPage = props => {
 				// Authorization Prompt
 				<>
 					<h1>Sign in with Alles</h1>
-					<p>
-						<span style={{color: theme.accent}}>{props.application.name}</span>{" "}
-						allows you to {props.application.description}
-					</p>
-					<SmallText>
-						CREATED BY{" "}
-						<Link href="/t/[slug]" as={`/t/${props.application.team.slug}`}>
-							<a style={{color: theme.accent}}>
-								{props.application.team.name.toUpperCase()}
-							</a>
-						</Link>
-						{props.application.team.verified ? (
+					<div className="applicationInfo">
+						<p>
+							<span style={{color: theme.accent}}>{props.application.name}</span>{" "}
+							allows you to {props.application.description}
+						</p>
+						{props.scopes.length > 0 ? (
 							<>
-								{" "}
-								<Verified />
+								<p style={{marginBottom: 0}}>This application wants to:</p>
+								<div className="scopes">
+									{props.scopes.map(s => (
+										<div key={s}>
+											<p>{config.scopes[s]}</p>
+										</div>
+									))}
+								</div>
 							</>
 						) : (
 							<></>
 						)}
-					</SmallText>
-					{props.scopes.length > 0 ? (
-						<>
-							<p style={{marginBottom: 0}}>This application wants to:</p>
-							<div className="scopes">
-								{props.scopes.map(s => (
-									<div key={s}>
-										<p>{config.scopes[s]}</p>
-									</div>
-								))}
-							</div>
-						</>
-					) : (
-						<></>
-					)}
+					</div>
 
 					<Button disabled={loading} wide onClick={authorizeApplication}>
 						Continue
@@ -136,6 +122,10 @@ const AuthPage = props => {
 					</Button>
 
 					<style jsx>{`
+						.applicationInfo {
+							min-height: 100px;
+						}
+
 						.scopes {
 							padding: 0 10px;
 						}
