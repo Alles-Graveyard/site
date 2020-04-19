@@ -1,5 +1,6 @@
 import theme from "../reactants/theme";
 import {useState, useEffect} from "react";
+import {X} from "react-feather";
 
 export default props => {
 	const [closed, setClosed] = useState(true);
@@ -13,14 +14,22 @@ export default props => {
 	) : (
 		<div className="banner">
 			<p>{props.message}</p>
-			<i
-				className="material-icons"
+			<X
 				onClick={() => {
 					setClosed(true);
 				}}
-			>
-				close
-			</i>
+				style={{
+					display: "flex",
+					flexFlow: "column",
+					justifyContent: "center",
+					textAlign: "center",
+					width: 20,
+					height: 20,
+					cursor: "pointer",
+					padding: 10,
+					flexShrink: 0
+				}}
+			/>
 
 			<style jsx>{`
 				.banner {
@@ -37,8 +46,7 @@ export default props => {
 					display: flex;
 				}
 
-				.banner p,
-				.banner i {
+				.banner p {
 					display: flex;
 					flex-flow: column;
 					justify-content: center;
@@ -47,20 +55,6 @@ export default props => {
 				.banner p {
 					margin: 0;
 					flex-grow: 1;
-				}
-
-				.banner i {
-					border-radius: 50%;
-					text-align: center;
-					width: 20px;
-					height: 20px;
-					cursor: pointer;
-					padding: 10px;
-					flex-shrink: 0;
-				}
-
-				.banner i:hover {
-					background: ${theme.greyF};
 				}
 			`}</style>
 		</div>
