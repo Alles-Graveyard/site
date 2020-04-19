@@ -1,11 +1,13 @@
-import db from "../../../../util/db";
-import sessionAuth from "../../../../util/sessionAuth";
+import db from "../../../../../util/db";
+import sessionAuth from "../../../../../util/sessionAuth";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "invalidSession"});
 
 	//Get Team
+	if (typeof req.query.slug !== "string")
+		return res.status(400).json({err: "invalidTeam"});
 	const team = await db.Team.findOne({
 		where: {
 			slug: req.query.slug

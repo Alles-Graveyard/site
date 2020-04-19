@@ -10,8 +10,9 @@ import {X, Edit2, Shield} from "react-feather";
 
 const membersPage = props => {
 	const [removeConfirm, setRemoveConfirm] = useState();
+	const [banner, setBanner] = useState({});
 	const iconBtnStyles = {margin: "0 5px"};
-
+	
 	if (props.team) {
 		return (
 			<Page
@@ -28,6 +29,7 @@ const membersPage = props => {
 						name: "members"
 					}
 				]}
+				banner={banner}
 			>
 				<main>
 					<h1 className="name">{props.team.name}</h1>
@@ -35,7 +37,7 @@ const membersPage = props => {
 					<table>
 						<tbody>
 							{props.team.members.map(m =>
-								m.id !== removeConfirm ? (
+								m.username !== removeConfirm ? (
 									<tr key={m.id} className="member">
 										<td>
 											<img src={`https://avatar.alles.cx/user/${m.id}`} />
@@ -55,7 +57,7 @@ const membersPage = props => {
 											{props.team.members.length > 1 ? (
 												<X
 													style={iconBtnStyles}
-													onClick={() => setRemoveConfirm(m.id)}
+													onClick={() => setRemoveConfirm(m.username)}
 												/>
 											) : (
 												<></>
@@ -69,20 +71,30 @@ const membersPage = props => {
 												<p>
 													Remove{" "}
 													<span>
-														@
-														{
-															props.team.members[
-																Object.keys(props.team.members)[
-																	props.team.members
-																		.map(member => member.id)
-																		.indexOf(removeConfirm)
-																]
-															].username
-														}
+														@{removeConfirm}
 													</span>{" "}
 													from this team?
 												</p>
-												<Button style={{margin: "0 10px"}}>Confirm</Button>
+												<Button style={{margin: "0 10px"}} onClick={() => {
+													axios.post(
+														`${config.apiUrl}/teams/${encodeURIComponent(
+															props.team.slug
+														)}/members/${encodeURIComponent(removeConfirm)}/remove`,
+														{},
+														{
+															headers: {
+																authorization: props.user.sessionToken
+															}
+														}
+													).then(() => {
+														location.reload();
+													}).catch(() => {
+														setBanner({
+															message: "An error occurred while removing this team member",
+															update: new Date().getTime()
+														});
+													});
+												}}>Confirm</Button>
 												<Button secondary onClick={() => setRemoveConfirm()}>
 													Cancel
 												</Button>

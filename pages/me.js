@@ -12,7 +12,7 @@ import {PlusCircle, Triangle} from "react-feather";
 
 const homepage = props => {
 	const [loading, setLoading] = useState(false);
-	const [banner, setBanner] = useState({});
+	const [banner, setBanner] = useState();
 	const avatarUploadInput = createRef();
 
 	//Show Banner
