@@ -1,5 +1,6 @@
 import db from "../../../../../../util/db";
 import sessionAuth from "../../../../../../util/sessionAuth";
+import config from "../../../../../../config";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -21,7 +22,7 @@ export default async (req, res) => {
 		}
 	});
 	if (!teamMember) return res.status(400).json({err: "notMemberOfTeam"});
-	if (!teamMember.admin && !teamMember.roles.includes("manage-members"))
+	if (!teamMember.admin)
 		return res.status(400).json({err: "badPermissions"});
 
 	//Get User
@@ -41,11 +42,16 @@ export default async (req, res) => {
 			teamId: team.id
 		}
 	});
-	if (!m) return res.status(400).json({err: "notMemberOfTeam"});
-	if (m.admin || (m.roles.includes("manage-members") && !teamMember.admin))
-		return res.status(400).json({err: "cannotRemove"});
+    if (!m) return res.status(400).json({err: "notMemberOfTeam"});
+    
+    //Add Role
+    if (typeof req.body.role !== "string") return res.status(400).json({err: "invalidBodyParameters"});
+    const r = req.body.role.trim().replace(/[^0-9a-z-]/gi, "-");
+    if (m.roles.includes(r)) return res.status(400).json({err: "alreadyExists"});
+    if (m.roles.length > config.maxRoles) return res.status(400).json({err: "tooManyRoles"});
+    const roles = m.roles;
+    roles.push(r);
+    await m.update({roles});
 
-	//Remove
-	await m.destroy();
 	res.json({});
 };

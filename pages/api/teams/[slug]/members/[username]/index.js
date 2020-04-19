@@ -1,5 +1,5 @@
-import db from "../../../../../util/db";
-import sessionAuth from "../../../../../util/sessionAuth";
+import db from "../../../../../../util/db";
+import sessionAuth from "../../../../../../util/sessionAuth";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -21,7 +21,7 @@ export default async (req, res) => {
 		}
 	});
 	if (!teamMember) return res.status(400).json({err: "notMemberOfTeam"});
-	if (!teamMember.admin && !teamMember.includes("manage-members"))
+	if (!teamMember.admin && !teamMember.roles.includes("manage-members"))
 		return res.status(400).json({err: "badPermissions"});
 
 	//Get User

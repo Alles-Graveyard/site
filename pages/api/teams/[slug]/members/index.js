@@ -23,7 +23,7 @@ export default async (req, res) => {
 		}
 	});
 	if (!teamMember) return res.status(400).json({err: "notMemberOfTeam"});
-	if (!teamMember.admin && !teamMember.includes("manage-members"))
+	if (!teamMember.admin && !teamMember.roles.includes("manage-members"))
 		return res.status(400).json({err: "badPermissions"});
 
 	//Get Team Members

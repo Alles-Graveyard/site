@@ -22,7 +22,12 @@ export default {
 		password: {
 			min: 6,
 			max: 128
+		},
+		role: {
+			min: 3,
+			max: 32
 		}
 	},
-	usersResultLimit: 20
+	usersResultLimit: 20,
+	maxRoles: 1000
 };

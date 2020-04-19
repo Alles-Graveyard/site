@@ -16,7 +16,7 @@ const membersPage = props => {
 		padding: "0 5px",
 		cursor: "pointer"
 	};
-	
+
 	if (props.team) {
 		return (
 			<Page
@@ -57,7 +57,10 @@ const membersPage = props => {
 										</td>
 										<td>
 											{m.admin ? <Shield style={iconBtnStyles} /> : <></>}
-											<Link href="/teams/[slug]/members/[username]" as={`/teams/${props.team.slug}/members/${m.username}`}>
+											<Link
+												href="/teams/[slug]/members/[username]"
+												as={`/teams/${props.team.slug}/members/${m.username}`}
+											>
 												<a>
 													<Edit2 style={iconBtnStyles} />
 												</a>
@@ -77,32 +80,39 @@ const membersPage = props => {
 										<td colSpan="3">
 											<div>
 												<p>
-													Remove{" "}
-													<span>
-														@{removeConfirm}
-													</span>{" "}
-													from this team?
+													Remove <span>@{removeConfirm}</span> from this team?
 												</p>
-												<Button style={{margin: "0 10px"}} onClick={() => {
-													axios.post(
-														`${config.apiUrl}/teams/${encodeURIComponent(
-															props.team.slug
-														)}/members/${encodeURIComponent(removeConfirm)}/remove`,
-														{},
-														{
-															headers: {
-																authorization: props.user.sessionToken
-															}
-														}
-													).then(() => {
-														location.reload();
-													}).catch(() => {
-														setBanner({
-															message: "An error occurred while removing this team member",
-															update: new Date().getTime()
-														});
-													});
-												}}>Confirm</Button>
+												<Button
+													style={{margin: "0 10px"}}
+													onClick={() => {
+														axios
+															.post(
+																`${config.apiUrl}/teams/${encodeURIComponent(
+																	props.team.slug
+																)}/members/${encodeURIComponent(
+																	removeConfirm
+																)}/remove`,
+																{},
+																{
+																	headers: {
+																		authorization: props.user.sessionToken
+																	}
+																}
+															)
+															.then(() => {
+																location.reload();
+															})
+															.catch(() => {
+																setBanner({
+																	message:
+																		"An error occurred while removing this team member",
+																	update: new Date().getTime()
+																});
+															});
+													}}
+												>
+													Confirm
+												</Button>
 												<Button secondary onClick={() => setRemoveConfirm()}>
 													Cancel
 												</Button>
@@ -231,11 +241,7 @@ membersPage.getInitialProps = async ctx => {
 				)
 			).data
 		};
-	} catch (err) {
-		return {
-			team: null
-		};
-	}
+	} catch (err) {}
 };
 
 export default withAuth(withRouter(membersPage), `${config.apiUrl}/me`);
