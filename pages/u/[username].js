@@ -211,11 +211,7 @@ userPage.getInitialProps = async ctx => {
 				)
 			).data
 		};
-	} catch (err) {
-		return {
-			requestedUser: null
-		};
-	}
+	} catch (err) {}
 };
 
 export default withAuth(withRouter(userPage), `${config.apiUrl}/me`);
