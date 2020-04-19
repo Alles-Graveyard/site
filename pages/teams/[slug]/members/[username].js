@@ -47,45 +47,49 @@ const memberPage = props => {
 				<main>
 					<h1 className="name">{props.member.name}</h1>
 					<h2 className="username">@{props.member.username}</h2>
-					<div className="roles">
-						{props.member.roles.map(r => (
-							<div className="role" key={r}>
-								<div>
-									<p>{r}</p>
-								</div>
-								{props.admin ? (
+					{props.member.roles.length > 0 ? (
+						<div className="roles">
+							{props.member.roles.map(r => (
+								<div className="role" key={r}>
 									<div>
-										<X
-											style={{
-												cursor: "pointer",
-												color: theme.grey8
-											}}
-											onClick={() => {
-												axios
-													.post(
-														`${config.apiUrl}/teams/${encodeURIComponent(
-															props.member.team.slug
-														)}/members/${props.member.username}/removeRole`,
-														{
-															role: r
-														},
-														{
-															headers: {
-																authorization: props.user.sessionToken
-															}
-														}
-													)
-													.then(() => location.reload())
-													.catch(() => showBanner("An error occurred."));
-											}}
-										/>
+										<p>{r}</p>
 									</div>
-								) : (
-									<></>
-								)}
-							</div>
-						))}
-					</div>
+									{props.admin ? (
+										<div>
+											<X
+												style={{
+													cursor: "pointer",
+													color: theme.grey8
+												}}
+												onClick={() => {
+													axios
+														.post(
+															`${config.apiUrl}/teams/${encodeURIComponent(
+																props.member.team.slug
+															)}/members/${props.member.username}/removeRole`,
+															{
+																role: r
+															},
+															{
+																headers: {
+																	authorization: props.user.sessionToken
+																}
+															}
+														)
+														.then(() => location.reload())
+														.catch(() => showBanner("An error occurred."));
+												}}
+											/>
+										</div>
+									) : (
+										<></>
+									)}
+								</div>
+							))}
+						</div>
+					) : (
+						<p>No roles.</p>
+					)}
 
 					{props.admin ? (
 						<form
@@ -142,16 +146,15 @@ const memberPage = props => {
 						max-width: 100%;
 						box-sizing: border-box;
 						margin: 0 auto;
+						text-align: center;
 					}
 
 					h1.name {
-						text-align: center;
 						margin: 0;
 						margin-bottom: 5px;
 					}
 
 					h2.username {
-						text-align: center;
 						margin: 0;
 						margin-bottom: 30px;
 						font-weight: 500;
@@ -175,6 +178,7 @@ const memberPage = props => {
 					.role div:nth-child(1) {
 						flex-grow: 1;
 						margin: auto 10px;
+						text-align: left;
 					}
 
 					.role div:nth-child(2) {
