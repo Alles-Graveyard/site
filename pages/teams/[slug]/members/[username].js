@@ -57,7 +57,8 @@ const memberPage = props => {
 									<div>
 										<X
 											style={{
-												cursor: "pointer"
+												cursor: "pointer",
+												color: theme.grey8
 											}}
 											onClick={() => {
 												axios

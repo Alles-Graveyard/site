@@ -43,7 +43,7 @@ export default async (req, res) => {
 	});
 	if (!m) return res.status(400).json({err: "notMemberOfTeam"});
 
-	//Add Role
+	//Remove Role
 	if (typeof req.body.role !== "string")
 		return res.status(400).json({err: "invalidBodyParameters"});
 	const r = req.body.role.trim().replace(/[^0-9a-z-]/gi, "-");
@@ -52,11 +52,10 @@ export default async (req, res) => {
 		r.length > config.inputBounds.role.max
 	)
 		return res.status(400).json({err: "invalidBodyParameters"});
-	if (m.roles.includes(r)) return res.status(400).json({err: "alreadyExists"});
-	if (m.roles.length > config.maxRoles)
-		return res.status(400).json({err: "tooManyRoles"});
+	if (!m.roles.includes(r))
+		return res.status(400).json({err: "memberDoesNotHaveRole"});
 	const roles = m.roles;
-	roles.push(r);
+	roles.splice(roles.indexOf(r), 1);
 	await m.update({roles});
 
 	res.json({});
