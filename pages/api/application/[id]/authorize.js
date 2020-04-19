@@ -30,12 +30,9 @@ export default async (req, res) => {
 	const application = await db.Application.findOne({
 		where: {
 			id: req.query.id
-		},
-		include: ["team"]
+		}
 	});
 	if (!application) return res.status(400).json({err: "invalidApplication"});
-	if (!application.team.developer)
-		return res.status(400).json({err: "applicationDisabled"});
 
 	//Verify Redirect URI
 	if (!application.callbackUrls.includes(req.body.redirectUri))
