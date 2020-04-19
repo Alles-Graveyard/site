@@ -7,9 +7,7 @@ import axios from "axios";
 
 import Button from "../reactants/Button";
 import SmallText from "../reactants/SmallText";
-import Verified from "../reactants/Verified";
 import theme from "../reactants/theme";
-import Link from "next/link";
 
 const AuthPage = props => {
 	const [loading, setLoading] = useState(false);
@@ -59,9 +57,7 @@ const AuthPage = props => {
 				!props.error
 					? [
 							{
-								name: `$${props.application.team.slug}`,
-								href: "/t/[slug]",
-								as: `/t/${props.application.team.slug}`
+								name: "authorize",
 							},
 							{
 								name: props.application.name
