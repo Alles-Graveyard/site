@@ -16,7 +16,14 @@ export default props => {
 			{props.header ? (
 				<Header
 					title="Alles"
-					userId={props.user ? props.user.id : null}
+					user={
+						props.user
+							? {
+									id: props.user.id,
+									href: "/me"
+							  }
+							: null
+					}
 					breadcrumbs={props.breadcrumbs}
 				/>
 			) : (

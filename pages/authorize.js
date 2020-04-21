@@ -57,7 +57,7 @@ const AuthPage = props => {
 				!props.error
 					? [
 							{
-								name: "authorize",
+								name: "authorize"
 							},
 							{
 								name: props.application.name
@@ -81,7 +81,9 @@ const AuthPage = props => {
 					<h1>Sign in with Alles</h1>
 					<div className="applicationInfo">
 						<p>
-							<span style={{color: theme.accent}}>{props.application.name}</span>{" "}
+							<span style={{color: theme.accent}}>
+								{props.application.name}
+							</span>{" "}
 							allows you to {props.application.description}
 						</p>
 						{props.scopes.length > 0 ? (
