@@ -64,7 +64,7 @@ export default withAuth(
 							await axios.post(`${config.apiUrl}/login`, {
 								pulsarToken
 							})
-						).data;
+						).data.token;
 						Cookies.set("sessionToken", token, {
 							domain: location.host,
 							expires: 365
