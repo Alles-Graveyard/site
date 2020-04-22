@@ -1,5 +1,5 @@
 import Page from "../layout/CardPage";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {withRouter} from "next/router";
 import withAuth from "../reactants/withAuth";
 import Cookies from "js-cookie";
@@ -52,6 +52,30 @@ export default withAuth(
 			//Not Signed in
 			const [formError, setFormError] = useState("");
 			const [formLoading, setFormLoading] = useState(false);
+
+			//Pulsar
+			useEffect(() => {
+				(async () => {
+					try {
+						const pulsarToken = (await axios.get("http://localhost:2318/token"))
+							.data;
+						setFormLoading(true);
+						const token = (
+							await axios.post(`${config.apiUrl}/login`, {
+								pulsarToken
+							})
+						).data;
+						Cookies.set("sessionToken", token, {
+							domain: location.host,
+							expires: 365
+						});
+						const redirectUrl = props.router.query.redirect;
+						window.location.href = redirectUrl ? redirectUrl : "/";
+					} catch (e) {
+						setFormLoading(false);
+					}
+				})();
+			}, []);
 
 			return (
 				<Page title="Sign in" logo>

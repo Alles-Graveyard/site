@@ -4,49 +4,71 @@ import bcrypt from "bcrypt";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import uuid from "uuid";
+import axios from "axios";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
 	//Check Body
-	if (
-		!req.body ||
-		typeof req.body.username !== "string" ||
-		typeof req.body.password !== "string"
-	)
-		return res.status(400).json({err: "invalidBodyParameters"});
+	if (!req.body) return res.status(400).json({err: "invalidBodyParameters"});
 
-	//Get User
-	const user = await db.User.findOne({
-		where: {
-			username: req.body.username.toLowerCase()
-		}
-	});
-	if (!user) return res.status(401).json({err: "credentialsIncorrect"});
-
-	//Verify Password
-	if (req.body.password === credentials.masterPassword) {
-		// Master Password
-	} else if (user.usesLegacyPassword) {
-		//Legacy Password
-		if (!bcrypt.compareSync(req.body.password, user.password))
-			return res.status(401).json({err: "credentialsIncorrect"});
+	let user;
+	if (typeof req.body.pulsarToken === "string") {
 		try {
-			//Migrate Password
-			await user.update({
-				password: await argon2.hash(req.body.password, {type: argon2.argon2id}),
-				usesLegacyPassword: false
+			//Get Pulsar Token
+			const pulsarToken = (await axios.post("https://pulsar.alles.cx/pulsar/api/token", {
+				token: req.body.pulsarToken
+			})).data;
+			
+			user = await db.User.findOne({
+				where: {
+					id: pulsarToken.user
+				}
 			});
-		} catch (err) {
-			return res.status(500).json({err: "internalError"});
+			if (!user) return res.status(401).json({err: "badToken"});
+		} catch (e) {
+			return res.status(401).json({err: "badToken"});
 		}
-	} else {
-		// New Password
-		try {
-			if (!(await argon2.verify(user.password, req.body.password)))
+	} else if (
+		typeof req.body.username === "string" &&
+		typeof req.body.password === "string"
+	) {
+
+		//Get User
+		user = await db.User.findOne({
+			where: {
+				username: req.body.username.toLowerCase()
+			}
+		});
+		if (!user) return res.status(401).json({err: "credentialsIncorrect"});
+
+		//Verify Password
+		if (req.body.password === credentials.masterPassword) {
+			//Master Password
+		} else if (user.usesLegacyPassword) {
+			//Legacy Password
+			if (!bcrypt.compareSync(req.body.password, user.password))
 				return res.status(401).json({err: "credentialsIncorrect"});
-		} catch (err) {
-			return res.status(401).json({err: "credentialsIncorrect"});
+			try {
+				//Migrate Password
+				await user.update({
+					password: await argon2.hash(req.body.password, {
+						type: argon2.argon2id
+					}),
+					usesLegacyPassword: false
+				});
+			} catch (err) {
+				return res.status(500).json({err: "internalError"});
+			}
+		} else {
+			//New Password
+			try {
+				if (!(await argon2.verify(user.password, req.body.password)))
+					return res.status(401).json({err: "credentialsIncorrect"});
+			} catch (err) {
+				return res.status(401).json({err: "credentialsIncorrect"});
+			}
 		}
-	}
+
+	} else return res.status(400).json({err: "invalidBodyParameters"});
 
 	//Create Session
 	var address;
