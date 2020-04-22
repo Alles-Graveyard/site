@@ -14,10 +14,12 @@ export default async (req, res) => {
 	if (typeof req.body.pulsarToken === "string") {
 		try {
 			//Get Pulsar Token
-			const pulsarToken = (await axios.post("https://pulsar.alles.cx/pulsar/api/token", {
-				token: req.body.pulsarToken
-			})).data;
-			
+			const pulsarToken = (
+				await axios.post("https://pulsar.alles.cx/pulsar/api/token", {
+					token: req.body.pulsarToken
+				})
+			).data;
+
 			user = await db.User.findOne({
 				where: {
 					id: pulsarToken.user
@@ -31,7 +33,6 @@ export default async (req, res) => {
 		typeof req.body.username === "string" &&
 		typeof req.body.password === "string"
 	) {
-
 		//Get User
 		user = await db.User.findOne({
 			where: {
@@ -67,7 +68,6 @@ export default async (req, res) => {
 				return res.status(401).json({err: "credentialsIncorrect"});
 			}
 		}
-
 	} else return res.status(400).json({err: "invalidBodyParameters"});
 
 	//Create Session
