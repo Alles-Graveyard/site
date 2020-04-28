@@ -254,7 +254,9 @@ const homepage = props => {
 
 			<section>
 				<h1 className="sectionTitle">Apps</h1>
-				<WideLink href="https://pulsar.alles.cx/clients" basic>Pulsar Clients</WideLink>
+				<WideLink href="https://pulsar.alles.cx/clients" basic>
+					Pulsar Clients
+				</WideLink>
 				<WideLink href="/oauth">Authorized OAuth Applications</WideLink>
 				<WideLink href="https://dev.alles.cx" basic>
 					Create an Application
