@@ -84,7 +84,14 @@ const userPage = props => {
 						)}
 					</section>
 
-					<PostField placeholder="What's happening?" />
+					{self ? (
+						<PostField
+							placeholder="What's up?"
+							sessionToken={props.user.sessionToken}
+						/>
+					) : (
+						<></>
+					)}
 
 					{props.requestedUser.posts.map(p => (
 						<Post
