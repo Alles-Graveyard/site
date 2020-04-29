@@ -39,7 +39,8 @@ export default async (req, res) => {
 				content: "This is another test",
 				createdAt: new Date(),
 				score: 10,
-				vote: 0
+				vote: 0,
+				replies: 1
 			},
 			{
 				slug: "def",
@@ -51,7 +52,8 @@ export default async (req, res) => {
 				content: "This is a test",
 				createdAt: new Date() - 1000,
 				score: 15,
-				vote: -1
+				vote: -1,
+				replies: 3
 			}
 		]
 	});

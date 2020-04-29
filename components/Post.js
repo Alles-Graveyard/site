@@ -1,13 +1,18 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
 import theme from "../reactants/theme";
 import {Plus, Minus} from "react-feather";
 import config from "../config";
+import moment from "moment";
 
 export default ({data, ...props}) => {
 	const [vote, setVote] = useState(data.vote);
 	const [score, setScore] = useState(data.score);
+	const dateFormat = "MMM DD YYYY HH:mm";
+	const [date, setDate] = useState(dateFormat);
+
+	useEffect(() => setDate(moment(data.createdAt).format(dateFormat)), []);
 
 	const changeVote = v => {
 		if (!props.sessionToken) return;
@@ -48,6 +53,10 @@ export default ({data, ...props}) => {
 				<p className="content">{data.content}</p>
 			</main>
 
+			<footer>
+				<p>{date} // {data.replies} {data.replies === 1 ? "Reply" : "Replies"}</p>
+			</footer>
+
 			<style jsx>{`
 				div.mainContainer {
 					padding: 10px;
@@ -80,6 +89,11 @@ export default ({data, ...props}) => {
 
 				p.content {
 					white-space: pre-wrap;
+				}
+
+				footer p {
+					color: ${theme.grey4};
+					font-size: 12px;
 				}
 			`}</style>
 		</div>
