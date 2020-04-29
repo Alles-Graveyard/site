@@ -146,6 +146,7 @@ export default ({data, ...props}) => {
 					border: solid 1px ${theme.borderGrey};
 					border-radius: 10px;
 					display: flex;
+					box-sizing: border-box;
 				}
 
 				aside {

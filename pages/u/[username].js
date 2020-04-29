@@ -7,6 +7,7 @@ import {withRouter} from "next/router";
 import {useState} from "react";
 import Button from "../../reactants/Button";
 import Post from "../../components/Post";
+import PostField from "../../components/PostField";
 
 const userPage = props => {
 	if (props.requestedUser) {
@@ -45,44 +46,46 @@ const userPage = props => {
 					}
 				]}
 			>
-				<section className="banner"></section>
-				<section className="user">
-					<img
-						className="profilePicture"
-						src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
-					/>
-					<h1 className="name">
-						{props.requestedUser.name}
-						{props.requestedUser.plus ? <sup>+</sup> : <></>}
-					</h1>
-					<h2 className="username">@{props.requestedUser.username}</h2>
-					<h2 className="counts">
-						<span>
-							<b>{props.requestedUser.followers}</b>{" "}
-							{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
-						</span>
-						<span>
-							<b>{props.requestedUser.rubies}</b>{" "}
-							{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
-						</span>
-					</h2>
-					<h2 className="tagline">{props.requestedUser.about}</h2>
-					{self ? (
-						<></>
-					) : (
-						<>
-							<Button
-								style={userButtonStyle}
-								secondary={!isFollowing}
-								onClick={toggleFollow}
-							>
-								{!isFollowing ? "Follow" : "Following"}
-							</Button>
-						</>
-					)}
-				</section>
+				<main>
+					<section className="banner"></section>
+					<section className="user">
+						<img
+							className="profilePicture"
+							src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
+						/>
+						<h1 className="name">
+							{props.requestedUser.name}
+							{props.requestedUser.plus ? <sup>+</sup> : <></>}
+						</h1>
+						<h2 className="username">@{props.requestedUser.username}</h2>
+						<h2 className="counts">
+							<span>
+								<b>{props.requestedUser.followers}</b>{" "}
+								{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
+							</span>
+							<span>
+								<b>{props.requestedUser.rubies}</b>{" "}
+								{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
+							</span>
+						</h2>
+						<h2 className="tagline">{props.requestedUser.about}</h2>
+						{self ? (
+							<></>
+						) : (
+							<>
+								<Button
+									style={userButtonStyle}
+									secondary={!isFollowing}
+									onClick={toggleFollow}
+								>
+									{!isFollowing ? "Follow" : "Following"}
+								</Button>
+							</>
+						)}
+					</section>
 
-				<div className="posts">
+					<PostField placeholder="What's happening?" />
+
 					{props.requestedUser.posts.map(p => (
 						<Post
 							key={p.slug}
@@ -91,13 +94,18 @@ const userPage = props => {
 							link
 						/>
 					))}
-				</div>
+				</main>
 
 				<style jsx>{`
-					section {
-						background: white;
+					main {
 						width: 600px;
 						max-width: 100%;
+						margin: 0 auto;
+					}
+
+					section {
+						background: white;
+						width: 100%;
 						margin: 20px auto;
 						border: solid 1px ${theme.borderGrey};
 						border-radius: 10px;
@@ -182,12 +190,6 @@ const userPage = props => {
 						margin: 0;
 						margin-bottom: 20px;
 						color: ${theme.grey4};
-					}
-
-					div.posts {
-						width: 600px;
-						max-width: 100%;
-						margin: 0 auto;
 					}
 				`}</style>
 			</Page>

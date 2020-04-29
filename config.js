@@ -27,5 +27,5 @@ export default {
 		}
 	},
 	usersResultLimit: 20,
-	maxRoles: 1000
+	maxPostLength: 300
 };
