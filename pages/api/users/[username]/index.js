@@ -34,7 +34,8 @@ export default async (req, res) => {
 				author: {
 					id: u.id,
 					name: u.name,
-					username: u.username
+					username: u.username,
+					plus: true
 				},
 				content: "This is another test",
 				createdAt: new Date(),
@@ -47,7 +48,8 @@ export default async (req, res) => {
 				author: {
 					id: u.id,
 					name: u.name,
-					username: u.username
+					username: u.username,
+					plus: true
 				},
 				content: "This is a test",
 				createdAt: new Date() - 1000,

@@ -44,7 +44,10 @@ export default ({data, ...props}) => {
 			<header>
 				<img src={`https://avatar.alles.cx/user/${data.author.id}`} />
 				<div>
-					<h1>{data.author.name}</h1>
+					<h1>
+						{data.author.name}
+						{data.author.plus ? <sup>+</sup> : <></>}
+					</h1>
 					<h2>@{data.author.username}</h2>
 				</div>
 			</header>
@@ -54,7 +57,9 @@ export default ({data, ...props}) => {
 			</main>
 
 			<footer>
-				<p>{date} // {data.replies} {data.replies === 1 ? "Reply" : "Replies"}</p>
+				<p>
+					{date} // {data.replies} {data.replies === 1 ? "Reply" : "Replies"}
+				</p>
 			</footer>
 
 			<style jsx>{`
