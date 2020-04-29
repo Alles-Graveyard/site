@@ -47,10 +47,10 @@ const userPage = props => {
 			>
 				<section className="banner"></section>
 				<section className="user">
-				<img
-							className="profilePicture"
-							src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
-						/>
+					<img
+						className="profilePicture"
+						src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
+					/>
 					<h1 className="name">
 						{props.requestedUser.name}
 						{props.requestedUser.plus ? <sup>+</sup> : <></>}
@@ -84,7 +84,12 @@ const userPage = props => {
 
 				<div className="posts">
 					{props.requestedUser.posts.map(p => (
-						<Post key={p.slug} data={p} link />
+						<Post
+							key={p.slug}
+							data={p}
+							sessionToken={props.user.sessionToken}
+							link
+						/>
 					))}
 				</div>
 
