@@ -7,10 +7,10 @@ import axios from "axios";
 
 export default props => {
 	const [charCount, setCharCount] = useState(null);
-	const [content, setContent] = useState();
+	const [content, setContent] = useState("");
 
 	const submit = () => {
-		if (!content || content.length > config.maxPostLength) return;
+		if (content.length < 1 || content.length > config.maxPostLength) return;
 		axios.post(
 			`${config.apiUrl}/post`,
 			{
@@ -52,7 +52,7 @@ export default props => {
 					<p>{charCount}</p>
 				</div>
 
-				<button onClick={submit}>
+				<button onClick={submit} disabled={content.trim().length < 1}>
 					<ChevronRight />
 				</button>
 			</aside>
@@ -96,7 +96,7 @@ export default props => {
 					font-size: 1em;
 					box-sizing: border-box;
 					background: ${theme.accent};
-					border: solid 1px ${theme.accent};
+                    border: none;
 					color: white;
 					cursor: pointer;
 					transition: all 0.1s;
@@ -107,7 +107,6 @@ export default props => {
 				}
 
 				button:disabled {
-					border-color: ${theme.borderGrey};
 					background: ${theme.disabledBackground};
 					color: ${theme.grey4};
 					cursor: default;
