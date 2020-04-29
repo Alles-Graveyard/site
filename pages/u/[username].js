@@ -6,6 +6,7 @@ import axios from "axios";
 import {withRouter} from "next/router";
 import {useState} from "react";
 import Button from "../../reactants/Button";
+import Post from "../../components/Post";
 
 const userPage = props => {
 	if (props.requestedUser) {
@@ -46,12 +47,10 @@ const userPage = props => {
 			>
 				<section className="banner"></section>
 				<section className="user">
-					<div className="profilePicture">
-						<img
-							className="picture"
+				<img
+							className="profilePicture"
 							src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
 						/>
-					</div>
 					<h1 className="name">
 						{props.requestedUser.name}
 						{props.requestedUser.plus ? <sup>+</sup> : <></>}
@@ -83,11 +82,19 @@ const userPage = props => {
 					)}
 				</section>
 
+				<div className="posts">
+					{props.requestedUser.posts.map(p => (
+						<Post key={p.slug} data={p} link />
+					))}
+				</div>
+
 				<style jsx>{`
 					section {
 						background: white;
-						max-width: 600px;
+						width: 600px;
+						max-width: 100%;
 						margin: 20px auto;
+						border: solid 1px ${theme.borderGrey};
 						border-radius: 10px;
 						padding: 20px;
 						box-sizing: border-box;
@@ -99,6 +106,7 @@ const userPage = props => {
 						border-bottom-left-radius: 0;
 						border-bottom-right-radius: 0;
 						background: ${theme.accent};
+						border: solid 1px ${theme.borderGrey};
 					}
 
 					section.user {
@@ -123,13 +131,13 @@ const userPage = props => {
 						overflow: hidden;
 					}
 
-					.profilePicture img {
-						position: absolute;
-						left: 0;
-						top: 0;
-						width: 100%;
-						height: 100%;
-						transition: 0.1s;
+					@media screen and (max-width: 450px) {
+						.profilePicture {
+							height: 120px;
+							width: 120px;
+							top: -60px;
+							margin-bottom: -60px;
+						}
 					}
 
 					h1.name {
@@ -171,13 +179,10 @@ const userPage = props => {
 						color: ${theme.grey4};
 					}
 
-					@media screen and (max-width: 450px) {
-						.profilePicture {
-							height: 120px;
-							width: 120px;
-							top: -60px;
-							margin-bottom: -60px;
-						}
+					div.posts {
+						width: 600px;
+						max-width: 100%;
+						margin: 0 auto;
 					}
 				`}</style>
 			</Page>

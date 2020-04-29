@@ -27,6 +27,32 @@ export default async (req, res) => {
 		isFollowing: await u.hasFollower(user),
 		joinDate: u.createdAt,
 		rubies: u.rubies,
-		plus: u.plus
+		plus: u.plus,
+		posts: [
+			{
+				slug: "abc",
+				author: {
+					id: u.id,
+					name: u.name,
+					username: u.username
+				},
+				content: "This is another test",
+				createdAt: new Date(),
+				score: 10,
+				vote: 0
+			},
+			{
+				slug: "def",
+				author: {
+					id: u.id,
+					name: u.name,
+					username: u.username
+				},
+				content: "This is a test",
+				createdAt: new Date() - 1000,
+				score: 15,
+				vote: -1
+			}
+		]
 	});
 };
