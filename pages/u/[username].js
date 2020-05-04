@@ -9,7 +9,7 @@ import Button from "../../reactants/Button";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 
-const userPage = props => {
+const page = props => {
 	if (props.requestedUser) {
 		const self = props.requestedUser.id === props.user.id;
 		const [isFollowing, setIsFollowing] = useState(
@@ -211,7 +211,7 @@ const userPage = props => {
 	}
 };
 
-userPage.getInitialProps = async ctx => {
+page.getInitialProps = async ctx => {
 	const {username} = ctx.query;
 	const {sessionToken} = ctx.user;
 
@@ -233,4 +233,4 @@ userPage.getInitialProps = async ctx => {
 	} catch (err) {}
 };
 
-export default withAuth(withRouter(userPage), `${config.apiUrl}/me`);
+export default withAuth(withRouter(page), `${config.apiUrl}/me`);

@@ -10,7 +10,7 @@ import WideLink from "../components/WideLink";
 import Link from "next/link";
 import {PlusCircle, Triangle} from "react-feather";
 
-const homepage = props => {
+const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [banner, setBanner] = useState();
 	const avatarUploadInput = createRef();
@@ -436,4 +436,4 @@ const homepage = props => {
 	);
 };
 
-export default withAuth(homepage, `${config.apiUrl}/me`);
+export default withAuth(page, `${config.apiUrl}/me`);

@@ -6,7 +6,7 @@ const errors = {
 	500: "Something broke :("
 };
 
-const error = ({statusCode}) => (
+const page = ({statusCode}) => (
 	<Page header title={statusCode ? statusCode : "Error"}>
 		<main>
 			<h1>{statusCode ? statusCode : "Error"}</h1>
@@ -43,11 +43,11 @@ const error = ({statusCode}) => (
 	</Page>
 );
 
-error.getInitialProps = ({res, err}) => {
+page.getInitialProps = ({res, err}) => {
 	const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
 	return {
 		statusCode
 	};
 };
 
-export default error;
+export default page;

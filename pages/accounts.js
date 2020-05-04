@@ -4,7 +4,7 @@ import config from "../config";
 import axios from "axios";
 import WideUser from "../components/WideUser";
 
-const accountsPage = props => {
+const page = props => {
 	const switchUser = id => {
 		axios
 			.post(
@@ -87,7 +87,7 @@ const accountsPage = props => {
 	);
 };
 
-accountsPage.getInitialProps = async ctx => {
+page.getInitialProps = async ctx => {
 	return {
 		accounts: (
 			await axios.get(`${config.apiUrl}/accounts`, {
@@ -99,4 +99,4 @@ accountsPage.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(accountsPage, `${config.apiUrl}/me`);
+export default withAuth(page, `${config.apiUrl}/me`);

@@ -9,7 +9,7 @@ import Button from "../reactants/Button";
 import SmallText from "../reactants/SmallText";
 import theme from "../reactants/theme";
 
-const AuthPage = props => {
+const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [pageError, setError] = useState(props.error);
 
@@ -149,7 +149,7 @@ const AuthPage = props => {
 	);
 };
 
-AuthPage.getInitialProps = async ctx => {
+page.getInitialProps = async ctx => {
 	//Basic query parameter checks
 	if (!ctx.query.client_id)
 		return {
@@ -204,4 +204,4 @@ AuthPage.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(withRouter(AuthPage), `${config.apiUrl}/me`);
+export default withAuth(withRouter(page), `${config.apiUrl}/me`);

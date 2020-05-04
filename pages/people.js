@@ -8,7 +8,7 @@ import {withRouter} from "next/router";
 import WideUser from "../components/WideUser";
 import {ChevronLeft, ChevronRight} from "react-feather";
 
-const people = props => {
+const page = props => {
 	const backwardsBtn =
 		props.users.length > 0 && !props.firstPage ? props.users[0].username : null;
 	const forwardsBtn =
@@ -56,7 +56,7 @@ const people = props => {
 	);
 };
 
-people.getInitialProps = async ctx => {
+page.getInitialProps = async ctx => {
 	const {before, after} = ctx.query;
 	const {sessionToken} = ctx.user;
 
@@ -78,7 +78,7 @@ people.getInitialProps = async ctx => {
 	).data;
 };
 
-export default withRouter(withAuth(people, `${config.apiUrl}/me`));
+export default withRouter(withAuth(page, `${config.apiUrl}/me`));
 
 //Navigation Arrows
 const NavArrows = ({before, after}) => (
