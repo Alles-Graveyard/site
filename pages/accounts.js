@@ -24,7 +24,6 @@ const page = props => {
 	return (
 		<Page
 			title="Accounts"
-			header
 			user={props.user}
 			breadcrumbs={[
 				{

@@ -38,7 +38,6 @@ const page = props => {
 		return (
 			<Page
 				title={`@${props.requestedUser.username}`}
-				header
 				user={props.user}
 				breadcrumbs={[
 					{

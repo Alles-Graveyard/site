@@ -149,7 +149,6 @@ const page = props => {
 	return (
 		<Page
 			title="My Account"
-			header
 			banner={banner}
 			user={props.user}
 			breadcrumbs={[

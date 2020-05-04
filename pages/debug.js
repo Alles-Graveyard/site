@@ -4,7 +4,6 @@ import withAuth from "../util/withAuth";
 export default withAuth(props => {
 	return (
 		<Page
-			header
 			user={props.user}
 			breadcrumbs={[
 				{

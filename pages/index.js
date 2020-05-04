@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default withAuth(props => {
 	return (
-		<Page header user={props.user}>
+		<Page user={props.user}>
 			<p>
 				This page isn't done yet. Go to{" "}
 				<Link href="/me">

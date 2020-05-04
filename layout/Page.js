@@ -13,22 +13,20 @@ export default props => {
 	return (
 		<div className="page">
 			<Head title={props.title ? `Alles • ${props.title}` : "Alles"} />
-			{props.header ? (
-				<Header
-					title="Alles"
-					user={
-						props.user
-							? {
-									id: props.user.id,
-									href: "/me"
-							  }
-							: null
-					}
-					breadcrumbs={props.breadcrumbs}
-				/>
-			) : (
-				<></>
-			)}
+
+			<Header
+				title="Alles"
+				user={
+					props.user
+						? {
+								id: props.user.id,
+								href: "/me"
+						  }
+						: null
+				}
+				breadcrumbs={props.breadcrumbs}
+			/>
+
 			<main style={props.style}>{props.children}</main>
 
 			{props.banner ? (

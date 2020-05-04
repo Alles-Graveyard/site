@@ -17,7 +17,6 @@ const page = props => {
 			: null;
 	return (
 		<Page
-			header
 			user={props.user}
 			title="Users"
 			breadcrumbs={[

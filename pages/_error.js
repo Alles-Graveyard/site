@@ -7,7 +7,7 @@ const errors = {
 };
 
 const page = ({statusCode}) => (
-	<Page header title={statusCode ? statusCode : "Error"}>
+	<Page title={statusCode ? statusCode : "Error"}>
 		<main>
 			<h1>{statusCode ? statusCode : "Error"}</h1>
 			<p>
