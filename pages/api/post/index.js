@@ -10,7 +10,7 @@ export default async (req, res) => {
 	const content = req.body.content.trim();
 	if (content.length < 1 || content.length > config.maxPostLength)
 		return res.status(400).json({err: "postLength"});
-    console.log(content);
-    
-    res.json({});
+	console.log(content);
+
+	res.json({});
 };

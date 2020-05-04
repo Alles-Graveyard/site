@@ -96,7 +96,7 @@ export default props => {
 					font-size: 1em;
 					box-sizing: border-box;
 					background: ${theme.accent};
-                    border: none;
+					border: none;
 					color: white;
 					cursor: pointer;
 					transition: all 0.1s;
