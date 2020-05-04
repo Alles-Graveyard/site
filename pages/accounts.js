@@ -28,7 +28,7 @@ const accountsPage = props => {
 			user={props.user}
 			breadcrumbs={[
 				{
-					name: "accounts"
+					name: "Accounts"
 				}
 			]}
 		>

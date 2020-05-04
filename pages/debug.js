@@ -9,7 +9,7 @@ export default withAuth(props => {
 			user={props.user}
 			breadcrumbs={[
 				{
-					name: "debug"
+					name: "Debug"
 				}
 			]}
 		>

@@ -22,7 +22,7 @@ const people = props => {
 			title="Users"
 			breadcrumbs={[
 				{
-					name: "people"
+					name: "People"
 				}
 			]}
 		>

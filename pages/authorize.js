@@ -57,7 +57,7 @@ const AuthPage = props => {
 				!props.error
 					? [
 							{
-								name: "authorize"
+								name: "Authorize"
 							},
 							{
 								name: props.application.name

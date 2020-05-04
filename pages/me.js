@@ -154,7 +154,7 @@ const homepage = props => {
 			user={props.user}
 			breadcrumbs={[
 				{
-					name: "me"
+					name: "My Account"
 				}
 			]}
 		>
