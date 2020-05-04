@@ -1,6 +1,5 @@
 import Page from "../layout/Page";
-import config from "../config";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 
 export default withAuth(props => {
 	return (
@@ -22,4 +21,4 @@ export default withAuth(props => {
 			</p>
 		</Page>
 	);
-}, `${config.apiUrl}/me`);
+});

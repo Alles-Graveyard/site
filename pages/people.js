@@ -1,5 +1,5 @@
 import Page from "../layout/Page";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 import theme from "../reactants/theme";
 import config from "../config";
 import Link from "next/link";
@@ -78,7 +78,7 @@ page.getInitialProps = async ctx => {
 	).data;
 };
 
-export default withRouter(withAuth(page, `${config.apiUrl}/me`));
+export default withRouter(withAuth(page));
 
 //Navigation Arrows
 const NavArrows = ({before, after}) => (

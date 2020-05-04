@@ -1,7 +1,7 @@
 import Page from "../layout/CardPage";
 import {useState, useEffect} from "react";
 import {withRouter} from "next/router";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";
 
@@ -204,4 +204,4 @@ page.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(withRouter(page), `${config.apiUrl}/me`);
+export default withAuth(withRouter(page));

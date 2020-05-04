@@ -1,5 +1,5 @@
 import Page from "../layout/Page";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 import theme from "../reactants/theme";
 import config from "../config";
 import {useState, createRef} from "react";
@@ -436,4 +436,4 @@ const page = props => {
 	);
 };
 
-export default withAuth(page, `${config.apiUrl}/me`);
+export default withAuth(page);

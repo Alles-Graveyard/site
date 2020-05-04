@@ -1,5 +1,5 @@
 import Page from "../layout/Page";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";
 import WideUser from "../components/WideUser";
@@ -99,4 +99,4 @@ page.getInitialProps = async ctx => {
 	};
 };
 
-export default withAuth(page, `${config.apiUrl}/me`);
+export default withAuth(page);

@@ -1,5 +1,5 @@
 import Page from "../../layout/Page";
-import withAuth from "../../reactants/withAuth";
+import withAuth from "../../util/withAuth";
 import theme from "../../reactants/theme";
 import config from "../../config";
 import axios from "axios";
@@ -233,4 +233,4 @@ page.getInitialProps = async ctx => {
 	} catch (err) {}
 };
 
-export default withAuth(withRouter(page), `${config.apiUrl}/me`);
+export default withAuth(withRouter(page));

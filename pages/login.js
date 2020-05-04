@@ -1,7 +1,7 @@
 import Page from "../layout/CardPage";
 import {useState, useEffect} from "react";
 import {withRouter} from "next/router";
-import withAuth from "../reactants/withAuth";
+import withAuth from "../util/withAuth";
 import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
@@ -138,6 +138,5 @@ export default withAuth(
 			);
 		}
 	}),
-	`${config.apiUrl}/me`,
 	true
 );
