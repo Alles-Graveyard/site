@@ -48,7 +48,11 @@ export default async (req, res) => {
 				})
 			).data;
 
-            console.log(id);
+			// Set File ID in Database
+			await user.update({
+				avatar: id
+			});
+			
             res.json({});
 		} catch (e) {
 			res.status(500).json({err: "internalError"});
