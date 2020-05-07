@@ -166,7 +166,7 @@ const page = props => {
 					type="file"
 					ref={avatarUploadInput}
 					style={{display: "none"}}
-					accept="image/png"
+					accept="png, jpg, jpeg"
 					onChange={avatarUpload}
 					disabled={loading}
 				/>
