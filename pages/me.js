@@ -208,7 +208,7 @@ const page = props => {
 				<div className="box">
 					<h1>Your Profile</h1>
 					<form onSubmit={updateProfile}>
-						<h2>Your Name</h2>
+						<h2>Name</h2>
 						<Input
 							wide
 							name="name"
