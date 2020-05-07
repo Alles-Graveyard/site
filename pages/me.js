@@ -25,7 +25,6 @@ const page = props => {
 
 	//Upload Avatar
 	const avatarUpload = e => {
-		return showBanner("Avatar uploads are temporarily disabled.");
 		setLoading(true);
 		const file = e.target.files[0];
 		const formData = new FormData();
@@ -41,19 +40,8 @@ const page = props => {
 				location.reload();
 				setLoading(false);
 			})
-			.catch(error => {
-				if (error.response) {
-					const {err} = error.response.data;
-					if (err === "avatarTooBig" || error.response.status === 413) {
-						showBanner("The avatar you selected is too big.");
-					} else if (err === "badFileType") {
-						showBanner("Your avatar must be a png file.");
-					} else {
-						showBanner("Something went wrong.");
-					}
-				} else {
-					showBanner("Something went wrong.");
-				}
+			.catch(() => {
+				showBanner("Something went wrong.");
 				setLoading(false);
 			});
 	};
