@@ -27,5 +27,6 @@ export default {
 		}
 	},
 	usersResultLimit: 20,
-	maxPostLength: 300
+	maxPostLength: 300,
+	fileUploadUrl: "https://fs.alles.cx"
 };
