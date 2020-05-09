@@ -5,6 +5,7 @@ import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import uuid from "uuid";
 import axios from "axios";
+import log from "@alleshq/log";
 
 export default async (req, res) => {
 	//Check Body
@@ -94,4 +95,7 @@ export default async (req, res) => {
 
 	//Response
 	res.json({token});
+
+	// Log
+	log(credentials.logarithm, "user.signIn", {address}, user.id);
 };

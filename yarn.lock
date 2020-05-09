@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alleshq/log@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/log/-/log-1.0.0.tgz#be0eea1b0bc7782fe67012b6ca2f32b2b5e78039"
+  integrity sha512-nFEtJXhPi24KeK7SIw4NSUP84koS6O4xyAwiOBo7EQwhSyZNr6RxO99CfCA1xzbltiyV4F1XOJlFBU3lWuPbsA==
+  dependencies:
+    axios "^0.19.2"
+
 "@ampproject/toolbox-core@^2.0.0", "@ampproject/toolbox-core@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.2.0.tgz#3878c5fbdd2acdd865f070ded43ee84652a7a16b"
@@ -1408,7 +1415,7 @@ autoprefixer@^9.6.1:
     postcss "^7.0.27"
     postcss-value-parser "^4.0.3"
 
-axios@^0.19.1:
+axios@^0.19.1, axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
