@@ -52,8 +52,8 @@ export default async (req, res) => {
 			await user.update({
 				avatar: id
 			});
-			
-            res.json({});
+
+			res.json({});
 		} catch (e) {
 			res.status(500).json({err: "internalError"});
 		}
