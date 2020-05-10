@@ -1,4 +1,7 @@
-export default color => {
+export default () => {
+	const color = getComputedStyle(document.documentElement).getPropertyValue(
+		"--primary"
+	);
 	console.log(
 		`
 
