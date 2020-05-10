@@ -35,9 +35,9 @@ export default async (req, res) => {
 					id: u.id,
 					name: u.name,
 					username: u.username,
-					plus: true
+					plus: u.plus
 				},
-				content: "This is another test",
+				content: "Ignore this, it's just a test.",
 				createdAt: new Date(),
 				score: 10,
 				vote: 0,
@@ -49,9 +49,9 @@ export default async (req, res) => {
 					id: u.id,
 					name: u.name,
 					username: u.username,
-					plus: true
+					plus: u.plus
 				},
-				content: "This is a test",
+				content: "Testing in production™",
 				createdAt: new Date() - 1000,
 				score: 15,
 				vote: -1,
