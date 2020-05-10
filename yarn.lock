@@ -957,6 +957,13 @@
   dependencies:
     safe-buffer "^5.1.2"
 
+"@reactants/ui@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-0.14.0.tgz#0ccd5ea4b7d2d3d8225ec733a1967cb8f5143da1"
+  integrity sha512-LKFnGd7qersQ/8mUCoGll8lq4lTe3t87gVtlp1qAIUgWTTG2ryWaqbQEFO29Lbav3ljWpImImNVzNv2ikix+RQ==
+  dependencies:
+    classnames "^2.2.6"
+
 "@types/cookie@^0.3.3":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.3.3.tgz#85bc74ba782fb7aa3a514d11767832b0e3bc6803"
@@ -1884,6 +1891,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classnames@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
 cli-cursor@^2.1.0:
   version "2.1.0"

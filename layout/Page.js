@@ -1,11 +1,7 @@
 import {useEffect} from "react";
-import consoleWarning from "../reactants/consoleWarning";
-import theme from "../reactants/theme";
-
-import Head from "../reactants/Head";
-import Header from "../reactants/Header";
+import consoleWarning from "../util/consoleWarning";
+import {Header, withTheme, useTheme} from "@reactants/ui/Header";
 import Banner from "./Banner";
-import GlobalStyles from "../reactants/GlobalStyles";
 
 export default props => {
 	useEffect(consoleWarning, []);
@@ -47,8 +43,6 @@ export default props => {
 					background: ${theme.greyF};
 				}
 			`}</style>
-
-			<GlobalStyles />
 		</div>
 	);
 };
