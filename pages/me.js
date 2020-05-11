@@ -158,7 +158,7 @@ const page = props => {
 						<img className="overlay" src="/add-overlay.png" />
 						<img
 							className="picture"
-							src={`https://avatar.alles.cx/user/${props.user.id}`}
+							src={`https://avatar.alles.cx/u/${props.user.username}`}
 						/>
 					</div>
 
