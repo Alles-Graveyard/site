@@ -1,11 +1,9 @@
 import Page from "../layout/Page";
 import withAuth from "../util/withAuth";
-import theme from "../reactants/theme";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-import Input from "../reactants/Input";
-import Button from "../reactants/Button";
+import {Input, Button, Box, Spacer} from "@reactants/ui";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
 import {PlusCircle, Triangle} from "react-feather";
@@ -145,128 +143,146 @@ const page = props => {
 				}
 			]}
 		>
-			<section className="user">
-				<div
-					className="profilePicture"
-					onClick={() => avatarUploadInput.current.click()}
-				>
-					<img className="overlay" src="/add-overlay.png" />
-					<img
-						className="picture"
-						src={`https://avatar.alles.cx/user/${props.user.id}`}
+			<Spacer y={8} />
+
+			<Box
+				style={{
+					textAlign: "center"
+				}}
+			>
+				<Box.Content>
+					<div
+						className="profilePicture"
+						onClick={() => avatarUploadInput.current.click()}
+					>
+						<img className="overlay" src="/add-overlay.png" />
+						<img
+							className="picture"
+							src={`https://avatar.alles.cx/user/${props.user.id}`}
+						/>
+					</div>
+
+					<input
+						type="file"
+						ref={avatarUploadInput}
+						style={{display: "none"}}
+						accept="png, jpg, jpeg"
+						onChange={avatarUpload}
+						disabled={loading}
 					/>
-				</div>
-				<h1 className="name">
-					{props.user.name}
-					{props.user.plus ? <sup>+</sup> : <></>}
-				</h1>
-				<h2 className="username">@{props.user.username}</h2>
 
-				<input
-					type="file"
-					ref={avatarUploadInput}
-					style={{display: "none"}}
-					accept="png, jpg, jpeg"
-					onChange={avatarUpload}
-					disabled={loading}
-				/>
+					<h1 className="name">
+						{props.user.name}
+						{props.user.plus ? <sup>+</sup> : <></>}
+					</h1>
+					<h2 className="username">@{props.user.username}</h2>
 
-				<div className="quickInfo">
-					<a href="https://plus.alles.cx">
-						<div>
-							<PlusCircle />
-							<p>
-								{props.user.plus ? (
-									<>
-										Alles+ is <b>Active</b>
-									</>
-								) : (
-									<>
-										Try <b>Alles+</b>
-									</>
-								)}
-							</p>
-						</div>
-					</a>
-
-					<Link href="/rubies">
-						<a>
+					<div className="quickInfo">
+						<a href="https://plus.alles.cx">
 							<div>
-								<Triangle />
+								<PlusCircle />
 								<p>
-									<b>{props.user.rubies}</b>{" "}
-									{props.user.rubies === 1 ? "Ruby" : "Rubies"}
+									{props.user.plus ? (
+										<>
+											Alles+ is <b>Active</b>
+										</>
+									) : (
+										<>
+											Try <b>Alles+</b>
+										</>
+									)}
 								</p>
 							</div>
 						</a>
-					</Link>
-				</div>
-			</section>
 
-			<section>
-				<h1 className="sectionTitle">Basic Settings</h1>
-				<div className="box">
-					<h1>Your Profile</h1>
+						<Link href="/rubies">
+							<a>
+								<div>
+									<Triangle />
+									<p>
+										<b>{props.user.rubies}</b>{" "}
+										{props.user.rubies === 1 ? "Ruby" : "Rubies"}
+									</p>
+								</div>
+							</a>
+						</Link>
+					</div>
+				</Box.Content>
+			</Box>
+
+			<Spacer y={2} />
+
+			<Box>
+				<Box.Header>My Profile</Box.Header>
+				<Box.Content>
 					<form onSubmit={updateProfile}>
-						<h2>Name</h2>
 						<Input
-							wide
+							fluid
+							label="Name"
 							name="name"
 							maxLength="50"
 							placeholder="Jessica Adams"
-							defaultValue={props.user.name}
+							initialValue={props.user.name}
 						/>
-						<h2>Nickname</h2>
+						<Spacer />
 						<Input
-							wide
+							fluid
+							label="Nickname"
 							name="nickname"
 							maxLength="50"
 							placeholder="Jessica"
-							defaultValue={props.user.nickname}
+							initialValue={props.user.nickname}
 						/>
-						<h2>About</h2>
+						<Spacer />
 						<Input
-							wide
+							fluid
+							label="About"
 							name="about"
 							maxLength="125"
 							placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
-							defaultValue={props.user.about}
+							initialValue={props.user.about}
 						/>
-						<Button wide disabled={loading}>
+						<Spacer />
+						<Button fluid disabled={loading}>
 							Update
 						</Button>
 					</form>
-				</div>
-			</section>
+				</Box.Content>
+			</Box>
 
-			<section>
-				<h1 className="sectionTitle">Apps</h1>
-				<WideLink href="https://pulsar.alles.cx/clients" basic>
-					Pulsar Clients
-				</WideLink>
-				<WideLink href="/oauth">Authorized OAuth Applications</WideLink>
-				<WideLink href="https://dev.alles.cx" basic>
-					Create an Application
-				</WideLink>
-			</section>
+			<Spacer y={2} />
 
-			<section>
-				<h1 className="sectionTitle">Security</h1>
-				<div className="box">
-					<h1>Change your Password</h1>
+			<Box>
+				<Box.Header>Apps &amp; Connections</Box.Header>
+				<Box.Content>
+					<WideLink href="https://pulsar.alles.cx/clients" basic>
+						Pulsar Clients
+					</WideLink>
+				</Box.Content>
+			</Box>
+
+			<Spacer y={2} />
+
+			<Box>
+				<Box.Header>Change Password</Box.Header>
+				<Box.Content>
 					<form onSubmit={changePassword}>
-						<h2>Old Password</h2>
-						<Input wide type="password" name="oldPassword" />
-						<h2>New Password</h2>
-						<Input wide type="password" name="newPassword" />
-						<h2>Confirm New Password</h2>
-						<Input wide type="password" name="newPassword2" />
-						<Button wide disabled={loading}>
+						<Input.Password fluid label="Old Password" name="oldPassword" />
+						<Spacer />
+						<Input.Password fluid label="New Password" name="newPassword" />
+						<Spacer />
+						<Input.Password
+							fluid
+							label="Confirm New Password"
+							name="newPassword2"
+						/>
+						<Spacer />
+						<Button fluid disabled={loading}>
 							Update Password
 						</Button>
 					</form>
-				</div>
-			</section>
+				</Box.Content>
+			</Box>
 
 			<style jsx>{`
 				section {
@@ -277,20 +293,7 @@ const page = props => {
 					border-radius: 10px;
 					padding: 20px;
 					box-sizing: border-box;
-					border: solid 1px ${theme.borderGrey};
-				}
-
-				h1.sectionTitle {
-					border-left: solid 5px;
-					padding-left: 10px;
-					padding-right: 5px;
-					transition: 0.1s;
-				}
-
-				section:hover h1.sectionTitle {
-					border-color: ${theme.accent};
-					padding-left: 15px;
-					padding-right: 0px;
+					border: solid 1px var(--accents-2);
 				}
 
 				section.user {
@@ -300,7 +303,7 @@ const page = props => {
 				}
 
 				.profilePicture {
-					border: solid 1px ${theme.borderGrey};
+					border: solid 1px var(--accents-2);
 					border-radius: 50%;
 					height: 200px;
 					width: 200px;
@@ -348,7 +351,7 @@ const page = props => {
 					font-weight: 400;
 					margin: 0;
 					margin-bottom: 10px;
-					color: ${theme.accent};
+					color: var(--primary);
 				}
 
 				.quickInfo {
@@ -372,32 +375,11 @@ const page = props => {
 				.quickInfo div p {
 					margin: 0;
 					margin-top: 10px;
-					color: ${theme.grey4};
+					color: var(--accents-6);
 				}
 
 				.quickInfo div b {
 					color: black;
-				}
-
-				.box {
-					border: solid 1px ${theme.borderGrey};
-					border-radius: 10px;
-					padding: 20px;
-				}
-
-				.box h1 {
-					font-weight: 500;
-					margin: 0;
-					margin-bottom: 40px;
-					font-size: 20px;
-				}
-
-				.box h2 {
-					font-weight: 500;
-					color: ${theme.grey4};
-					margin: 0;
-					margin-top: 20px;
-					font-size: 18px;
 				}
 
 				@media screen and (max-width: 700px) {

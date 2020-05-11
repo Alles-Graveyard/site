@@ -39,9 +39,8 @@ export default props => {
 					bottom: 0;
 					background: white;
 					margin: 20px;
-					border: solid 1px var(--accent-2);
+					border: solid 1px var(--accents-2);
 					border-radius: 10px;
-					box-shadow: 2px 5px 10px var(--accent-8);
 					display: flex;
 				}
 

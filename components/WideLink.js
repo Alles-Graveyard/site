@@ -1,5 +1,4 @@
 import Link from "next/link";
-import theme from "../reactants/theme";
 
 export default props => (
 	<>
@@ -26,8 +25,8 @@ export default props => (
 			}
 
 			a:hover {
-				border-color: ${theme.borderGrey};
-				color: ${theme.accent};
+				border-color: var(--accents-2);
+				color: var(--primary);
 			}
 		`}</style>
 	</>
