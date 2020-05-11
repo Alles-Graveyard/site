@@ -214,39 +214,37 @@ const page = props => {
 
 			<Box>
 				<Box.Header>My Profile</Box.Header>
-				<Box.Content>
-					<form onSubmit={updateProfile}>
-						<Input
-							fluid
-							label="Name"
-							name="name"
-							maxLength="50"
-							placeholder="Jessica Adams"
-							initialValue={props.user.name}
-						/>
-						<Spacer />
-						<Input
-							fluid
-							label="Nickname"
-							name="nickname"
-							maxLength="50"
-							placeholder="Jessica"
-							initialValue={props.user.nickname}
-						/>
-						<Spacer />
-						<Input
-							fluid
-							label="About"
-							name="about"
-							maxLength="125"
-							placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
-							initialValue={props.user.about}
-						/>
-						<Spacer />
-						<Button disabled={loading} style={{marginLeft: "auto"}} primary>
-							Update
-						</Button>
-					</form>
+				<Box.Content as="form" onSubmit={updateProfile}>
+					<Input
+						fluid
+						label="Name"
+						name="name"
+						maxLength="50"
+						placeholder="Jessica Adams"
+						initialValue={props.user.name}
+					/>
+					<Spacer />
+					<Input
+						fluid
+						label="Nickname"
+						name="nickname"
+						maxLength="50"
+						placeholder="Jessica"
+						initialValue={props.user.nickname}
+					/>
+					<Spacer />
+					<Input
+						fluid
+						label="About"
+						name="about"
+						maxLength="125"
+						placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
+						initialValue={props.user.about}
+					/>
+					<Spacer />
+					<Button disabled={loading} style={{marginLeft: "auto"}} primary>
+						Update
+					</Button>
 				</Box.Content>
 			</Box>
 
@@ -265,22 +263,20 @@ const page = props => {
 
 			<Box>
 				<Box.Header>Change Password</Box.Header>
-				<Box.Content>
-					<form onSubmit={changePassword}>
-						<Input.Password fluid label="Old Password" name="oldPassword" />
-						<Spacer />
-						<Input.Password fluid label="New Password" name="newPassword" />
-						<Spacer />
-						<Input.Password
-							fluid
-							label="Confirm New Password"
-							name="newPassword2"
-						/>
-						<Spacer />
-						<Button disabled={loading} style={{marginLeft: "auto"}} primary>
-							Change Password
-						</Button>
-					</form>
+				<Box.Content as="form" onSubmit={changePassword}>
+					<Input.Password fluid label="Old Password" name="oldPassword" />
+					<Spacer />
+					<Input.Password fluid label="New Password" name="newPassword" />
+					<Spacer />
+					<Input.Password
+						fluid
+						label="Confirm New Password"
+						name="newPassword2"
+					/>
+					<Spacer />
+					<Button disabled={loading} style={{marginLeft: "auto"}} primary>
+						Change Password
+					</Button>
 				</Box.Content>
 			</Box>
 
