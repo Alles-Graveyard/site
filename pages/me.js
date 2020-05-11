@@ -13,7 +13,7 @@ const page = props => {
 	const [banner, setBanner] = useState();
 	const avatarUploadInput = createRef();
 
-	//Show Banner
+	// Show Banner
 	const showBanner = message => {
 		setBanner({
 			message,
@@ -21,7 +21,7 @@ const page = props => {
 		});
 	};
 
-	//Upload Avatar
+	// Upload Avatar
 	const avatarUpload = e => {
 		setLoading(true);
 		const file = e.target.files[0];
@@ -44,7 +44,7 @@ const page = props => {
 			});
 	};
 
-	//Update Profile
+	// Update Profile
 	const updateProfile = e => {
 		e.preventDefault();
 		const form = e.target;
@@ -78,7 +78,7 @@ const page = props => {
 			});
 	};
 
-	//Change Password
+	// Change Password
 	const changePassword = e => {
 		e.preventDefault();
 		const form = e.target;
