@@ -1,27 +1,26 @@
 import {useEffect} from "react";
 import consoleWarning from "../util/consoleWarning";
-import {Header, withTheme, useTheme} from "@reactants/ui/Header";
+import {Header, Breadcrumb} from "@reactants/ui";
 import Banner from "./Banner";
+import Link from "next/link";
+import Head from "next/head";
 
 export default props => {
 	useEffect(consoleWarning, []);
 
 	return (
-		<div className="page">
-			<Head title={props.title ? `Alles • ${props.title}` : "Alles"} />
+		<>
+			<Head>
+				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
+			</Head>
 
-			<Header
-				title="Alles"
-				user={
-					props.user
-						? {
-								id: props.user.id,
-								href: "/me"
-						  }
-						: null
-				}
-				breadcrumbs={props.breadcrumbs}
-			/>
+			<Header>
+				<Breadcrumb>
+					<Link href="/" passHref>
+						<Breadcrumb.Item as="h4" text="Alles" />
+					</Link>
+				</Breadcrumb>
+			</Header>
 
 			<main style={props.style}>{props.children}</main>
 
@@ -32,17 +31,24 @@ export default props => {
 			)}
 
 			<style jsx>{`
-				.page {
-					display: flex;
-					flex-flow: column;
-				}
-
 				main {
-					padding: 20px;
-					flex-grow: 1;
-					background: ${theme.greyF};
+					padding: 0 25px 50px;
+					max-width: 800px;
+					margin: 80px auto 0;
 				}
 			`}</style>
-		</div>
+
+			<style jsx global>{`
+				a {
+					color: inherit;
+					text-decoration: none;
+				}
+
+				a.normal {
+					color: var(--primary);
+					text-decoration: underline;
+				}
+			`}</style>
+		</>
 	);
 };

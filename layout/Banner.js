@@ -1,4 +1,3 @@
-import theme from "../reactants/theme";
 import {useState, useEffect} from "react";
 import {X} from "react-feather";
 
@@ -40,9 +39,9 @@ export default props => {
 					bottom: 0;
 					background: white;
 					margin: 20px;
-					border: solid 1px ${theme.borderGrey};
+					border: solid 1px var(--accent-2);
 					border-radius: 10px;
-					box-shadow: 2px 5px 10px ${theme.grey8};
+					box-shadow: 2px 5px 10px var(--accent-8);
 					display: flex;
 				}
 

@@ -1,5 +1,4 @@
 import Page from "../layout/Page";
-import theme from "../reactants/theme";
 const errors = {
 	200: "Nothing went wrong: You found the error page!",
 	404: "The page you were looking for doesn't exist!",
@@ -37,7 +36,7 @@ const page = ({statusCode}) => (
 				max-width: 300px;
 				margin: 0 auto;
 				border-radius: 10px;
-				border: solid 1px ${theme.borderGrey};
+				border: solid 1px var(--accent-2);
 			}
 		`}</style>
 	</Page>
