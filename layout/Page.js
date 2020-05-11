@@ -19,7 +19,7 @@ export default props => {
 					<Link href="/" passHref>
 						<Breadcrumb.Item as="h4" text="Alles" />
 					</Link>
-					
+
 					{props.breadcrumbs ? (
 						props.breadcrumbs.map((b, i) =>
 							b.href ? (
