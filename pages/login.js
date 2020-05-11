@@ -6,43 +6,49 @@ import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
 import {Input, Button, Box, Row, Spacer} from "@reactants/ui";
-import Link from "next/link";
 
 export default withAuth(
 	withRouter(props => {
 		if (props.user) {
-			// No need to sign in again!
-			return <p>signed in</p>;
 			return (
-				<Page title="Sign in" logo user={props.user}>
-					<h1 style={{textAlign: "center"}}>Already signed in</h1>
-					<p>
-						You're already signed in as{" "}
-						<span style={{color: theme.accent}}>{props.user.name}</span>. You
-						can{" "}
-						<Link href="/accounts">
-							<a className="normal">switch accounts</a>
-						</Link>
-						, or continue back to the redirect url.
-					</p>
-					<Button
-						wide
-						onClick={() => {
-							const redirectUrl = props.router.query.redirect;
-							window.location.href = redirectUrl ? redirectUrl : "/";
-						}}
-					>
-						Continue
-					</Button>
+				<Page title="Sign in" user={props.user}>
+					<Row align="middle" justify="center" style={{height: "inherit"}}>
+						<div className="container">
+							<h2>Hang on a minute!</h2>
+							<p>You're already signed in!</p>
 
-					<br />
-					<br />
-					<SmallText>
-						Developer? This page puts the session token in a cookie that can be
-						accessed by all pages on this domain. If you're trying to self-host
-						a site that would normally be on a .alles.cx subdomain, you'll need
-						to manually set the cookie.
-					</SmallText>
+							<Spacer y={2} />
+
+							<Button
+								fluid
+								primary
+								onClick={() => {
+									const redirectUrl = props.router.query.redirect;
+									window.location.href = redirectUrl ? redirectUrl : "/";
+								}}
+							>
+								{props.router.query.redirect
+									? "Continue to Redirect"
+									: "Return to Homepage"}
+							</Button>
+							<Spacer y={0.5} />
+							<Button fluid secondary>
+								Switch Accounts
+							</Button>
+						</div>
+					</Row>
+
+					<style jsx>{`
+						.container {
+							width: 100%;
+							max-width: 375px;
+						}
+
+						h2,
+						p {
+							text-align: center;
+						}
+					`}</style>
 				</Page>
 			);
 		} else {
@@ -195,6 +201,10 @@ export default withAuth(
 						.container {
 							width: 100%;
 							max-width: 375px;
+						}
+
+						h2 {
+							text-align: center;
 						}
 
 						.error {
