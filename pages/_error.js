@@ -1,4 +1,4 @@
-import Page from "../layout/Page";
+import Page from "../components/Page";
 const errors = {
 	200: "Nothing went wrong: You found the error page!",
 	404: "The page you were looking for doesn't exist!",
