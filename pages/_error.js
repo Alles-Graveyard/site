@@ -14,7 +14,7 @@ const page = ({statusCode}) => (
 					? errors[statusCode]
 						? errors[statusCode]
 						: "Something went wrong."
-					: "An error occurred on the client"}
+					: "Something went wrong."}
 			</p>
 		</main>
 
@@ -29,14 +29,7 @@ const page = ({statusCode}) => (
 			}
 
 			main {
-				background: #ffffff;
 				text-align: center;
-				padding: 50px;
-				width: 100%;
-				max-width: 300px;
-				margin: 0 auto;
-				border-radius: 10px;
-				border: solid 1px var(--accent-2);
 			}
 		`}</style>
 	</Page>
