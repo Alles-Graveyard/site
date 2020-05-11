@@ -19,7 +19,22 @@ export default props => {
 					<Link href="/" passHref>
 						<Breadcrumb.Item as="h4" text="Alles" />
 					</Link>
+					
+					{props.breadcrumbs ? (
+						props.breadcrumbs.map((b, i) =>
+							b.href ? (
+								<Link href={b.href} as={b.as} passHref key={i}>
+									<Breadcrumb.Item text={b.name} />
+								</Link>
+							) : (
+								<Breadcrumb.Item text={b.name} key={i} />
+							)
+						)
+					) : (
+						<></>
+					)}
 				</Breadcrumb>
+
 				{props.user ? (
 					<Link href="/me">
 						<a>
