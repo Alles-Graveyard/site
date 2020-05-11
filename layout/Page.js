@@ -23,10 +23,7 @@ export default props => {
 				{props.user ? (
 					<Link href="/me">
 						<a>
-							<Avatar
-								username={props.user.username}
-								size={50}
-							/>
+							<Avatar username={props.user.username} size={50} />
 						</a>
 					</Link>
 				) : (
