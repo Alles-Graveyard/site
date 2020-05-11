@@ -242,7 +242,7 @@ const page = props => {
 						initialValue={props.user.about}
 					/>
 					<Spacer />
-					<Button disabled={loading} style={{marginLeft: "auto"}} primary>
+					<Button loading={loading} style={{marginLeft: "auto"}} primary>
 						Update
 					</Button>
 				</Box.Content>
@@ -274,7 +274,7 @@ const page = props => {
 						name="newPassword2"
 					/>
 					<Spacer />
-					<Button disabled={loading} style={{marginLeft: "auto"}} primary>
+					<Button loading={loading} style={{marginLeft: "auto"}} primary>
 						Change Password
 					</Button>
 				</Box.Content>
