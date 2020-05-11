@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import consoleWarning from "../util/consoleWarning";
-import {Header, Breadcrumb} from "@reactants/ui";
+import {Header, Breadcrumb, Avatar} from "@reactants/ui";
 import Banner from "./Banner";
 import Link from "next/link";
 import Head from "next/head";
@@ -20,6 +20,18 @@ export default props => {
 						<Breadcrumb.Item as="h4" text="Alles" />
 					</Link>
 				</Breadcrumb>
+				{props.user ? (
+					<Link href="/me">
+						<a>
+							<Avatar
+								username={props.user.username}
+								size={50}
+							/>
+						</a>
+					</Link>
+				) : (
+					<></>
+				)}
 			</Header>
 
 			<main style={props.style}>{props.children}</main>
