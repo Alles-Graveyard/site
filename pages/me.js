@@ -3,15 +3,16 @@ import withAuth from "../util/withAuth";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-import {Input, Button, Box, Spacer} from "@reactants/ui";
+import {Input, Button, Box, Spacer, setTheme, useTheme} from "@reactants/ui";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
-import {PlusCircle, Triangle} from "react-feather";
+import {PlusCircle, Triangle, Moon, Sun} from "react-feather";
 
 const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [banner, setBanner] = useState();
 	const avatarUploadInput = createRef();
+	const theme = useTheme();
 
 	// Show Banner
 	const showBanner = message => {
@@ -147,7 +148,8 @@ const page = props => {
 
 			<Box
 				style={{
-					textAlign: "center"
+					textAlign: "center",
+					position: "relative"
 				}}
 			>
 				<Box.Content>
@@ -176,6 +178,10 @@ const page = props => {
 						{props.user.plus ? <sup>+</sup> : <></>}
 					</h1>
 					<h2 className="username">@{props.user.username}</h2>
+
+					<div className="theme" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+						{theme === "light" ? <Sun /> : <Moon />}
+					</div>
 
 					<div className="quickInfo">
 						<a href="https://plus.alles.cx">
@@ -299,23 +305,6 @@ const page = props => {
 			</Box>
 
 			<style jsx>{`
-				section {
-					background: white;
-					width: 600px;
-					max-width: 100%;
-					margin: 20px auto;
-					border-radius: 10px;
-					padding: 20px;
-					box-sizing: border-box;
-					border: solid 1px var(--accents-2);
-				}
-
-				section.user {
-					margin-top: 100px;
-					padding-top: 0;
-					text-align: center;
-				}
-
 				.profilePicture {
 					border: solid 1px var(--accents-2);
 					border-radius: 50%;
@@ -351,6 +340,13 @@ const page = props => {
 
 				.profilePicture:hover img.overlay {
 					opacity: 1;
+				}
+
+				.theme {
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					cursor: pointer;
 				}
 
 				h1.name {
@@ -393,7 +389,7 @@ const page = props => {
 				}
 
 				.quickInfo div b {
-					color: black;
+					color: var(--foreground);
 				}
 
 				@media screen and (max-width: 700px) {

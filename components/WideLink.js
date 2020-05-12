@@ -16,7 +16,7 @@ export default props => (
 				padding: 10px;
 				border: 1px;
 				cursor: pointer;
-				color: black;
+				color: var(--foreground);
 				text-decoration: none;
 				border: 1px transparent;
 				border-style: solid none;
