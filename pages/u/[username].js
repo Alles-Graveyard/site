@@ -177,7 +177,7 @@ const page = props => {
 					}
 
 					h2.counts b {
-						color: black;
+						color: var(--foreground);
 					}
 
 					h2.tagline {
