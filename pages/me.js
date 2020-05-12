@@ -212,9 +212,9 @@ const page = props => {
 
 			<Spacer y={2} />
 
-			<Box>
+			<Box as="form" onSubmit={updateProfile}>
 				<Box.Header>My Profile</Box.Header>
-				<Box.Content as="form" onSubmit={updateProfile}>
+				<Box.Content>
 					<Input
 						fluid
 						label="Name"
@@ -270,9 +270,9 @@ const page = props => {
 
 			<Spacer y={2} />
 
-			<Box>
+			<Box as="form" onSubmit={changePassword}>
 				<Box.Header>Change Password</Box.Header>
-				<Box.Content as="form" onSubmit={changePassword}>
+				<Box.Content>
 					<Input.Password fluid label="Old Password" name="oldPassword" />
 					<Spacer />
 					<Input.Password fluid label="New Password" name="newPassword" />
