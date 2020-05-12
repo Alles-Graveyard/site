@@ -1,6 +1,5 @@
-import Page from "../layout/Page";
+import Page from "../components/Page";
 import withAuth from "../util/withAuth";
-import theme from "../reactants/theme";
 import config from "../config";
 import Link from "next/link";
 import axios from "axios";
@@ -127,13 +126,13 @@ const NavArrows = ({before, after}) => (
 				margin: 0 10px;
 				display: flex;
 				justify-content: center;
-				border: solid 1px ${theme.borderGrey};
+				border: solid 1px var(--accents-2);
 				border-radius: 50%;
 			}
 
 			a.disabled {
 				background: none;
-				color: ${theme.grey4};
+				color: var(--accents-4);
 			}
 
 			span {
