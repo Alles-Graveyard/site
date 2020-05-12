@@ -1,12 +1,15 @@
 import {Avatar, Box} from "@reactants/ui";
 
 export default ({user, style, ...props}) => (
-	<Box style={{
-		display: "flex",
-		padding: 20,
-		margin: "20px 0",
-		...style
-	}} {...props}>
+	<Box
+		style={{
+			display: "flex",
+			padding: 20,
+			margin: "20px 0",
+			...style
+		}}
+		{...props}
+	>
 		<div className="left">
 			<Avatar username={user.username} size={40} />
 			<h1>
