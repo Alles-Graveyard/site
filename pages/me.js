@@ -373,25 +373,26 @@ const page = props => {
 					justify-content: center;
 				}
 
-				.quickInfo div {
+				.quickInfo a {
 					width: 170px;
 					padding: 10px;
 					box-sizing: border-box;
 					cursor: pointer;
 					border-radius: var(--radius);
+					display: block;
 				}
 
-				.quickInfo div:hover {
-					background: #f7f7f7;
+				.quickInfo a:hover {
+					background: var(--accents-2);
 				}
 
-				.quickInfo div p {
+				.quickInfo p {
 					margin: 0;
 					margin-top: 10px;
 					color: var(--accents-6);
 				}
 
-				.quickInfo div b {
+				.quickInfo b {
 					color: var(--foreground);
 				}
 
@@ -400,7 +401,7 @@ const page = props => {
 						display: block;
 					}
 
-					.quickInfo div {
+					.quickInfo {
 						width: 100%;
 					}
 				}
