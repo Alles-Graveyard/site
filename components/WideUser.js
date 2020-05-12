@@ -14,7 +14,6 @@ export default ({user, ...props}) => (
 		<style jsx>{`
 			article {
 				display: flex;
-				background: #ffffff;
 				padding: 20px;
 				margin: 20px 0;
 				border-radius: 20px;
