@@ -16,7 +16,7 @@ export default ({user, ...props}) => (
 				display: flex;
 				padding: 20px;
 				margin: 20px 0;
-				border-radius: 20px;
+				border-radius: var(--radius);
 				border: solid 1px var(--accents-2);
 				overflow: hidden;
 			}
