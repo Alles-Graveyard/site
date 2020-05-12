@@ -1,13 +1,11 @@
-import Page from "../../layout/Page";
+import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
-import theme from "../../reactants/theme";
 import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {useState} from "react";
-import Button from "../../reactants/Button";
+import {Button, Box} from "@reactants/ui";
 import Post from "../../components/Post";
-import PostField from "../../components/PostField";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -33,8 +31,6 @@ const page = props => {
 				.catch(() => {});
 		};
 
-		const userButtonStyle = {margin: "5px 10px", padding: 5, width: 100};
-
 		return (
 			<Page
 				title={`@${props.requestedUser.username}`}
@@ -46,11 +42,26 @@ const page = props => {
 				]}
 			>
 				<main>
-					<section className="banner"></section>
-					<section className="user">
+					<Box
+						style={{
+							height: 150,
+							background: "var(--primary)",
+							borderBottomLeftRadius: 0,
+							borderBottomRightRadius: 0
+						}}
+					/>
+
+					<Box
+						style={{
+							textAlign: "center",
+							borderTopLeftRadius: 0,
+							borderTopRightRadius: 0,
+							padding: "0 20px 20px"
+						}}
+					>
 						<img
 							className="profilePicture"
-							src={`https://avatar.alles.cx/user/${props.requestedUser.id}`}
+							src={`https://avatar.alles.cx/u/${props.requestedUser.username}`}
 						/>
 						<h1 className="name">
 							{props.requestedUser.name}
@@ -73,7 +84,12 @@ const page = props => {
 						) : (
 							<>
 								<Button
-									style={userButtonStyle}
+									style={{
+										margin: "0 auto",
+										width: 100
+									}}
+									small
+									primary={isFollowing}
 									secondary={!isFollowing}
 									onClick={toggleFollow}
 								>
@@ -81,8 +97,9 @@ const page = props => {
 								</Button>
 							</>
 						)}
-					</section>
+					</Box>
 
+					{/*
 					{self ? (
 						<PostField
 							placeholder="What's up?"
@@ -100,6 +117,7 @@ const page = props => {
 							link
 						/>
 					))}
+					*/}
 				</main>
 
 				<style jsx>{`
@@ -109,35 +127,7 @@ const page = props => {
 						margin: 0 auto;
 					}
 
-					section {
-						background: white;
-						width: 100%;
-						margin: 20px auto;
-						border: solid 1px ${theme.borderGrey};
-						border-radius: 10px;
-						padding: 20px;
-						box-sizing: border-box;
-					}
-
-					section.banner {
-						height: 150px;
-						margin-bottom: 0;
-						border-bottom-left-radius: 0;
-						border-bottom-right-radius: 0;
-						background: ${theme.accent};
-						border: solid 1px ${theme.borderGrey};
-					}
-
-					section.user {
-						padding-top: 0;
-						text-align: center;
-						margin-top: 10px;
-						border-top-left-radius: 0;
-						border-top-right-radius: 0;
-					}
-
 					.profilePicture {
-						border: solid 10px ${theme.greyF};
 						border-radius: 50%;
 						height: 200px;
 						width: 200px;
@@ -171,7 +161,7 @@ const page = props => {
 						font-weight: 400;
 						margin: 0;
 						margin-bottom: 5px;
-						color: ${theme.accent};
+						color: var(--primary);
 					}
 
 					h2.counts {
@@ -179,7 +169,7 @@ const page = props => {
 						font-weight: 400;
 						margin: 0;
 						margin-bottom: 10px;
-						color: ${theme.grey4};
+						color: var(--accents-6);
 					}
 
 					h2.counts span {
@@ -195,7 +185,7 @@ const page = props => {
 						font-weight: 400;
 						margin: 0;
 						margin-bottom: 20px;
-						color: ${theme.grey4};
+						color: var(--accents-6);
 					}
 				`}</style>
 			</Page>

@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
-import theme from "../reactants/theme";
 import {Plus, Minus} from "react-feather";
 import config from "../config";
 import moment from "moment";
@@ -75,7 +74,7 @@ export default ({data, ...props}) => {
 				header img {
 					width: 50px;
 					height: 50px;
-					border: solid 1px ${theme.borderGrey};
+					border: solid 1px var(--accents-2);
 					border-radius: 50%;
 					margin-right: 10px;
 				}
@@ -97,7 +96,7 @@ export default ({data, ...props}) => {
 				}
 
 				footer p {
-					color: ${theme.grey4};
+					color: var(--accents-6);
 					font-size: 12px;
 				}
 			`}</style>
@@ -111,7 +110,7 @@ export default ({data, ...props}) => {
 					style={{
 						cursor: "pointer",
 						margin: "5px auto",
-						color: vote === 1 ? theme.accent : theme.grey4
+						color: `var(--${vote === 1 ? "primary" : "accents-6"})`
 					}}
 					onClick={() => changeVote(vote === 1 ? 0 : 1)}
 				/>
@@ -122,7 +121,7 @@ export default ({data, ...props}) => {
 					style={{
 						cursor: "pointer",
 						margin: "5px auto",
-						color: vote === -1 ? theme.accent : theme.grey4
+						color: `var(--${vote === 1 ? "primary" : "accents-6"})`
 					}}
 					onClick={() => changeVote(vote === -1 ? 0 : -1)}
 				/>
@@ -143,7 +142,7 @@ export default ({data, ...props}) => {
 					width: 100%;
 					margin: 20px 0;
 					background: white;
-					border: solid 1px ${theme.borderGrey};
+					border: solid 1px var(--accents-2);
 					border-radius: 10px;
 					display: flex;
 					box-sizing: border-box;
