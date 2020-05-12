@@ -1,4 +1,4 @@
-import Page from "../layout/Page";
+import Page from "../components/Page";
 import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";

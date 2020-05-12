@@ -1,15 +1,15 @@
-import theme from "../reactants/theme";
+import {Avatar} from "@reactants/ui";
 
-export default props => (
+export default ({user, ...props}) => (
 	<article {...props}>
 		<div className="left">
-			<img src={`https://avatar.alles.cx/user/${props.user.id}`} />
+			<Avatar username={user.username} size={40} />
 			<h1>
-				{props.user.name}
-				{props.user.plus ? <sup>+</sup> : <></>}
+				{user.name}
+				{user.plus ? <sup>+</sup> : <></>}
 			</h1>
 		</div>
-		<h2>@{props.user.username}</h2>
+		<h2>@{user.username}</h2>
 
 		<style jsx>{`
 			article {
@@ -18,36 +18,27 @@ export default props => (
 				padding: 20px;
 				margin: 20px 0;
 				border-radius: 20px;
-				border: solid 1px ${theme.borderGrey};
+				border: solid 1px var(--accents-2);
 				overflow: hidden;
 			}
 
-			article:hover,
-			article:hover img {
-				border-color: ${theme.grey8};
+			article:hover {
+				border-color: var(--accents-4);
 			}
 
 			article h1 {
 				font-size: 20px;
 				font-weight: 500;
 				margin: auto 0;
+				margin-left: 10px;
 			}
 
 			article h2 {
 				font-size: 15px;
 				font-weight: 400;
 				margin: auto 0;
-				color: ${theme.grey4};
+				color: var(--accents-6);
 				text-align: right;
-			}
-
-			article img {
-				height: 30px;
-				width: 30px;
-				border-radius: 50%;
-				margin-right: 10px;
-				border: solid 1px ${theme.borderGrey};
-				flex-shrink: 0;
 			}
 
 			article .left {
