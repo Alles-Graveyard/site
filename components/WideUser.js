@@ -1,7 +1,12 @@
-import {Avatar} from "@reactants/ui";
+import {Avatar, Box} from "@reactants/ui";
 
-export default ({user, ...props}) => (
-	<article {...props}>
+export default ({user, style, ...props}) => (
+	<Box style={{
+		display: "flex",
+		padding: 20,
+		margin: "20px 0",
+		...style
+	}} {...props}>
 		<div className="left">
 			<Avatar username={user.username} size={40} />
 			<h1>
@@ -21,18 +26,14 @@ export default ({user, ...props}) => (
 				overflow: hidden;
 			}
 
-			article:hover {
-				border-color: var(--accents-4);
-			}
-
-			article h1 {
+			h1 {
 				font-size: 20px;
 				font-weight: 500;
 				margin: auto 0;
 				margin-left: 10px;
 			}
 
-			article h2 {
+			h2 {
 				font-size: 15px;
 				font-weight: 400;
 				margin: auto 0;
@@ -40,10 +41,10 @@ export default ({user, ...props}) => (
 				text-align: right;
 			}
 
-			article .left {
+			.left {
 				display: flex;
 				flex-grow: 1;
 			}
 		`}</style>
-	</article>
+	</Box>
 );
