@@ -179,7 +179,10 @@ const page = props => {
 					</h1>
 					<h2 className="username">@{props.user.username}</h2>
 
-					<div className="theme" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+					<div
+						className="theme"
+						onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+					>
 						{theme === "light" ? <Sun /> : <Moon />}
 					</div>
 
