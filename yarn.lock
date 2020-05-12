@@ -1037,10 +1037,10 @@
   dependencies:
     safe-buffer "^5.1.2"
 
-"@reactants/ui@^0.14.0":
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-0.14.0.tgz#0ccd5ea4b7d2d3d8225ec733a1967cb8f5143da1"
-  integrity sha512-LKFnGd7qersQ/8mUCoGll8lq4lTe3t87gVtlp1qAIUgWTTG2ryWaqbQEFO29Lbav3ljWpImImNVzNv2ikix+RQ==
+"@reactants/ui@^0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-0.16.0.tgz#5a015ca342f832db01dc720f2bde4e67f6e32472"
+  integrity sha512-VK93HEdZEjUS2Jnwq8LZNb7AhSg8IeAu5+fLAu73OndK1n4BdpGCafera8RGa4G6oVv52khuscnn/P/9zLX3cA==
   dependencies:
     classnames "^2.2.6"
 
