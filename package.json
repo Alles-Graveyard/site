@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"format": "prettier --write \"**/*.+(js|jsx|json)\""
+		"format": "prettier --write \"**/*.+(js|jsx|json|css)\""
 	},
 	"dependencies": {
 		"@alleshq/log": "^1.0.0",
