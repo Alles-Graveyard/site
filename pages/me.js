@@ -241,11 +241,20 @@ const page = props => {
 						placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
 						initialValue={props.user.about}
 					/>
-					<Spacer />
-					<Button loading={loading} style={{marginLeft: "auto"}} primary>
-						Update
-					</Button>
 				</Box.Content>
+				<Box.Footer
+					style={{
+						overflow: "auto",
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center"
+					}}
+				>
+					Updates across all services
+					<Button loading={loading} primary small right>
+						Save
+					</Button>
+				</Box.Footer>
 			</Box>
 
 			<Spacer y={2} />
@@ -273,11 +282,20 @@ const page = props => {
 						label="Confirm New Password"
 						name="newPassword2"
 					/>
-					<Spacer />
-					<Button loading={loading} style={{marginLeft: "auto"}} primary>
+				</Box.Content>
+				<Box.Footer
+					style={{
+						overflow: "auto",
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center"
+					}}
+				>
+					Must be between 6 and 128 characters long
+					<Button loading={loading} primary small right>
 						Change Password
 					</Button>
-				</Box.Content>
+				</Box.Footer>
 			</Box>
 
 			<style jsx>{`
@@ -361,7 +379,7 @@ const page = props => {
 					padding: 10px;
 					box-sizing: border-box;
 					cursor: pointer;
-					border-radius: 10px;
+					border-radius: var(--radius);
 				}
 
 				.quickInfo div:hover {
