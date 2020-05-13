@@ -4,8 +4,9 @@ import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {useState} from "react";
-import {Button, Box} from "@reactants/ui";
+import {Button, Box, Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
+import PostField from "../../components/PostField";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -99,7 +100,8 @@ const page = props => {
 						)}
 					</Box>
 
-					{/*
+					<Spacer y={2} />
+
 					{self ? (
 						<PostField
 							placeholder="What's up?"
@@ -109,6 +111,7 @@ const page = props => {
 						<></>
 					)}
 
+					{/*
 					{props.requestedUser.posts.map(p => (
 						<Post
 							key={p.slug}
