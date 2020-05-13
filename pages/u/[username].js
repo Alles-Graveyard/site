@@ -123,6 +123,15 @@ const page = props => {
 					*/}
 				</main>
 
+				<style jsx global>{`
+					:root,
+					:root.dark-mode {
+						${props.requestedUser.color
+							? `--primary: ${props.requestedUser.color}`
+							: ``};
+					}
+				`}</style>
+
 				<style jsx>{`
 					main {
 						width: 600px;
