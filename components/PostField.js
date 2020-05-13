@@ -40,7 +40,9 @@ export default props => {
 				disabled={!content}
 				style={{
 					borderRadius: 0,
-					width: "100%"
+					width: "100%",
+					borderStyle: "none",
+					borderTopStyle: "solid"
 				}}
 			>
 				Post
