@@ -1,5 +1,5 @@
 import {Box, Textarea, Button} from "@reactants/ui";
-import {useState, useEffect, createRef} from "react";
+import {useState, createRef} from "react";
 import config from "../config";
 import axios from "axios";
 import {Image} from "react-feather";
