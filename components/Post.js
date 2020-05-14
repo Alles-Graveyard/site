@@ -56,6 +56,9 @@ export default ({data, ...props}) => {
 
 			<main>
 				<p className="content">{data.content}</p>
+				<div className="image">
+					<img src="https://images.unsplash.com/photo-1589431726521-098f9353cb21?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
+				</div>
 			</main>
 
 			<footer>
@@ -65,7 +68,7 @@ export default ({data, ...props}) => {
 			</footer>
 
 			<style jsx>{`
-				div.mainContainer {
+				.mainContainer {
 					padding: 10px;
 					flex-grow: 1;
 				}
@@ -96,6 +99,21 @@ export default ({data, ...props}) => {
 
 				p.content {
 					white-space: pre-wrap;
+				}
+
+				.image {
+					width: 100%;
+					max-height: 300px;
+					border-radius: var(--radius);
+					overflow: hidden;
+					display: flex;
+					justify-content: center;
+					flex-flow: column nowrap;
+				}
+
+				.image img {
+					width: 100%;
+					margin: 0 auto;
 				}
 
 				footer p {
@@ -151,6 +169,7 @@ export default ({data, ...props}) => {
 					display: flex;
 					flex-flow: column;
 					justify-content: center;
+					width: 50px;
 				}
 
 				aside p {
@@ -159,6 +178,7 @@ export default ({data, ...props}) => {
 
 				.main {
 					flex-grow: 1;
+					width: 100%;
 				}
 			`}</style>
 		</Box>
