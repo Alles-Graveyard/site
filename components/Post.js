@@ -105,9 +105,11 @@ export default ({data, ...props}) => {
 	);
 
 	return (
-		<Box style={{
-			display: "flex"
-		}}>
+		<Box
+			style={{
+				display: "flex"
+			}}
+		>
 			<aside>
 				<Plus
 					style={{
