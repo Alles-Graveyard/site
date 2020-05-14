@@ -26,17 +26,19 @@ export default ({data, ...props}) => {
 			if (vote === 1 && v === -1) setScore(score - 2);
 		}
 
-		axios.post(
-			`${config.apiUrl}/post/${data.slug}/vote`,
-			{
-				vote: v
-			},
-			{
-				headers: {
-					authorization: props.sessionToken
+		axios
+			.post(
+				`${config.apiUrl}/post/${data.slug}/vote`,
+				{
+					vote: v
+				},
+				{
+					headers: {
+						authorization: props.sessionToken
+					}
 				}
-			}
-		);
+			)
+			.catch(() => {});
 	};
 
 	const MainContainer = () => (
@@ -126,7 +128,7 @@ export default ({data, ...props}) => {
 					style={{
 						cursor: "pointer",
 						margin: "5px auto",
-						color: `var(--${vote === 1 ? "primary" : "accents-6"})`
+						color: `var(--${vote === -1 ? "primary" : "accents-6"})`
 					}}
 					onClick={() => changeVote(vote === -1 ? 0 : -1)}
 				/>
