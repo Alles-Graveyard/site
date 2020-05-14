@@ -7,7 +7,6 @@ import {Image, X} from "react-feather";
 export default props => {
 	const [content, setContent] = useState("");
 	const [imageUpload, setImage] = useState();
-	const [imageSrc, setImageSrc] = useState();
 	const imageInput = createRef();
 
 	const submit = () => {
@@ -48,15 +47,9 @@ export default props => {
 				}}
 			/>
 
-			{imageSrc ? (
+			{imageUpload ? (
 				<div className="image">
-					<img
-						src={imageSrc}
-						onError={() => {
-							setImage();
-							setImageSrc();
-						}}
-					/>
+					<img src={imageUpload} onError={() => setImage()} />
 					<X
 						style={{
 							position: "absolute",
@@ -67,10 +60,7 @@ export default props => {
 							borderRadius: "50%",
 							cursor: "pointer"
 						}}
-						onClick={() => {
-							setImage();
-							setImageSrc();
-						}}
+						onClick={() => setImage()}
 					/>
 				</div>
 			) : (
@@ -91,10 +81,7 @@ export default props => {
 				onChange={e => {
 					const f = e.target.files[0];
 					const reader = new FileReader();
-					reader.onload = e => {
-						setImage(f);
-						setImageSrc(e.target.result);
-					};
+					reader.onload = e => setImage(e.target.result);
 					reader.readAsDataURL(f);
 				}}
 			/>
