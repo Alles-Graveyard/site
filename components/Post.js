@@ -4,6 +4,7 @@ import Link from "next/link";
 import {Plus, Minus} from "react-feather";
 import config from "../config";
 import moment from "moment";
+import {Box} from "@reactants/ui";
 
 export default ({data, ...props}) => {
 	const [vote, setVote] = useState(data.vote);
@@ -104,7 +105,9 @@ export default ({data, ...props}) => {
 	);
 
 	return (
-		<article>
+		<Box style={{
+			display: "flex"
+		}}>
 			<aside>
 				<Plus
 					style={{
@@ -138,16 +141,6 @@ export default ({data, ...props}) => {
 			)}
 
 			<style jsx>{`
-				article {
-					width: 100%;
-					margin: 20px 0;
-					background: white;
-					border: solid 1px var(--accents-2);
-					border-radius: 10px;
-					display: flex;
-					box-sizing: border-box;
-				}
-
 				aside {
 					flex-shrink: 0;
 					padding: 10px;
@@ -164,6 +157,6 @@ export default ({data, ...props}) => {
 					flex-grow: 1;
 				}
 			`}</style>
-		</article>
+		</Box>
 	);
 };

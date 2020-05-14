@@ -111,16 +111,16 @@ const page = props => {
 						<></>
 					)}
 
-					{/*
 					{props.requestedUser.posts.map(p => (
-						<Post
-							key={p.slug}
-							data={p}
-							sessionToken={props.user.sessionToken}
-							link
-						/>
+						<React.Fragment key={p.slug}>
+							<Spacer y={2} />
+							<Post
+								data={p}
+								sessionToken={props.user.sessionToken}
+								link
+							/>
+						</React.Fragment>
 					))}
-					*/}
 				</main>
 
 				<style jsx global>{`
