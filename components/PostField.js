@@ -2,7 +2,7 @@ import {Box, Textarea, Button} from "@reactants/ui";
 import {useState, createRef} from "react";
 import config from "../config";
 import axios from "axios";
-import {Image} from "react-feather";
+import {Image, X} from "react-feather";
 
 export default props => {
 	const [content, setContent] = useState("");
@@ -57,6 +57,21 @@ export default props => {
 							setImageSrc();
 						}}
 					/>
+					<X
+						style={{
+							position: "absolute",
+							top: 25,
+							right: 25,
+							background: "var(--accents-2)",
+							color: "var(--accents-6)",
+							borderRadius: "50%",
+							cursor: "pointer"
+						}}
+						onClick={() => {
+							setImage();
+							setImageSrc();
+						}}
+					/>
 				</div>
 			) : (
 				<></>
@@ -89,10 +104,8 @@ export default props => {
 				disabled={!content}
 				onClick={submit}
 				style={{
-					borderRadius: 0,
-					width: "100%",
-					borderStyle: "none",
-					borderTopStyle: "solid"
+					width: "calc(100% - 40px)",
+					margin: 20
 				}}
 			>
 				Post
@@ -101,12 +114,17 @@ export default props => {
 			<style jsx>{`
 				.image {
 					padding: 20px;
+					position: relative;
 				}
 
 				.image img {
 					width: 100%;
 					border: solid 1px var(--accents-2);
 					border-radius: var(--radius);
+				}
+
+				.icons {
+					padding: 0 10px;
 				}
 			`}</style>
 		</Box>
