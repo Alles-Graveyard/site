@@ -179,10 +179,7 @@ const page = props => {
 					</h1>
 					<h2 className="username">@{props.user.username}</h2>
 
-					<div
-						className="theme"
-						onClick={() => toggleTheme()}
-					>
+					<div className="theme" onClick={() => toggleTheme()}>
 						{theme === "light" ? <Sun /> : <Moon />}
 					</div>
 
