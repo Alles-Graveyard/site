@@ -5,6 +5,7 @@ import db from "../../../util/db";
 import {v4 as uuid} from "uuid";
 import axios from "axios";
 import sharp from "sharp";
+import FormData from "form-data";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -36,10 +37,10 @@ export default async (req, res) => {
 	if (typeof req.body.image === "string") {
 		try {
 			// Convert to Buffer
-			let image = Buffer.from(req.body.image.split(";base64,")[1], "base64");
+			let img = Buffer.from(req.body.image.split(";base64,")[1], "base64");
 
 			// Resize
-			image = await sharp(image)
+			img = await sharp(img)
 				.resize({
 					width: 500,
 					fit: "cover"
@@ -48,7 +49,7 @@ export default async (req, res) => {
 				.toBuffer();
 
 			// Create Text Overlay
-			const {height} = await sharp(image).metadata();
+			const {height} = await sharp(img).metadata();
 			const text = Buffer.from(`
 				<svg
 					width="500"
@@ -65,17 +66,28 @@ export default async (req, res) => {
 			`);
 
 			// Composite Overlay
-			image = await sharp(image).composite([
+			img = await sharp(img).composite([
 				{
 					input: text
 				}
 			]);
 
 			// Convert to png
-			image = await image.png().toBuffer();
-		} catch (e) {
-			console.log(e);
-		}
+			img = await img.png().toBuffer();
+
+			// Upload to AllesFS
+			const formData = new FormData();
+			formData.append("file", img, {
+				filename: "image"
+			});
+			formData.append("public", "true");
+			imageId = (
+				await axios.post(config.fileUploadUrl, formData.getBuffer(), {
+					auth: credentials.fileUpload,
+					headers: formData.getHeaders()
+				})
+			).data;
+		} catch (e) {}
 	}
 
 	// Create Post
