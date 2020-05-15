@@ -4,6 +4,7 @@ import credentials from "../../../credentials";
 import db from "../../../util/db";
 import {v4 as uuid} from "uuid";
 import axios from "axios";
+import sharp from "sharp";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -30,11 +31,59 @@ export default async (req, res) => {
 		)
 	).data;
 
+	// Image
+	let imageId;
+	if (typeof req.body.image === "string") {
+		try {
+			// Convert to Buffer
+			let image = Buffer.from(req.body.image.split(";base64,")[1], "base64");
+
+			// Resize
+			image = await sharp(image)
+				.resize({
+					width: 500,
+					fit: "cover"
+				})
+				.png()
+				.toBuffer();
+
+			// Create Text Overlay
+			const {height} = await sharp(image).metadata();
+			const text = Buffer.from(`
+				<svg
+					width="500"
+					height="${height}"
+				>
+					<text
+						font-family="Rubik, sans-serif"
+						font-size="10"
+						x="10"
+						y="${height - 10}"
+						fill="#ffffff"
+					>@${user.username}</text>
+				</svg>
+			`);
+
+			// Composite Overlay
+			image = await sharp(image).composite([
+				{
+					input: text
+				}
+			]);
+
+			// Convert to png
+			image = await image.png().toBuffer();
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	// Create Post
 	const post = await db.Post.create({
 		id: uuid(),
 		content,
-		score
+		score,
+		image: imageId
 	});
 	await post.setUser(user);
 
