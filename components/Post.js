@@ -149,7 +149,10 @@ export default ({data, ...props}) => {
 			</aside>
 
 			{props.link ? (
-				<Link href="/p/[slug]" as={`/p/${data.slug}`}>
+				<Link
+					href="/[username]/[slug]"
+					as={`/${data.author.username}/${data.slug}`}
+				>
 					<a className="main">
 						<MainContainer />
 					</a>
