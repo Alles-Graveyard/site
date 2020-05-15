@@ -3,7 +3,7 @@ import withAuth from "../util/withAuth";
 import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
-import {Input, Button, Box, Spacer, setTheme, useTheme} from "@reactants/ui";
+import {Input, Button, Box, Spacer, useTheme} from "@reactants/ui";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
 import {PlusCircle, Triangle, Moon, Sun} from "react-feather";
@@ -12,7 +12,7 @@ const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [banner, setBanner] = useState();
 	const avatarUploadInput = createRef();
-	const theme = useTheme();
+	const {theme, toggleTheme} = useTheme();
 
 	// Show Banner
 	const showBanner = message => {
@@ -181,7 +181,7 @@ const page = props => {
 
 					<div
 						className="theme"
-						onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+						onClick={() => toggleTheme()}
 					>
 						{theme === "light" ? <Sun /> : <Moon />}
 					</div>

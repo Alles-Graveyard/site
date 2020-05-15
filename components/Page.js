@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import consoleWarning from "../util/consoleWarning";
-import {Header, Breadcrumb, Avatar} from "@reactants/ui";
+import {Header, Breadcrumb, Avatar, ThemeScript} from "@reactants/ui";
 import Banner from "./Banner";
 import Link from "next/link";
 import Head from "next/head";
@@ -12,6 +12,7 @@ export default props => {
 		<>
 			<Head>
 				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
+				<ThemeScript />
 			</Head>
 
 			<Header>
