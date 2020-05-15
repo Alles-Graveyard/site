@@ -396,22 +396,20 @@ const page = props => {
 					color: var(--foreground);
 				}
 
-				@media screen and (max-width: 700px) {
-					.quickInfo {
-						display: block;
-					}
-
-					.quickInfo {
-						width: 100%;
-					}
-				}
-
-				@media screen and (max-width: 450px) {
+				@media screen and (max-width: 500px) {
 					.profilePicture {
 						height: 120px;
 						width: 120px;
 						top: -60px;
 						margin-bottom: -80px;
+					}
+
+					.quickInfo {
+						display: block;
+					}
+
+					.quickInfo a {
+						width: 100%;
 					}
 				}
 			`}</style>
