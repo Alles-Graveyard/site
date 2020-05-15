@@ -4,7 +4,7 @@ import Link from "next/link";
 import {Plus, Minus} from "react-feather";
 import config from "../config";
 import moment from "moment";
-import {Box} from "@reactants/ui";
+import {Box, Avatar} from "@reactants/ui";
 
 export default ({data, ...props}) => {
 	const [vote, setVote] = useState(data.vote);
@@ -44,7 +44,7 @@ export default ({data, ...props}) => {
 	const MainContainer = () => (
 		<div className="mainContainer">
 			<header>
-				<img src={`https://avatar.alles.cx/user/${data.author.id}`} />
+				<Avatar username={data.author.username} size={50} />
 				<div>
 					<h1>
 						{data.author.name}
@@ -77,12 +77,8 @@ export default ({data, ...props}) => {
 					display: flex;
 				}
 
-				header img {
-					width: 50px;
-					height: 50px;
-					border: solid 1px var(--accents-2);
-					border-radius: 50%;
-					margin-right: 10px;
+				header div {
+					margin-left: 10px;
 				}
 
 				header h1 {
