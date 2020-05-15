@@ -49,10 +49,10 @@ export default async (req, res) => {
 				.toBuffer();
 
 			// Create Text Overlay
-			const {height} = await sharp(img).metadata();
+			const {width, height} = await sharp(img).metadata();
 			const text = Buffer.from(`
 				<svg
-					width="500"
+					width="${width}"
 					height="${height}"
 				>
 					<text
