@@ -28,7 +28,7 @@ const page = props => {
 				<>
 					<NavArrows before={backwardsBtn} after={forwardsBtn} />
 					{props.users.map(u => (
-						<Link href="/u/[username]" as={`/u/${u.username}`} key={u.id}>
+						<Link href="/[username]" as={`/${u.username}`} key={u.id}>
 							<a>
 								<WideUser user={u} />
 							</a>
