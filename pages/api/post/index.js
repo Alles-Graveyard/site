@@ -1,7 +1,9 @@
 import sessionAuth from "../../../util/sessionAuth";
 import config from "../../../config";
+import credentials from "../../../credentials";
 import db from "../../../util/db";
 import {v4 as uuid} from "uuid";
+import axios from "axios";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -13,11 +15,26 @@ export default async (req, res) => {
 	if (content.length < 1 || content.length > config.maxPostLength)
 		return res.status(400).json({err: "postLength"});
 
+	// Get Content Score
+	const score = (
+		await axios.post(
+			"https://content-score.alles.cx",
+			{
+				content
+			},
+			{
+				headers: {
+					authorization: credentials.contentScore
+				}
+			}
+		)
+	).data;
+
 	// Create Post
 	const post = await db.Post.create({
 		id: uuid(),
 		content,
-		score: 0
+		score
 	});
 	await post.setUser(user);
 
