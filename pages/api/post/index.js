@@ -1,5 +1,7 @@
 import sessionAuth from "../../../util/sessionAuth";
 import config from "../../../config";
+import db from "../../../util/db";
+import {v4 as uuid} from "uuid";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -10,7 +12,16 @@ export default async (req, res) => {
 	const content = req.body.content.trim();
 	if (content.length < 1 || content.length > config.maxPostLength)
 		return res.status(400).json({err: "postLength"});
-	console.log(content);
 
-	res.json({});
+	// Create Post
+	const post = await db.Post.create({
+		id: uuid(),
+		content,
+		score: 0
+	});
+	await post.setUser(user);
+
+	res.json({
+		id: post.id
+	});
 };

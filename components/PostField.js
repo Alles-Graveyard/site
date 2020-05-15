@@ -6,22 +6,29 @@ import {Image, X} from "react-feather";
 
 export default props => {
 	const [content, setContent] = useState("");
+	const [loading, setLoading] = useState(false);
 	const [imageUpload, setImage] = useState();
 	const imageInput = createRef();
 
 	const submit = () => {
 		if (!content || content.length > config.maxPostLength) return;
-		axios.post(
-			`${config.apiUrl}/post`,
-			{
-				content
-			},
-			{
-				headers: {
-					authorization: props.sessionToken
+		setLoading(true);
+		axios
+			.post(
+				`${config.apiUrl}/post`,
+				{
+					content,
+					image: imageUpload
+				},
+				{
+					headers: {
+						authorization: props.sessionToken
+					}
 				}
-			}
-		);
+			)
+			.then(res => {
+				console.log(res.data);
+			});
 	};
 
 	const iconStyle = {
@@ -89,6 +96,7 @@ export default props => {
 			<Button
 				primary
 				disabled={!content}
+				loading={loading}
 				onClick={submit}
 				style={{
 					width: "calc(100% - 40px)",

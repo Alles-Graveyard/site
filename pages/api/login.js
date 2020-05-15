@@ -3,7 +3,7 @@ import credentials from "../../credentials";
 import bcrypt from "bcrypt";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
-import uuid from "uuid";
+import {v4 as uuid} from "uuid";
 import axios from "axios";
 import log from "@alleshq/log";
 
