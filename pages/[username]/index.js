@@ -7,6 +7,7 @@ import {useState} from "react";
 import {Button, Box, Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
+import NotFound from "../404";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -200,11 +201,7 @@ const page = props => {
 		);
 	} else {
 		//User does not exist
-		return (
-			<Page header user={props.user}>
-				<p>Invalid User</p>
-			</Page>
-		);
+		return <NotFound />;
 	}
 };
 
@@ -227,7 +224,9 @@ page.getInitialProps = async ctx => {
 				)
 			).data
 		};
-	} catch (err) {}
+	} catch (err) {
+		if (ctx.res) ctx.res.statusCode = 404;
+	}
 };
 
 export default withAuth(withRouter(page));
