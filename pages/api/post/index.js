@@ -18,6 +18,19 @@ export default async (req, res) => {
 	const content = req.body.content.trim();
 	if (content.length < 1 || content.length > config.maxPostLength)
 		return res.status(400).json({err: "postLength"});
+	
+	// Parent
+	let parent;
+	if (typeof req.body.parent === "string") {
+		parent = await db.Post.findOne({
+			where: {
+				id: uuidTranslator.toUUID(req.body.parent)
+			}
+		});
+		if (!parent) {
+			return res.status(400).json({err: "invalidParent"});
+		}
+	}
 
 	// Get Content Score
 	const score = (
@@ -104,6 +117,9 @@ export default async (req, res) => {
 		image: imageId
 	});
 	await post.setUser(user);
+
+	// Parent
+	if (parent) await post.setParent(parent);
 
 	// Upvote
 	await db.PostInteraction.create({

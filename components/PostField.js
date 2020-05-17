@@ -19,7 +19,8 @@ export default props => {
 				`${config.apiUrl}/post`,
 				{
 					content,
-					image: imageUpload
+					image: imageUpload,
+					parent: props.parent
 				},
 				{
 					headers: {

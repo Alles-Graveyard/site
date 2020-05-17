@@ -38,6 +38,7 @@ const page = props => {
 							: "Got something else to say?"
 					}
 					button="Reply"
+					parent={props.post.slug}
 					sessionToken={props.user.sessionToken}
 				/>
 			</Page>
