@@ -41,18 +41,52 @@ export default ({data, ...props}) => {
 			.catch(() => {});
 	};
 
+	const Header = () => (
+		<header>
+			<Avatar username={data.author.username} size={50} />
+			<div>
+				<h1>
+					{data.author.name}
+					{data.author.plus ? <sup>+</sup> : <></>}
+				</h1>
+				<h2>@{data.author.username}</h2>
+			</div>
+
+			<style jsx>{`
+				header {
+					display: flex;
+				}
+
+				header div {
+					margin-left: 10px;
+				}
+
+				header h1 {
+					margin: 0 5px;
+					font-size: 20px;
+					font-weight: 500;
+				}
+
+				header h2 {
+					margin: 0 5px;
+					font-size: 16px;
+					font-weight: 400;
+				}
+			`}</style>
+		</header>
+	);
+
 	const MainContainer = () => (
 		<div className="mainContainer">
-			<header>
-				<Avatar username={data.author.username} size={50} />
-				<div>
-					<h1>
-						{data.author.name}
-						{data.author.plus ? <sup>+</sup> : <></>}
-					</h1>
-					<h2>@{data.author.username}</h2>
-				</div>
-			</header>
+			{props.expanded ? (
+				<Link href="/[username]" as={`/${data.author.username}`}>
+					<a>
+						<Header />
+					</a>
+				</Link>
+			) : (
+				<Header />
+			)}
 
 			<main>
 				<p className="content">{data.content}</p>
@@ -74,33 +108,13 @@ export default ({data, ...props}) => {
 					flex-grow: 1;
 				}
 
-				header {
-					display: flex;
-				}
-
-				header div {
-					margin-left: 10px;
-				}
-
-				header h1 {
-					margin: 0 5px;
-					font-size: 20px;
-					font-weight: 500;
-				}
-
-				header h2 {
-					margin: 0 5px;
-					font-size: 16px;
-					font-weight: 400;
-				}
-
 				p.content {
 					white-space: pre-wrap;
 				}
 
 				.image {
 					width: 100%;
-					max-height: 500px;
+					${props.expanded ? "" : "max-height: 500px;"}
 					border-radius: var(--radius);
 					overflow: hidden;
 					display: flex;
