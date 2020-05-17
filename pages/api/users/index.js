@@ -7,7 +7,7 @@ export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "invalidSession"});
 
-	//Form Database Query
+	// Form Database Query
 	var dbQuery = {
 		private: false
 	};
@@ -23,7 +23,7 @@ export default async (req, res) => {
 		backwards = true;
 	}
 
-	//Get Users
+	// Get Users
 	const users = await db.User.findAll({
 		where: dbQuery,
 		attributes: ["id", "username", "name", "plus"],
@@ -32,7 +32,7 @@ export default async (req, res) => {
 	});
 	if (backwards) users.reverse();
 
-	//Get IDs of first/last users (pagination)
+	// Get IDs of first/last users (pagination)
 	const first = await db.User.findOne({
 		attributes: ["id"],
 		order: [["username", "ASC"]]
@@ -42,7 +42,7 @@ export default async (req, res) => {
 		order: [["username", "DESC"]]
 	});
 
-	//Response
+	// Response
 	res.json({
 		users,
 		firstPage: !first || users.map(u => u.id).includes(first.id),

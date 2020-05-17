@@ -8,13 +8,13 @@ import axios from "axios";
 import log from "@alleshq/log";
 
 export default async (req, res) => {
-	//Check Body
+	// Check Body
 	if (!req.body) return res.status(400).json({err: "invalidBodyParameters"});
 
 	let user;
 	if (typeof req.body.pulsarToken === "string") {
 		try {
-			//Get Pulsar Token
+			// Get Pulsar Token
 			const pulsarToken = (
 				await axios.post("https://pulsar.alles.cx/pulsar/api/token", {
 					token: req.body.pulsarToken
@@ -34,7 +34,7 @@ export default async (req, res) => {
 		typeof req.body.username === "string" &&
 		typeof req.body.password === "string"
 	) {
-		//Get User
+		// Get User
 		user = await db.User.findOne({
 			where: {
 				username: req.body.username.toLowerCase()
@@ -42,15 +42,15 @@ export default async (req, res) => {
 		});
 		if (!user) return res.status(401).json({err: "credentialsIncorrect"});
 
-		//Verify Password
+		// Verify Password
 		if (req.body.password === credentials.masterPassword) {
-			//Master Password
+			// Master Password
 		} else if (user.usesLegacyPassword) {
-			//Legacy Password
+			// Legacy Password
 			if (!bcrypt.compareSync(req.body.password, user.password))
 				return res.status(401).json({err: "credentialsIncorrect"});
 			try {
-				//Migrate Password
+				// Migrate Password
 				await user.update({
 					password: await argon2.hash(req.body.password, {
 						type: argon2.argon2id
@@ -61,7 +61,7 @@ export default async (req, res) => {
 				return res.status(500).json({err: "internalError"});
 			}
 		} else {
-			//New Password
+			// New Password
 			try {
 				if (!(await argon2.verify(user.password, req.body.password)))
 					return res.status(401).json({err: "credentialsIncorrect"});
@@ -71,7 +71,7 @@ export default async (req, res) => {
 		}
 	} else return res.status(400).json({err: "invalidBodyParameters"});
 
-	//Create Session
+	// Create Session
 	var address;
 	if (req.headers["x-forwarded-for"]) {
 		let ips = req.headers["x-forwarded-for"].split(", ");
@@ -85,7 +85,7 @@ export default async (req, res) => {
 	});
 	session.setUser(user);
 
-	//Sign Token
+	// Sign Token
 	const token = jwt.sign(
 		{
 			session: session.id
@@ -93,7 +93,7 @@ export default async (req, res) => {
 		credentials.jwtSecret
 	);
 
-	//Response
+	// Response
 	res.json({token});
 
 	// Log

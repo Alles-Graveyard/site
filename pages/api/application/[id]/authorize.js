@@ -8,7 +8,7 @@ export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "invalidSession"});
 
-	//Validate Body
+	// Validate Body
 	if (
 		!req.body ||
 		typeof req.body.scopes !== "string" ||
@@ -16,7 +16,7 @@ export default async (req, res) => {
 	)
 		return res.status(400).json({err: "invalidBodyParameters"});
 
-	//Verify Scopes
+	// Verify Scopes
 	const scopes = [...new Set(req.body.scopes.split(" "))].filter(Boolean);
 	if (scopes.length > 50) return res.status(400).json({err: "tooManyScopes"});
 	for (var i = 0; i < scopes.length; i++) {
@@ -24,7 +24,7 @@ export default async (req, res) => {
 			return res.status(400).json({err: "invalidScope"});
 	}
 
-	//Get Application
+	// Get Application
 	if (typeof req.query.id !== "string")
 		return res.status(400).json({err: "invalidApplication"});
 	const application = await db.Application.findOne({
@@ -34,11 +34,11 @@ export default async (req, res) => {
 	});
 	if (!application) return res.status(400).json({err: "invalidApplication"});
 
-	//Verify Redirect URI
+	// Verify Redirect URI
 	if (!application.callbackUrls.includes(req.body.redirectUri))
 		return res.status(400).json({err: "invalidRedirectUri"});
 
-	//Create code
+	// Create code
 	const code = await db.AuthCode.create({
 		id: uuid(),
 		code: randomString(128),

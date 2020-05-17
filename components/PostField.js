@@ -12,7 +12,7 @@ export default props => {
 
 	const submit = () => {
 		if (!content || content.length > config.maxPostLength) return;
-		setLoading(true);
+		//setLoading(true);
 		axios
 			.post(
 				`${config.apiUrl}/post`,
