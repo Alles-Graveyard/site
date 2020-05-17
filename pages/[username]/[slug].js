@@ -62,7 +62,6 @@ const page = props => {
 					{props.post.replies.map(reply => (
 						<React.Fragment key={reply.slug}>
 							<Spacer y={2} />
-
 							<Post data={reply} sessionToken={props.user.sessionToken} />
 						</React.Fragment>
 					))}

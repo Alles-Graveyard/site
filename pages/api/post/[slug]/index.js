@@ -68,7 +68,7 @@ export default async (req, res) => {
 	if (post.parentId && !parent) {
 		// Missing Post
 		parent = config.ghost.post;
-	} else if (parent) parent = await postData(parent);
+	} else if (parent) parent = await postData(parent, user.id);
 
 	// Replies
 	const replies = await Promise.all(
@@ -92,7 +92,7 @@ export default async (req, res) => {
 					limit: 100
 				})
 			)
-			.map(p => postData(p))
+			.map(p => postData(p, user.id))
 	);
 
 	// Response

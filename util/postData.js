@@ -31,24 +31,26 @@ export default async (post, userId) => {
 	});
 
 	// Get Author
-	const author = await post.getUser();
+	let author = await post.getUser();
+	author = author
+		? {
+				id: author.id,
+				name: author.name,
+				username: author.username,
+				plus: author.plus
+		  }
+		: config.ghost.user;
 
 	// Return
 	return {
 		slug: uuidTranslator.fromUUID(post.id),
-		author: author
-			? {
-					id: author.id,
-					name: author.name,
-					username: author.username,
-					plus: author.plus
-			  }
-			: config.ghost.user,
+		author,
 		content: post.content,
 		image: post.image ? `https://fs.alles.cx/${post.image}` : null,
 		createdAt: post.createdAt,
 		score: upvotes - downvotes,
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
-		replyCount: await post.countChildren()
+		replyCount: await post.countChildren(),
+		hasParent: post.parentId !== null
 	};
 };
