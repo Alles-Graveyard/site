@@ -49,19 +49,22 @@ export default async (req, res) => {
 				})
 				.png()
 				.toBuffer();
+			
+			// Metadata
+			const metadata = await sharp(img).metadata();
+			if (metadata.size > 1000000) return res.status(400).json({err: "imageTooBig"});
 
 			// Create Text Overlay
-			const {width, height} = await sharp(img).metadata();
 			const text = Buffer.from(`
 				<svg
-					width="${width}"
-					height="${height}"
+					width="${metadata.width}"
+					height="${metadata.height}"
 				>
 					<text
 						font-family="Rubik, sans-serif"
 						font-size="10"
 						x="10"
-						y="${height - 10}"
+						y="${metadata.height - 10}"
 						fill="#ffffff"
 					>@${user.username}</text>
 				</svg>
