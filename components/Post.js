@@ -63,7 +63,7 @@ export default ({data, ...props}) => {
 
 			<footer>
 				<p>
-					{date} // {data.replies} {data.replies === 1 ? "Reply" : "Replies"}
+					{date} // {data.replyCount} {data.replyCount === 1 ? "Reply" : "Replies"}
 				</p>
 			</footer>
 
