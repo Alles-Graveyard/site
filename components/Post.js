@@ -148,7 +148,7 @@ export default ({data, ...props}) => {
 				/>
 			</aside>
 
-			{props.link ? (
+			{!props.expanded ? (
 				<Link
 					href="/[username]/[slug]"
 					as={`/${data.author.username}/${data.slug}`}

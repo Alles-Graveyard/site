@@ -115,7 +115,7 @@ const page = props => {
 					{props.requestedUser.posts.map(p => (
 						<React.Fragment key={p.slug}>
 							<Spacer y={2} />
-							<Post data={p} sessionToken={props.user.sessionToken} link />
+							<Post data={p} sessionToken={props.user.sessionToken}/>
 						</React.Fragment>
 					))}
 				</main>
