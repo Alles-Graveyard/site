@@ -14,10 +14,18 @@ export default async (req, res) => {
 	)
 		return res.status(400).json({err: "badRequest"});
 
+	// Post ID
+	let id;
+	try {
+		id = uuidTranslator.toUUID(req.query.slug);
+	} catch (e) {
+		return res.status(400).json({err: "invalidPost"});
+	}
+
 	// Get Post
 	const post = await db.Post.findOne({
 		where: {
-			id: uuidTranslator.toUUID(req.query.slug)
+			id
 		}
 	});
 	if (!post) return res.status(400).json({err: "invalidPost"});

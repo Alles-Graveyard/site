@@ -18,7 +18,7 @@ export default async (req, res) => {
 	const content = req.body.content.trim();
 	if (content.length < 1 || content.length > config.maxPostLength)
 		return res.status(400).json({err: "postLength"});
-	
+
 	// Parent
 	let parent;
 	if (typeof req.body.parent === "string") {
