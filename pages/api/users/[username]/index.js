@@ -65,7 +65,7 @@ export default async (req, res) => {
 							createdAt: p.createdAt,
 							score: upvotes - downvotes,
 							vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
-							replies: 1
+							replies: await p.countChildren()
 						};
 					})
 			  )
