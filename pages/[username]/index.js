@@ -43,82 +43,80 @@ const page = props => {
 					}
 				]}
 			>
-				<main>
-					<Box
-						style={{
-							height: 150,
-							background: "var(--primary)",
-							borderBottomLeftRadius: 0,
-							borderBottomRightRadius: 0
-						}}
+				<Box
+					style={{
+						height: 150,
+						background: "var(--primary)",
+						borderBottomLeftRadius: 0,
+						borderBottomRightRadius: 0
+					}}
+				/>
+
+				<Box
+					style={{
+						textAlign: "center",
+						borderTopLeftRadius: 0,
+						borderTopRightRadius: 0,
+						padding: "0 20px 20px"
+					}}
+				>
+					<img
+						className="profilePicture"
+						src={`https://avatar.alles.cx/u/${props.requestedUser.username}`}
 					/>
-
-					<Box
-						style={{
-							textAlign: "center",
-							borderTopLeftRadius: 0,
-							borderTopRightRadius: 0,
-							padding: "0 20px 20px"
-						}}
-					>
-						<img
-							className="profilePicture"
-							src={`https://avatar.alles.cx/u/${props.requestedUser.username}`}
-						/>
-						<h1 className="name">
-							{props.requestedUser.name}
-							{props.requestedUser.plus ? <sup>+</sup> : <></>}
-						</h1>
-						<h2 className="username">@{props.requestedUser.username}</h2>
-						<h2 className="counts">
-							<span>
-								<b>{props.requestedUser.followers}</b>{" "}
-								{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
-							</span>
-							<span>
-								<b>{props.requestedUser.rubies}</b>{" "}
-								{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
-							</span>
-						</h2>
-						<h2 className="tagline">{props.requestedUser.about}</h2>
-						{self ? (
-							<></>
-						) : (
-							<>
-								<Button
-									style={{
-										margin: "0 auto",
-										width: 100
-									}}
-									small
-									primary={isFollowing}
-									secondary={!isFollowing}
-									onClick={toggleFollow}
-								>
-									{!isFollowing ? "Follow" : "Following"}
-								</Button>
-							</>
-						)}
-					</Box>
-
-					<Spacer y={2} />
-
+					<h1 className="name">
+						{props.requestedUser.name}
+						{props.requestedUser.plus ? <sup>+</sup> : <></>}
+					</h1>
+					<h2 className="username">@{props.requestedUser.username}</h2>
+					<h2 className="counts">
+						<span>
+							<b>{props.requestedUser.followers}</b>{" "}
+							{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
+						</span>
+						<span>
+							<b>{props.requestedUser.rubies}</b>{" "}
+							{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
+						</span>
+					</h2>
+					<h2 className="tagline">{props.requestedUser.about}</h2>
 					{self ? (
-						<PostField
-							placeholder="What's up?"
-							sessionToken={props.user.sessionToken}
-						/>
-					) : (
 						<></>
+					) : (
+						<>
+							<Button
+								style={{
+									margin: "0 auto",
+									width: 100
+								}}
+								small
+								primary={isFollowing}
+								secondary={!isFollowing}
+								onClick={toggleFollow}
+							>
+								{!isFollowing ? "Follow" : "Following"}
+							</Button>
+						</>
 					)}
+				</Box>
 
-					{props.requestedUser.posts.map(p => (
-						<React.Fragment key={p.slug}>
-							<Spacer y={2} />
-							<Post data={p} sessionToken={props.user.sessionToken}/>
-						</React.Fragment>
-					))}
-				</main>
+				<Spacer y={2} />
+
+				{self ? (
+					<PostField
+						placeholder="What's up?"
+						sessionToken={props.user.sessionToken}
+					/>
+				) : (
+					<></>
+				)}
+
+				{props.requestedUser.posts.map(p => (
+					<React.Fragment key={p.slug}>
+						<Spacer y={2} />
+						<Post data={p} sessionToken={props.user.sessionToken} />
+					</React.Fragment>
+				))}
 
 				<style jsx global>{`
 					:root,
@@ -130,12 +128,6 @@ const page = props => {
 				`}</style>
 
 				<style jsx>{`
-					main {
-						width: 600px;
-						max-width: 100%;
-						margin: 0 auto;
-					}
-
 					.profilePicture {
 						border-radius: 50%;
 						height: 200px;

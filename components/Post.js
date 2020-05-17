@@ -99,7 +99,7 @@ export default ({data, ...props}) => {
 
 				.image {
 					width: 100%;
-					max-height: 300px;
+					max-height: 500px;
 					border-radius: var(--radius);
 					overflow: hidden;
 					display: flex;
