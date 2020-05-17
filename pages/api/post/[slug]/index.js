@@ -1,5 +1,7 @@
 import db from "../../../../util/db";
 import sessionAuth from "../../../../util/sessionAuth";
+import postData from "../../../../util/postData";
+import config from "../../../../config";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
@@ -21,10 +23,12 @@ export default async (req, res) => {
 	const post = await db.Post.findOne({
 		where: {
 			id
-		},
-		include: ["user"]
+		}
 	});
 	if (!post) return res.status(400).json({err: "invalidPost"});
+
+	// Get Author
+	const author = await post.getUser();
 
 	// Get Vote
 	const vote = await db.PostInteraction.findOne({
@@ -42,7 +46,7 @@ export default async (req, res) => {
 		}
 	});
 
-	// Get Upvotes
+	// Get Downvotes
 	const downvotes = await db.PostInteraction.count({
 		where: {
 			postId: post.id,
@@ -50,22 +54,32 @@ export default async (req, res) => {
 		}
 	});
 
+	// Parent
+	let parent = await post.getParent();
+	if (post.parentId && !parent) {
+		// Missing Post
+		parent = config.ghost.post;
+	} else if (parent) parent = await postData(parent);
+
 	// Response
 	res.json({
 		slug: uuidTranslator.fromUUID(post.id),
-		author: {
-			id: post.user.id,
-			name: post.user.name,
-			username: post.user.username,
-			plus: post.user.plus
-		},
+		author: author
+			? {
+					id: author.id,
+					name: author.name,
+					username: author.username,
+					plus: author.plus
+			  }
+			: config.ghost.user,
 		content: post.content,
 		image: post.image ? `https://fs.alles.cx/${post.image}` : null,
 		createdAt: post.createdAt,
 		score: upvotes - downvotes,
-		upvotes: post.user.id === user.id && user.plus ? upvotes : null,
-		downvotes: post.user.id === user.id && user.plus ? downvotes : null,
+		upvotes: author && author.id === user.id && user.plus ? upvotes : null,
+		downvotes: author && author.id === user.id && user.plus ? downvotes : null,
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
-		replyCount: await post.countChildren()
+		replyCount: await post.countChildren(),
+		parent
 	});
 };

@@ -23,6 +23,19 @@ const page = props => {
 					}
 				]}
 			>
+				{props.post.parent ? (
+					<>
+						<Post
+							data={props.post.parent}
+							sessionToken={props.user.sessionToken}
+						/>
+
+						<div className="chain"></div>
+					</>
+				) : (
+					<></>
+				)}
+
 				<Post
 					data={props.post}
 					sessionToken={props.user.sessionToken}
@@ -42,6 +55,17 @@ const page = props => {
 					sessionToken={props.user.sessionToken}
 					key={props.post.slug}
 				/>
+
+				<style jsx>{`
+					.chain {
+						background: var(--surface);
+						border: 1px var(--accents-2);
+						border-style: none solid;
+						width: 5px;
+						height: 30px;
+						margin: 5px auto;
+					}
+				`}</style>
 			</Page>
 		);
 	} else {

@@ -29,5 +29,28 @@ export default {
 	usersResultLimit: 20,
 	maxPostLength: 300,
 	fileUploadUrl: "https://fs.alles.cx",
-	domain: "alles.cx"
+	domain: "alles.cx",
+	ghost: {
+		user: {
+			id: "a0f1ae72-9c65-4170-ae39-f9b8132cf476",
+			username: "ghost",
+			name: "Ghost 👻",
+			plus: false
+		},
+		post: {
+			slug: "missing",
+			author: {
+				id: "a0f1ae72-9c65-4170-ae39-f9b8132cf476",
+				username: "ghost",
+				name: "Ghost 👻",
+				plus: false
+			},
+			content: "This post is missing :/",
+			image: null,
+			createdAt: new Date(1592006400000),
+			score: 0,
+			vote: 0,
+			replyCount: 1
+		}
+	}
 };

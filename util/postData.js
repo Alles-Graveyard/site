@@ -1,4 +1,5 @@
 import db from "./db";
+import config from "../config";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
@@ -42,12 +43,7 @@ export default async (post, userId) => {
 					username: author.username,
 					plus: author.plus
 			  }
-			: {
-					id: "a0f1ae72-9c65-4170-ae39-f9b8132cf476",
-					username: "ghost",
-					name: "Ghost 👻",
-					plus: false
-			  },
+			: config.ghost.user,
 		content: post.content,
 		image: post.image ? `https://fs.alles.cx/${post.image}` : null,
 		createdAt: post.createdAt,
