@@ -40,6 +40,7 @@ const page = props => {
 					button="Reply"
 					parent={props.post.slug}
 					sessionToken={props.user.sessionToken}
+					key={props.post.slug}
 				/>
 			</Page>
 		);
