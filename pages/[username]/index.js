@@ -215,7 +215,7 @@ page.getInitialProps = async ctx => {
 				await axios.get(
 					`${config.apiUrl}/users/${encodeURIComponent(
 						username.toLowerCase()
-					)}`,
+					)}?posts`,
 					{
 						headers: {
 							authorization: sessionToken
