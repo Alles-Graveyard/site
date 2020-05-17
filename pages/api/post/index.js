@@ -105,6 +105,14 @@ export default async (req, res) => {
 	});
 	await post.setUser(user);
 
+	// Upvote
+	await db.PostInteraction.create({
+		postId: post.id,
+		userId: user.id,
+		vote: "up"
+	});
+
+	// Response
 	res.json({
 		slug: uuidTranslator.fromUUID(post.id)
 	});
