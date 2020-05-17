@@ -3,11 +3,11 @@ import withAuth from "../../util/withAuth";
 import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
-import {useState} from "react";
-import {Button, Box, Spacer} from "@reactants/ui";
+import {Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 import NotFound from "../404";
+import Router from "next/router";
 
 const page = props => {
 	if (props.post) {
@@ -49,21 +49,34 @@ const page = props => {
 };
 
 page.getInitialProps = async ctx => {
-	const {slug} = ctx.query;
+	const {username, slug} = ctx.query;
 	const {sessionToken} = ctx.user;
 
 	try {
-		return {
-			post: (
-				await axios.get(
-					`${config.apiUrl}/post/${encodeURIComponent(slug)}?children`,
-					{
-						headers: {
-							authorization: sessionToken
-						}
+		const post = (
+			await axios.get(
+				`${config.apiUrl}/post/${encodeURIComponent(slug)}?children`,
+				{
+					headers: {
+						authorization: sessionToken
 					}
-				)
-			).data
+				}
+			)
+		).data;
+
+		if (post.author.username !== username) {
+			// Redirect to correct username
+			const redirectUrl = `/${post.author.username}/${post.slug}`;
+			if (typeof window === "undefined") {
+				ctx.res.writeHead(302, {Location: redirectUrl});
+				ctx.res.end();
+			} else {
+				Router.push(redirectUrl);
+			}
+		}
+
+		return {
+			post
 		};
 	} catch (err) {
 		if (ctx.res) ctx.res.statusCode = 404;
