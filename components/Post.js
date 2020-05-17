@@ -57,7 +57,7 @@ export default ({data, ...props}) => {
 			<main>
 				<p className="content">{data.content}</p>
 				<div className="image">
-					<img src="https://images.unsplash.com/photo-1589431726521-098f9353cb21?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
+					<img src={data.image} />
 				</div>
 			</main>
 
