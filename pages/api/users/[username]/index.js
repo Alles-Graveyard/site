@@ -18,28 +18,59 @@ export default async (req, res) => {
 	if (!u) return res.status(400).json({err: "invalidUser"});
 
 	// Get Posts
-	const posts = typeof req.query.posts === "string" ? (
-		await u.getPosts({
-			order: [["createdAt", "DESC"]],
-			limit: 100
-		})
-	).map(p => ({
-		slug: uuidTranslator.fromUUID(p.id),
-		author: {
-			id: u.id,
-			name: u.name,
-			username: u.username,
-			plus: u.plus
-		},
-		content: p.content,
-		image: p.image ? `https://fs.alles.cx/${p.image}` : null,
-		createdAt: p.createdAt,
-		score: 10,
-		vote: 0,
-		replies: 1
-	})) : [];
+	const posts =
+		typeof req.query.posts === "string"
+			? await Promise.all(
+					(
+						await u.getPosts({
+							order: [["createdAt", "DESC"]],
+							limit: 100
+						})
+					).map(async p => {
+						// Get Vote
+						const vote = await db.PostInteraction.findOne({
+							where: {
+								postId: p.id,
+								userId: u.id
+							}
+						});
 
-	console.log(posts);
+						// Get Upvotes
+						const upvotes = await db.PostInteraction.count({
+							where: {
+								postId: p.id,
+								vote: "up"
+							}
+						});
+
+						// Get Upvotes
+						const downvotes = await db.PostInteraction.count({
+							where: {
+								postId: p.id,
+								vote: "down"
+							}
+						});
+
+						// Return
+						return {
+							slug: uuidTranslator.fromUUID(p.id),
+							author: {
+								id: u.id,
+								name: u.name,
+								username: u.username,
+								plus: u.plus
+							},
+							content: p.content,
+							image: p.image ? `https://fs.alles.cx/${p.image}` : null,
+							createdAt: p.createdAt,
+							score: upvotes - downvotes,
+							vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
+							replies: 1
+						};
+					})
+			  )
+			: [];
+
 	// Response
 	res.json({
 		id: u.id,
