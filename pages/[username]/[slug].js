@@ -56,14 +56,29 @@ const page = props => {
 					key={props.post.slug}
 				/>
 
+				<Spacer y={2} />
+
+				<div className="replies">
+					{props.post.replies.map(reply => (
+						<React.Fragment key={reply.slug}>
+							<Spacer y={2} />
+
+							<Post data={reply} sessionToken={props.user.sessionToken} />
+						</React.Fragment>
+					))}
+				</div>
+
 				<style jsx>{`
 					.chain {
-						background: var(--surface);
-						border: 1px var(--accents-2);
-						border-style: none solid;
-						width: 5px;
-						height: 30px;
-						margin: 5px auto;
+						background: var(--accents-2);
+						width: 10px;
+						height: 50px;
+						margin: 0 auto;
+					}
+
+					.replies {
+						border-top: solid 10px var(--accents-2);
+						padding: 0 20px;
 					}
 				`}</style>
 			</Page>

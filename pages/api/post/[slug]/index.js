@@ -3,6 +3,7 @@ import sessionAuth from "../../../../util/sessionAuth";
 import postData from "../../../../util/postData";
 import config from "../../../../config";
 import shortUuid from "short-uuid";
+import {Op} from "sequelize";
 const uuidTranslator = shortUuid();
 
 export default async (req, res) => {
@@ -28,7 +29,15 @@ export default async (req, res) => {
 	if (!post) return res.status(400).json({err: "invalidPost"});
 
 	// Get Author
-	const author = await post.getUser();
+	let author = await post.getUser();
+	author = author
+		? {
+				id: author.id,
+				name: author.name,
+				username: author.username,
+				plus: author.plus
+		  }
+		: config.ghost.user;
 
 	// Get Vote
 	const vote = await db.PostInteraction.findOne({
@@ -61,25 +70,44 @@ export default async (req, res) => {
 		parent = config.ghost.post;
 	} else if (parent) parent = await postData(parent);
 
+	// Replies
+	const replies = await Promise.all(
+		(
+			await post.getChildren({
+				where: {
+					userId: author.id
+				},
+				order: [["createdAt", "DESC"]],
+				limit: 10
+			})
+		)
+			.concat(
+				await post.getChildren({
+					where: {
+						userId: {
+							[Op.not]: author.id
+						}
+					},
+					order: [["createdAt", "DESC"]],
+					limit: 100
+				})
+			)
+			.map(p => postData(p))
+	);
+
 	// Response
 	res.json({
 		slug: uuidTranslator.fromUUID(post.id),
-		author: author
-			? {
-					id: author.id,
-					name: author.name,
-					username: author.username,
-					plus: author.plus
-			  }
-			: config.ghost.user,
+		author,
 		content: post.content,
 		image: post.image ? `https://fs.alles.cx/${post.image}` : null,
 		createdAt: post.createdAt,
 		score: upvotes - downvotes,
-		upvotes: author && author.id === user.id && user.plus ? upvotes : null,
-		downvotes: author && author.id === user.id && user.plus ? downvotes : null,
+		upvotes: author.id === user.id && user.plus ? upvotes : null,
+		downvotes: author.id === user.id && user.plus ? downvotes : null,
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
 		replyCount: await post.countChildren(),
+		replies,
 		parent
 	});
 };
