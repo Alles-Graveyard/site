@@ -23,6 +23,9 @@ export default async (req, res) => {
 			? await Promise.all(
 					(
 						await u.getPosts({
+							where: {
+								parentId: null
+							},
 							order: [["createdAt", "DESC"]],
 							limit: 100
 						})
