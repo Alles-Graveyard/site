@@ -114,6 +114,7 @@ export default async (req, res) => {
 
 	// Response
 	res.json({
+		username: user.username,
 		slug: uuidTranslator.fromUUID(post.id)
 	});
 };

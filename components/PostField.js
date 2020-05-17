@@ -3,6 +3,7 @@ import {useState, createRef} from "react";
 import config from "../config";
 import axios from "axios";
 import {Image, X} from "react-feather";
+import Router from "next/router";
 
 export default props => {
 	const [content, setContent] = useState("");
@@ -12,7 +13,7 @@ export default props => {
 
 	const submit = () => {
 		if (!content || content.length > config.maxPostLength) return;
-		//setLoading(true);
+		setLoading(true);
 		axios
 			.post(
 				`${config.apiUrl}/post`,
@@ -27,7 +28,10 @@ export default props => {
 				}
 			)
 			.then(res => {
-				console.log(res.data);
+				Router.push(
+					"/[username]/[slug]",
+					`/${res.data.username}/${res.data.slug}`
+				);
 			});
 	};
 

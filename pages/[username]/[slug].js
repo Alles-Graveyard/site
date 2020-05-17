@@ -71,7 +71,7 @@ page.getInitialProps = async ctx => {
 				ctx.res.writeHead(302, {Location: redirectUrl});
 				ctx.res.end();
 			} else {
-				Router.push(redirectUrl);
+				Router.push("/[username]/[slug]", redirectUrl);
 			}
 		}
 
