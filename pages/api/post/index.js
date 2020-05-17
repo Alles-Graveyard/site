@@ -49,10 +49,11 @@ export default async (req, res) => {
 				})
 				.png()
 				.toBuffer();
-			
+
 			// Metadata
 			const metadata = await sharp(img).metadata();
-			if (metadata.size > 1000000) return res.status(400).json({err: "imageTooBig"});
+			if (metadata.size > 1000000)
+				return res.status(400).json({err: "imageTooBig"});
 
 			// Create Text Overlay
 			const text = Buffer.from(`
