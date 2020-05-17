@@ -1,7 +1,6 @@
 import db from "../../../../util/db";
 import sessionAuth from "../../../../util/sessionAuth";
-import shortUuid from "short-uuid";
-const uuidTranslator = shortUuid();
+import postData from "../../../../util/postData";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -29,48 +28,7 @@ export default async (req, res) => {
 							order: [["createdAt", "DESC"]],
 							limit: 100
 						})
-					).map(async p => {
-						// Get Vote
-						const vote = await db.PostInteraction.findOne({
-							where: {
-								postId: p.id,
-								userId: user.id
-							}
-						});
-
-						// Get Upvotes
-						const upvotes = await db.PostInteraction.count({
-							where: {
-								postId: p.id,
-								vote: "up"
-							}
-						});
-
-						// Get Upvotes
-						const downvotes = await db.PostInteraction.count({
-							where: {
-								postId: p.id,
-								vote: "down"
-							}
-						});
-
-						// Return
-						return {
-							slug: uuidTranslator.fromUUID(p.id),
-							author: {
-								id: u.id,
-								name: u.name,
-								username: u.username,
-								plus: u.plus
-							},
-							content: p.content,
-							image: p.image ? `https://fs.alles.cx/${p.image}` : null,
-							createdAt: p.createdAt,
-							score: upvotes - downvotes,
-							vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
-							replyCount: await p.countChildren()
-						};
-					})
+					).map(p => postData(p, user.id))
 			  )
 			: [];
 
