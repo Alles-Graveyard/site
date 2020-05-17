@@ -103,7 +103,7 @@ export default props => {
 					margin: 20
 				}}
 			>
-				Post
+				{props.button ? props.button : "Post"}
 			</Button>
 
 			<style jsx>{`
