@@ -6,6 +6,8 @@ import {v4 as uuid} from "uuid";
 import axios from "axios";
 import sharp from "sharp";
 import FormData from "form-data";
+import shortUuid from "short-uuid";
+const uuidTranslator = shortUuid();
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -100,6 +102,6 @@ export default async (req, res) => {
 	await post.setUser(user);
 
 	res.json({
-		id: post.id
+		slug: uuidTranslator.fromUUID(post.id)
 	});
 };
