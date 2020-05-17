@@ -31,7 +31,7 @@ export default async (req, res) => {
 						const vote = await db.PostInteraction.findOne({
 							where: {
 								postId: p.id,
-								userId: u.id
+								userId: user.id
 							}
 						});
 
