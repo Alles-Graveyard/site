@@ -2,6 +2,7 @@ import sessionAuth from "../../../util/sessionAuth";
 import config from "../../../config";
 import credentials from "../../../credentials";
 import db from "../../../util/db";
+import {literal} from "sequelize";
 import {v4 as uuid} from "uuid";
 import axios from "axios";
 import sharp from "sharp";
@@ -33,19 +34,27 @@ export default async (req, res) => {
 	}
 
 	// Get Content Score
-	const score = (
-		await axios.post(
-			"https://content-score.alles.cx",
-			{
-				content
-			},
-			{
-				headers: {
-					authorization: credentials.contentScore
+	let score = 0;
+	try {
+		score = (
+			await axios.post(
+				"https://content-score.alles.cx",
+				{
+					content
+				},
+				{
+					headers: {
+						authorization: credentials.contentScore
+					}
 				}
-			}
-		)
-	).data;
+			)
+		).data;
+	} catch (e) {}
+
+	// Update user reputation
+	await user.update({
+		reputation: literal(`reputation + ${score}`)
+	});
 
 	// Image
 	let imageId;
