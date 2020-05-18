@@ -7,6 +7,7 @@ import {v4 as uuid} from "uuid";
 import axios from "axios";
 import sharp from "sharp";
 import FormData from "form-data";
+import parseContent from "../../../util/parseContent";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
@@ -118,12 +119,36 @@ export default async (req, res) => {
 		} catch (e) {}
 	}
 
+	// Parse Content
+	const segments = parseContent(content);
+	const tags = [];
+	const taggedUsers = [];
+	await Promise.all(
+		segments.map(async segment => {
+			if (segment.type === "tag") {
+				// Tag
+				if (!tags.includes(segment.string)) tags.push(segment.string);
+			} else if (segment.type === "username") {
+				// Username
+				const taggedUser = await db.User.findOne({
+					where: {
+						username: segment.string
+					}
+				});
+				if (taggedUser && !taggedUsers.includes(taggedUser.id))
+					taggedUsers.push(taggedUser.id);
+			}
+		})
+	);
+
 	// Create Post
 	const post = await db.Post.create({
 		id: uuid(),
 		content,
 		score,
-		image: imageId
+		image: imageId,
+		tags,
+		taggedUsers
 	});
 	await post.setUser(user);
 

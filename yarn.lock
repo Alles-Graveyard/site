@@ -2134,7 +2134,7 @@ core-util-is@~1.0.0:
 
 "coredb-models@https://github.com/alleshq/coredb-models":
   version "0.0.8"
-  resolved "https://github.com/alleshq/coredb-models#cfa84b8b143831bd0bf18055efb83475eea1315d"
+  resolved "https://github.com/alleshq/coredb-models#f835cbb047704c8d72306e76022edc3c9754f01b"
   dependencies:
     prettier "^2.0.5"
 
