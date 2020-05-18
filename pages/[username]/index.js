@@ -100,13 +100,14 @@ const page = props => {
 					)}
 				</Box>
 
-				<Spacer y={2} />
-
 				{self ? (
-					<PostField
-						placeholder="What's up?"
-						sessionToken={props.user.sessionToken}
-					/>
+					<>
+						<Spacer y={2} />
+						<PostField
+							placeholder="What's up?"
+							sessionToken={props.user.sessionToken}
+						/>
+					</>
 				) : (
 					<></>
 				)}
