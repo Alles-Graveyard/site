@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
-import {Plus, Minus} from "react-feather";
+import {Plus, Minus, Trash2} from "react-feather";
 import TagWrapper from "../components/Tags";
 import config from "../config";
 import moment from "moment";
@@ -13,6 +13,7 @@ export default ({data, ...props}) => {
 	const [score, setScore] = useState(data.score);
 	const dateFormat = "MMM DD YYYY HH:mm";
 	const [date, setDate] = useState(dateFormat);
+	const [removed, setRemoved] = useState(false);
 
 	useEffect(() => setDate(moment(data.createdAt).format(dateFormat)), []);
 
@@ -51,7 +52,7 @@ export default ({data, ...props}) => {
 			);
 	};
 
-	return (
+	return !removed ? (
 		<Box
 			style={{
 				display: "flex",
@@ -112,6 +113,34 @@ export default ({data, ...props}) => {
 					</p>
 				</footer>
 			</div>
+
+			{props.self ? (
+				<Trash2
+					onClick={e => {
+						e.stopPropagation();
+						setRemoved(true);
+						axios.post(
+							`${config.apiUrl}/post/${data.slug}/remove`,
+							{},
+							{
+								headers: {
+									authorization: props.sessionToken
+								}
+							}
+						);
+					}}
+					style={{
+						cursor: "pointer",
+						color: "var(--accents-4)",
+						position: "absolute",
+						top: 5,
+						right: 5,
+						height: 20
+					}}
+				/>
+			) : (
+				<></>
+			)}
 
 			<style jsx>{`
 				aside {
@@ -175,6 +204,18 @@ export default ({data, ...props}) => {
 				footer p {
 					color: var(--accents-6);
 					font-size: 12px;
+				}
+			`}</style>
+		</Box>
+	) : (
+		<Box>
+			<h1>Removed</h1>
+
+			<style jsx>{`
+				h1 {
+					font-size: 30px;
+					text-align: center;
+					color: var(--accents-4);
 				}
 			`}</style>
 		</Box>
