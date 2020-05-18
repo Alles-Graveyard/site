@@ -115,22 +115,31 @@ export default ({data, ...props}) => {
 			</div>
 
 			{props.self ? (
-				<Trash2 onClick={e => {
-					e.stopPropagation();
-					setRemoved(true);
-					axios.post(`${config.apiUrl}/post/${data.slug}/remove`, {}, {
-						headers: {
-							authorization: props.sessionToken
-						}
-					}).catch(() => {});
-				}} style={{
-					cursor: "pointer",
-					color: "var(--accents-4)",
-					position: "absolute",
-					top: 5,
-					right: 5,
-					height: 20
-				}} />
+				<Trash2
+					onClick={e => {
+						e.stopPropagation();
+						setRemoved(true);
+						axios
+							.post(
+								`${config.apiUrl}/post/${data.slug}/remove`,
+								{},
+								{
+									headers: {
+										authorization: props.sessionToken
+									}
+								}
+							)
+							.catch(() => {});
+					}}
+					style={{
+						cursor: "pointer",
+						color: "var(--accents-4)",
+						position: "absolute",
+						top: 5,
+						right: 5,
+						height: 20
+					}}
+				/>
 			) : (
 				<></>
 			)}
