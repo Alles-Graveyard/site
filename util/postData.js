@@ -39,7 +39,7 @@ export default async (post, userId) => {
 				username: author.username,
 				plus: author.plus
 		  }
-		: config.ghost.user;
+		: config.ghost;
 
 	// Return
 	return {

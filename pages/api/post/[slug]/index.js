@@ -37,7 +37,7 @@ export default async (req, res) => {
 				username: author.username,
 				plus: author.plus
 		  }
-		: config.ghost.user;
+		: config.ghost;
 
 	// Get Vote
 	const vote = await db.PostInteraction.findOne({
@@ -75,15 +75,24 @@ export default async (req, res) => {
 					break;
 				}
 
+				const childId = parent.id;
 				parent = await parent.getParent();
 				if (!parent) {
 					// Missing Parent
-					ancestors.unshift(config.ghost.post);
+					ancestors.push({
+						slug: uuidTranslator.fromUUID(childId),
+						removed: true,
+						author: config.ghost
+					});
 					break;
 				}
 			}
 		} else {
-			ancestors.push(config.ghost.post);
+			ancestors.push({
+				slug: uuidTranslator.fromUUID(post.parentId),
+				removed: true,
+				author: config.ghost
+			});
 		}
 	}
 

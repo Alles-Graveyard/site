@@ -25,11 +25,7 @@ const page = props => {
 			>
 				{props.post.ancestors.map(p => (
 					<React.Fragment key={p.slug}>
-						<Post
-							data={p}
-							self={props.user.id === p.author.id}
-							sessionToken={props.user.sessionToken}
-						/>
+						<Post data={p} self={props.user.id === p.author.id} sessionToken={props.user.sessionToken} />
 						<div className="chain"></div>
 					</React.Fragment>
 				))}
@@ -61,11 +57,7 @@ const page = props => {
 					{props.post.replies.map(p => (
 						<React.Fragment key={p.slug}>
 							<Spacer y={2} />
-							<Post
-								data={p}
-								self={props.user.id === p.author.id}
-								sessionToken={props.user.sessionToken}
-							/>
+							<Post data={p} self={props.user.id === p.author.id} sessionToken={props.user.sessionToken} />
 						</React.Fragment>
 					))}
 				</div>
