@@ -108,6 +108,7 @@ export default async (req, res) => {
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
 		replyCount: await post.countChildren(),
 		replies,
+		hasParent: post.parentId !== null,
 		parent
 	});
 };

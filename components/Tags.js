@@ -9,12 +9,16 @@ export default props => {
 				text: segment.string,
 				tag: (
 					<Link href="/tag/[tag]" as={`/tag/${segment.string}`} key={i}>
-						<a className="normal">#{segment.string}</a>
+						<a className="normal" onClick={e => e.stopPropagation()}>
+							#{segment.string}
+						</a>
 					</Link>
 				),
 				username: (
 					<Link href="/[username]" as={`/${segment.string}`} key={i}>
-						<a className="normal">@{segment.string}</a>
+						<a className="normal" onClick={e => e.stopPropagation()}>
+							@{segment.string}
+						</a>
 					</Link>
 				)
 			}[segment.type])

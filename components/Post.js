@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
-import {Plus, Minus} from "react-feather";
+import {Plus, Minus, ChevronUp} from "react-feather";
 import TagWrapper from "../components/Tags";
 import config from "../config";
 import moment from "moment";
@@ -43,10 +43,19 @@ export default ({data, ...props}) => {
 			.catch(() => {});
 	};
 
+	const navigateToPost = () => {
+		if (!props.expanded)
+			Router.push(
+				"/[username]/[slug]",
+				`/${data.author.username}/${data.slug}`
+			);
+	};
+
 	return (
 		<Box
 			style={{
-				display: "flex"
+				display: "flex",
+				position: "relative"
 			}}
 		>
 			<aside>
@@ -71,16 +80,7 @@ export default ({data, ...props}) => {
 				/>
 			</aside>
 
-			<div
-				className="mainContainer"
-				onClick={() => {
-					if (!props.expanded)
-						Router.push(
-							"/[username]/[slug]",
-							`/${data.author.username}/${data.slug}`
-						);
-				}}
-			>
+			<div className="mainContainer" onClick={navigateToPost}>
 				<Link href="/[username]" as={`/${data.author.username}`}>
 					<a onClick={e => e.stopPropagation()}>
 						<header>
@@ -112,6 +112,21 @@ export default ({data, ...props}) => {
 					</p>
 				</footer>
 			</div>
+
+			{data.hasParent ? (
+				<ChevronUp
+					style={{
+						position: "absolute",
+						top: 5,
+						right: 5,
+						color: "var(--accents-4)",
+						cursor: props.expanded ? "default" : "pointer"
+					}}
+					onClick={navigateToPost}
+				/>
+			) : (
+				<></>
+			)}
 
 			<style jsx>{`
 				aside {
