@@ -4,8 +4,9 @@ import {Header, Breadcrumb, Avatar, ThemeScript} from "@reactants/ui";
 import Banner from "./Banner";
 import Link from "next/link";
 import Head from "next/head";
+import {withRouter} from "next/router";
 
-export default props => {
+export default withRouter(props => {
 	useEffect(consoleWarning, []);
 
 	return (
@@ -17,9 +18,13 @@ export default props => {
 
 			<Header>
 				<Breadcrumb>
-					<Link href="/" passHref>
+					{props.router.pathname !== "/login" ? (
+						<Link href="/" passHref>
+							<Breadcrumb.Item as="h4" text="Alles" />
+						</Link>
+					) : (
 						<Breadcrumb.Item as="h4" text="Alles" />
-					</Link>
+					)}
 
 					{props.breadcrumbs ? (
 						props.breadcrumbs.map((b, i) =>
@@ -76,4 +81,4 @@ export default props => {
 			`}</style>
 		</>
 	);
-};
+});
