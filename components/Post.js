@@ -6,6 +6,7 @@ import TagWrapper from "../components/Tags";
 import config from "../config";
 import moment from "moment";
 import {Box, Avatar} from "@reactants/ui";
+import Router from "next/router";
 
 export default ({data, ...props}) => {
 	const [vote, setVote] = useState(data.vote);
@@ -70,9 +71,18 @@ export default ({data, ...props}) => {
 				/>
 			</aside>
 
-			<div className="mainContainer">
+			<div
+				className="mainContainer"
+				onClick={() => {
+					if (!props.expanded)
+						Router.push(
+							"/[username]/[slug]",
+							`/${data.author.username}/${data.slug}`
+						);
+				}}
+			>
 				<Link href="/[username]" as={`/${data.author.username}`}>
-					<a>
+					<a onClick={e => e.stopPropagation()}>
 						<header>
 							<Avatar username={data.author.username} size={50} />
 							<div>
@@ -120,6 +130,7 @@ export default ({data, ...props}) => {
 				.mainContainer {
 					padding: 10px;
 					flex-grow: 1;
+					${!props.expanded ? "cursor: pointer;" : ""}
 				}
 
 				header {
