@@ -57,18 +57,22 @@ const page = props => {
 
 				<Spacer y={2} />
 
-				<div className="replies">
-					{props.post.replies.map(p => (
-						<React.Fragment key={p.slug}>
-							<Spacer y={2} />
-							<Post
-								data={p}
-								self={props.user.id === p.author.id}
-								sessionToken={props.user.sessionToken}
-							/>
-						</React.Fragment>
-					))}
-				</div>
+				{props.post.replies.length > 0 ? (
+					<div className="replies">
+						{props.post.replies.map(p => (
+							<React.Fragment key={p.slug}>
+								<Spacer y={2} />
+								<Post
+									data={p}
+									self={props.user.id === p.author.id}
+									sessionToken={props.user.sessionToken}
+								/>
+							</React.Fragment>
+						))}
+					</div>
+				) : (
+					<></>
+				)}
 
 				<style jsx>{`
 					.chain {
