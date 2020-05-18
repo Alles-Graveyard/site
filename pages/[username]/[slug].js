@@ -23,18 +23,13 @@ const page = props => {
 					}
 				]}
 			>
-				{props.post.parent ? (
-					<>
-						<Post
-							data={props.post.parent}
-							sessionToken={props.user.sessionToken}
-						/>
+				{props.post.ancestors.map(p => (
+					<React.Fragment key={p.slug}>
+						<Post data={p} sessionToken={props.user.sessionToken} />
 
 						<div className="chain"></div>
-					</>
-				) : (
-					<></>
-				)}
+					</React.Fragment>
+				))}
 
 				<Post
 					data={props.post}

@@ -63,12 +63,29 @@ export default async (req, res) => {
 		}
 	});
 
-	// Parent
-	let parent = await post.getParent();
-	if (post.parentId && !parent) {
-		// Missing Post
-		parent = config.ghost.post;
-	} else if (parent) parent = await postData(parent, user.id);
+	// Ancestors
+	const ancestors = [];
+	if (post.parentId) {
+		let parent = await post.getParent();
+		if (parent) {
+			for (var i = 0; i < 15; i++) {
+				ancestors.unshift(await postData(parent, user.id));
+				if (!parent.parentId) {
+					// No Parent
+					break;
+				}
+
+				parent = await parent.getParent();
+				if (!parent) {
+					// Missing Parent
+					ancestors.unshift(config.ghost.post);
+					break;
+				}
+			}
+		} else {
+			ancestors.push(config.ghost.post);
+		}
+	}
 
 	// Replies
 	const replies = await Promise.all(
@@ -108,7 +125,6 @@ export default async (req, res) => {
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
 		replyCount: await post.countChildren(),
 		replies,
-		hasParent: post.parentId !== null,
-		parent
+		ancestors
 	});
 };

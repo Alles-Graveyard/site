@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
-import {Plus, Minus, ChevronUp} from "react-feather";
+import {Plus, Minus} from "react-feather";
 import TagWrapper from "../components/Tags";
 import config from "../config";
 import moment from "moment";
@@ -112,21 +112,6 @@ export default ({data, ...props}) => {
 					</p>
 				</footer>
 			</div>
-
-			{data.hasParent ? (
-				<ChevronUp
-					style={{
-						position: "absolute",
-						top: 5,
-						right: 5,
-						color: "var(--accents-4)",
-						cursor: props.expanded ? "default" : "pointer"
-					}}
-					onClick={navigateToPost}
-				/>
-			) : (
-				<></>
-			)}
 
 			<style jsx>{`
 				aside {
