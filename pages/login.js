@@ -74,42 +74,39 @@ export default withAuth(
 				<Page title="Sign in">
 					<h2 style={{textAlign: "center"}}>Sign In</h2>
 
-					<Box>
-						<Box.Header>Enter your credentials</Box.Header>
-						<Box.Content
-							as="form"
-							onSubmit={e => {
-								e.preventDefault();
-								setError();
-								const username = e.target.username.value.trim().toLowerCase();
-								const password = e.target.password.value;
-								if (!username || !password) return;
+					<Box
+						as="form"
+						onSubmit={e => {
+							e.preventDefault();
+							setError();
+							const username = e.target.username.value.trim().toLowerCase();
+							const password = e.target.password.value;
+							if (!username || !password) return;
 
-								// Request
-								setLoading(true);
-								axios
-									.post(`${config.apiUrl}/login`, {
-										username,
-										password
-									})
-									.then(res => {
-										completeSignIn(res.data.token);
-									})
-									.catch(err => {
-										if (err.response.data.err === "credentialsIncorrect") {
-											setError(
-												"Your username or password doesn't seem to be right :/"
-											);
-										} else {
-											setError(
-												"Uh oh. Something's gone wrong. Maybe try again?"
-											);
-										}
-										setLoading(false);
-									});
-							}}
-							padding="20px 25px"
-						>
+							// Request
+							setLoading(true);
+							axios
+								.post(`${config.apiUrl}/login`, {
+									username,
+									password
+								})
+								.then(res => {
+									completeSignIn(res.data.token);
+								})
+								.catch(err => {
+									if (err.response.data.err === "credentialsIncorrect") {
+										setError(
+											"Your username or password doesn't seem to be right :/"
+										);
+									} else {
+										setError("Uh oh. Something's gone wrong. Maybe try again?");
+									}
+									setLoading(false);
+								});
+						}}
+					>
+						<Box.Header>Enter your credentials</Box.Header>
+						<Box.Content>
 							<Input
 								label="Username"
 								name="username"
