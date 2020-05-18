@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
 import {Plus, Minus} from "react-feather";
+import TagWrapper from "../components/Tags";
 import config from "../config";
 import moment from "moment";
 import {Box, Avatar} from "@reactants/ui";
@@ -41,100 +42,6 @@ export default ({data, ...props}) => {
 			.catch(() => {});
 	};
 
-	const Header = () => (
-		<header>
-			<Avatar username={data.author.username} size={50} />
-			<div>
-				<h1>
-					{data.author.name}
-					{data.author.plus ? <sup>+</sup> : <></>}
-				</h1>
-				<h2>@{data.author.username}</h2>
-			</div>
-
-			<style jsx>{`
-				header {
-					display: flex;
-				}
-
-				header div {
-					margin-left: 10px;
-				}
-
-				header h1 {
-					margin: 0 5px;
-					font-size: 20px;
-					font-weight: 500;
-				}
-
-				header h2 {
-					margin: 0 5px;
-					font-size: 16px;
-					font-weight: 400;
-				}
-			`}</style>
-		</header>
-	);
-
-	const MainContainer = () => (
-		<div className="mainContainer">
-			{props.expanded ? (
-				<Link href="/[username]" as={`/${data.author.username}`}>
-					<a>
-						<Header />
-					</a>
-				</Link>
-			) : (
-				<Header />
-			)}
-
-			<main>
-				<p className="content">{data.content}</p>
-				<div className="image">
-					<img src={data.image} />
-				</div>
-			</main>
-
-			<footer>
-				<p>
-					{date} // {data.replyCount}{" "}
-					{data.replyCount === 1 ? "Reply" : "Replies"}
-				</p>
-			</footer>
-
-			<style jsx>{`
-				.mainContainer {
-					padding: 10px;
-					flex-grow: 1;
-				}
-
-				p.content {
-					white-space: pre-wrap;
-				}
-
-				.image {
-					width: 100%;
-					${props.expanded ? "" : "max-height: 500px;"}
-					border-radius: var(--radius);
-					overflow: hidden;
-					display: flex;
-					justify-content: center;
-					flex-flow: column nowrap;
-				}
-
-				.image img {
-					width: 100%;
-					margin: 0 auto;
-				}
-
-				footer p {
-					color: var(--accents-6);
-					font-size: 12px;
-				}
-			`}</style>
-		</div>
-	);
-
 	return (
 		<Box
 			style={{
@@ -163,18 +70,38 @@ export default ({data, ...props}) => {
 				/>
 			</aside>
 
-			{!props.expanded ? (
-				<Link
-					href="/[username]/[slug]"
-					as={`/${data.author.username}/${data.slug}`}
-				>
-					<a className="main">
-						<MainContainer />
+			<div className="mainContainer">
+				<Link href="/[username]" as={`/${data.author.username}`}>
+					<a>
+						<header>
+							<Avatar username={data.author.username} size={50} />
+							<div>
+								<h1>
+									{data.author.name}
+									{data.author.plus ? <sup>+</sup> : <></>}
+								</h1>
+								<h2>@{data.author.username}</h2>
+							</div>
+						</header>
 					</a>
 				</Link>
-			) : (
-				<MainContainer />
-			)}
+
+				<main>
+					<p className="content">
+						<TagWrapper>{data.content}</TagWrapper>
+					</p>
+					<div className="image">
+						<img src={data.image} />
+					</div>
+				</main>
+
+				<footer>
+					<p>
+						{date} // {data.replyCount}{" "}
+						{data.replyCount === 1 ? "Reply" : "Replies"}
+					</p>
+				</footer>
+			</div>
 
 			<style jsx>{`
 				aside {
@@ -190,9 +117,53 @@ export default ({data, ...props}) => {
 					margin: 5px auto;
 				}
 
-				.main {
+				.mainContainer {
+					padding: 10px;
 					flex-grow: 1;
+				}
+
+				header {
+					display: flex;
+				}
+
+				header div {
+					margin-left: 10px;
+				}
+
+				header h1 {
+					margin: 0 5px;
+					font-size: 20px;
+					font-weight: 500;
+				}
+
+				header h2 {
+					margin: 0 5px;
+					font-size: 16px;
+					font-weight: 400;
+				}
+
+				p.content {
+					white-space: pre-wrap;
+				}
+
+				.image {
 					width: 100%;
+					${props.expanded ? "" : "max-height: 500px;"}
+					border-radius: var(--radius);
+					overflow: hidden;
+					display: flex;
+					justify-content: center;
+					flex-flow: column nowrap;
+				}
+
+				.image img {
+					width: 100%;
+					margin: 0 auto;
+				}
+
+				footer p {
+					color: var(--accents-6);
+					font-size: 12px;
 				}
 			`}</style>
 		</Box>
