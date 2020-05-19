@@ -18,6 +18,7 @@
 # misc
 .DS_Store
 .env*
+!.env.example
 
 # debug
 npm-debug.log*
@@ -26,6 +27,3 @@ yarn-error.log*
 
 # jetbrains
 .idea/
-
-# submodules
-reactants
