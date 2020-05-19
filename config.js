@@ -1,8 +1,10 @@
+const {ORIGIN, MODE} = process.env;
+
 export default {
 	apiUrl: `${
-		process.env.ORIGIN
-			? process.env.ORIGIN
-			: process.env.MODE === "beta"
+		ORIGIN
+			? ORIGIN
+			: MODE === "beta"
 			? "https://beta.alles.cx"
 			: "https://alles.cx"
 	}/api`,
