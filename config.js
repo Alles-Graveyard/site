@@ -6,7 +6,6 @@ export default {
 			? "https://beta.alles.cx"
 			: "https://alles.cx"
 	}/api`,
-	dev,
 	scopes: {},
 	inputBounds: {
 		name: {
