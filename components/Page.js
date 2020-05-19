@@ -9,10 +9,12 @@ import {withRouter} from "next/router";
 export default withRouter(props => {
 	useEffect(consoleWarning, []);
 
+	const title = process.env.mode === "beta" ? "Alles β" : "Alles";
+
 	return (
 		<>
 			<Head>
-				<title>{props.title ? `Alles • ${props.title}` : "Alles"}</title>
+				<title>{props.title ? `${title} • ${props.title}` : title}</title>
 				<ThemeScript />
 			</Head>
 
@@ -20,10 +22,10 @@ export default withRouter(props => {
 				<Breadcrumb>
 					{props.router.pathname !== "/login" ? (
 						<Link href="/" passHref>
-							<Breadcrumb.Item as="h4" text="Alles" />
+							<Breadcrumb.Item as="h4" text={title} />
 						</Link>
 					) : (
-						<Breadcrumb.Item as="h4" text="Alles" />
+						<Breadcrumb.Item as="h4" text={title} />
 					)}
 
 					{props.breadcrumbs ? (

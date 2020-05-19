@@ -8,6 +8,7 @@ module.exports = {
 				: MODE === "beta"
 				? "https://beta.alles.cx"
 				: "https://alles.cx"
-		}/api`
+		}/api`,
+		mode: MODE ? MODE : "stable"
 	}
 };
