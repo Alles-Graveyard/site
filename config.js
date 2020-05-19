@@ -1,7 +1,11 @@
-const dev = process.env.NODE_ENV === "development";
-
 export default {
-	apiUrl: `${dev ? "http://localhost:3000" : "https://alles.cx"}/api`,
+	apiUrl: `${
+		process.env.ORIGIN
+			? process.env.ORIGIN
+			: process.env.MODE === "beta"
+			? "https://beta.alles.cx"
+			: "https://alles.cx"
+	}/api`,
 	dev,
 	scopes: {},
 	inputBounds: {
