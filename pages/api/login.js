@@ -72,7 +72,7 @@ export default async (req, res) => {
 	} else return res.status(400).json({err: "invalidBodyParameters"});
 
 	// Beta for Plus Members
-	if (process.env.mode === "beta" && !user.plus)
+	if (process.env.NEXT_PUBLIC_MODE === "beta" && !user.plus)
 		return res.status(400).json({err: "plusMembersOnly"});
 
 	// Create Session

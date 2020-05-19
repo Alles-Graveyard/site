@@ -19,9 +19,9 @@ const page = props => {
 			setIsFollowing(!isFollowing);
 			axios
 				.post(
-					`${process.env.apiUrl}/users/${props.requestedUser.username}/${
-						isFollowing ? "unfollow" : "follow"
-					}`,
+					`${process.env.NEXT_PUBLIC_APIURL}/users/${
+						props.requestedUser.username
+					}/${isFollowing ? "unfollow" : "follow"}`,
 					{},
 					{
 						headers: {
@@ -209,7 +209,7 @@ page.getInitialProps = async ctx => {
 		return {
 			requestedUser: (
 				await axios.get(
-					`${process.env.apiUrl}/users/${encodeURIComponent(
+					`${process.env.NEXT_PUBLIC_APIURL}/users/${encodeURIComponent(
 						username.toLowerCase()
 					)}?posts`,
 					{

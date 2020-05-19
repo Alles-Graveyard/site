@@ -15,8 +15,8 @@ export default withAuth(props => {
 			<Box>
 				<Box.Header>Env Vars</Box.Header>
 				<Box.Content>
-					<p>API Url: {process.env.apiUrl}</p>
-					<p>Mode: {process.env.mode}</p>
+					<p>API Url: {process.env.NEXT_PUBLIC_APIURL}</p>
+					<p>Mode: {process.env.NEXT_PUBLIC_MODE}</p>
 				</Box.Content>
 			</Box>
 

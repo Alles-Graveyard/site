@@ -29,7 +29,7 @@ const page = props => {
 		formData.append("avatar", file);
 		e.target.value = null;
 		axios
-			.post(`${process.env.apiUrl}/avatar`, formData, {
+			.post(`${process.env.NEXT_PUBLIC_APIURL}/avatar`, formData, {
 				headers: {
 					authorization: props.user.sessionToken
 				}
@@ -56,7 +56,7 @@ const page = props => {
 
 		axios
 			.post(
-				`${process.env.apiUrl}/updateProfile`,
+				`${process.env.NEXT_PUBLIC_APIURL}/updateProfile`,
 				{
 					name: fullname,
 					nickname,
@@ -91,7 +91,7 @@ const page = props => {
 		if (newPassword === newPassword2) {
 			axios
 				.post(
-					`${process.env.apiUrl}/password`,
+					`${process.env.NEXT_PUBLIC_APIURL}/password`,
 					{
 						oldPassword,
 						newPassword

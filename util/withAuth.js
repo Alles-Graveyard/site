@@ -53,7 +53,7 @@ const auth = async ctx => {
 	if (!sessionToken) return;
 	var apiReq;
 	try {
-		apiReq = await axios.get(`${process.env.apiUrl}/me`, {
+		apiReq = await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/me`, {
 			headers: {
 				authorization: sessionToken
 			}

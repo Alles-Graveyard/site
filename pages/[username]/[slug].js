@@ -101,7 +101,9 @@ page.getInitialProps = async ctx => {
 	try {
 		const post = (
 			await axios.get(
-				`${process.env.apiUrl}/post/${encodeURIComponent(slug)}?children`,
+				`${process.env.NEXT_PUBLIC_APIURL}/post/${encodeURIComponent(
+					slug
+				)}?children`,
 				{
 					headers: {
 						authorization: sessionToken

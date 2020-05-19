@@ -86,7 +86,7 @@ export default withAuth(
 							// Request
 							setLoading(true);
 							axios
-								.post(`${process.env.apiUrl}/login`, {
+								.post(`${process.env.NEXT_PUBLIC_APIURL}/login`, {
 									username,
 									password
 								})
@@ -153,7 +153,7 @@ export default withAuth(
 										.get("http://localhost:2318/token")
 										.then(res => {
 											axios
-												.post(`${process.env.apiUrl}/login`, {
+												.post(`${process.env.NEXT_PUBLIC_APIURL}/login`, {
 													pulsarToken: res.data
 												})
 												.then(res => {

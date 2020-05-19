@@ -8,7 +8,7 @@ const page = props => {
 	const switchUser = id => {
 		axios
 			.post(
-				`${process.env.apiUrl}/accounts/switch/${id}`,
+				`${process.env.NEXT_PUBLIC_APIURL}/accounts/switch/${id}`,
 				{},
 				{
 					headers: {
@@ -77,7 +77,7 @@ const page = props => {
 page.getInitialProps = async ctx => {
 	return {
 		accounts: (
-			await axios.get(`${process.env.apiUrl}/accounts`, {
+			await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/accounts`, {
 				headers: {
 					authorization: ctx.user.sessionToken
 				}

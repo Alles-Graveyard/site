@@ -59,7 +59,7 @@ page.getInitialProps = async ctx => {
 
 	return (
 		await axios.get(
-			`${process.env.apiUrl}/users${
+			`${process.env.NEXT_PUBLIC_APIURL}/users${
 				after
 					? `?after=${encodeURIComponent(after)}`
 					: before

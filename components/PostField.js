@@ -16,7 +16,7 @@ export default props => {
 		setLoading(true);
 		axios
 			.post(
-				`${process.env.apiUrl}/post`,
+				`${process.env.NEXT_PUBLIC_APIURL}/post`,
 				{
 					content,
 					image: imageUpload,

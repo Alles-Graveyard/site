@@ -29,4 +29,3 @@ yarn-error.log*
 
 # other
 credentials.json
-docker-compose.yml

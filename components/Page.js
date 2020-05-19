@@ -9,7 +9,7 @@ import {withRouter} from "next/router";
 export default withRouter(props => {
 	useEffect(consoleWarning, []);
 
-	const title = process.env.mode === "beta" ? "Alles β" : "Alles";
+	const title = process.env.NEXT_PUBLIC_MODE === "beta" ? "Alles β" : "Alles";
 
 	return (
 		<>

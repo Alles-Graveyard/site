@@ -29,7 +29,7 @@ module.exports = async authHeader => {
 	if (!user) return fail;
 
 	// Restrict Beta to Plus
-	if (process.env.mode === "beta" && !user.plus) return fail;
+	if (process.env.NEXT_PUBLIC_MODE === "beta" && !user.plus) return fail;
 
 	return {
 		session,
