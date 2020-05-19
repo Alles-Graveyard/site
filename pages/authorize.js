@@ -1,20 +1,19 @@
-import Page from "../layout/CardPage";
+import Page from "../components/ColumnPage";
 import {useState, useEffect} from "react";
 import {withRouter} from "next/router";
 import withAuth from "../util/withAuth";
 import config from "../config";
 import axios from "axios";
-
-import Button from "../reactants/Button";
-import SmallText from "../reactants/SmallText";
-import theme from "../reactants/theme";
+import {Button, Box, Spacer} from "@reactants/ui";
+import WideUser from "../components/WideUser";
 
 const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [pageError, setError] = useState(props.error);
+	const [account, setAccount] = useState();
 
-	//Authorize Application
-	const authorizeApplication = async () => {
+	// Authorize Application
+	const authorizeApplication = async userId => {
 		setLoading(true);
 		var res;
 		try {
@@ -24,7 +23,8 @@ const page = props => {
 				)}/authorize`,
 				{
 					scopes: props.scopes.join(" "),
-					redirectUri: props.redirectUri
+					redirectUri: props.redirectUri,
+					user: userId
 				},
 				{
 					headers: {
@@ -42,16 +42,17 @@ const page = props => {
 		)}&state=${encodeURIComponent(props.state)}`;
 	};
 
-	//If first party application, authorize automatically
+	// If first party application, authorize automatically
 	useEffect(() => {
-		if (!props.error && props.application.firstParty) authorizeApplication();
+		if (!props.error && props.application.firstParty)
+			authorizeApplication(props.user.id);
 	}, []);
 
-	//Page Returned
+	// Page Returned
 	return props.error || !props.application.firstParty ? (
 		<Page
 			title="Authorize"
-			logo
+			width="500px"
 			user={props.user}
 			breadcrumbs={
 				!props.error
@@ -66,83 +67,125 @@ const page = props => {
 					: []
 			}
 		>
-			{pageError ? ( // Page Error
-				<>
-					<h3>Something went wrong</h3>
-					<p>{pageError}</p>
-					<SmallText>
-						If you continue having issues, contact the developer of the app you
-						are trying to sign in to. Refresh the page to try again.
-					</SmallText>
-				</>
-			) : (
-				// Authorization Prompt
-				<>
-					<h1>Sign in with Alles</h1>
-					<div className="applicationInfo">
-						<p>
-							<span style={{color: theme.accent}}>
-								{props.application.name}
-							</span>{" "}
-							allows you to {props.application.description}
-						</p>
-						{props.scopes.length > 0 ? (
-							<>
-								<p style={{marginBottom: 0}}>This application wants to:</p>
-								<div className="scopes">
-									{props.scopes.map(s => (
-										<div key={s}>
-											<p>{config.scopes[s]}</p>
-										</div>
+			<Box>
+				<Box.Header>
+					{pageError ? "Something went wrong" : "Sign in with Alles"}
+				</Box.Header>
+				<Box.Content>
+					{pageError ? (
+						// Page Error
+						<>
+							<p>{pageError}</p>
+							<p
+								style={{
+									color: "var(--accents-4)",
+									fontSize: 10
+								}}
+							>
+								If you continue having issues, contact the developer of the app
+								you are trying to sign in to. Refresh the page to try again.
+							</p>
+						</>
+					) : (
+						// Authorization Prompt
+						<>
+							{account ? (
+								<>
+									<div className="applicationInfo">
+										<p>
+											<span style={{color: "var(--primary)"}}>
+												{props.application.name}
+											</span>{" "}
+											allows you to {props.application.description}
+										</p>
+										{props.scopes.length > 0 ? (
+											<>
+												<p style={{marginBottom: 0}}>
+													This application wants to:
+												</p>
+												<div className="scopes">
+													{props.scopes.map(s => (
+														<div key={s}>
+															<p>{config.scopes[s]}</p>
+														</div>
+													))}
+												</div>
+											</>
+										) : (
+											<></>
+										)}
+									</div>
+
+									<Button
+										loading={loading}
+										fluid
+										primary
+										onClick={() => authorizeApplication(account)}
+									>
+										Continue
+									</Button>
+
+									<Spacer y={0.5} />
+
+									<Button
+										loading={loading}
+										fluid
+										secondary
+										onClick={() => {
+											setLoading(true);
+											window.location.href = `${
+												props.redirectUri
+											}?error=aborted&state=${encodeURIComponent(props.state)}`;
+										}}
+									>
+										Cancel
+									</Button>
+								</>
+							) : (
+								<>
+									<p>Which account do you wish to proceed with?</p>
+									<WideUser
+										user={props.accounts.primary}
+										style={{cursor: "pointer"}}
+										onClick={() => setAccount(props.accounts.primary.id)}
+									/>
+									{props.accounts.secondaries.map(account => (
+										<WideUser
+											key={account.id}
+											user={account}
+											style={{cursor: "pointer"}}
+											onClick={() => setAccount(account.id)}
+										/>
 									))}
-								</div>
-							</>
-						) : (
-							<></>
-						)}
-					</div>
+								</>
+							)}
 
-					<Button disabled={loading} wide onClick={authorizeApplication}>
-						Continue
-					</Button>
-					<Button
-						disabled={loading}
-						wide
-						secondary
-						onClick={() => {
-							setLoading(true);
-							window.location.href = `${
-								props.redirectUri
-							}?error=aborted&state=${encodeURIComponent(props.state)}`;
-						}}
-					>
-						Cancel
-					</Button>
+							<style jsx>{`
+								.applicationInfo {
+									min-height: 100px;
+								}
 
-					<style jsx>{`
-						.applicationInfo {
-							min-height: 100px;
-						}
+								.scopes {
+									padding: 0 10px;
+								}
 
-						.scopes {
-							padding: 0 10px;
-						}
+								.scopes div {
+									font-size: 12px;
+									padding: 10px;
+								}
 
-						.scopes div {
-							font-size: 12px;
-							padding: 10px;
-						}
+								.scopes div p {
+									margin: 0;
+								}
 
-						.scopes div p {
-							margin: 0;
-						}
-
-						.scopes div + div {
-							border-top: solid 1px ${theme.borderGrey};
-						}
-					`}</style>
-				</>
-			)}
+								.scopes div + div {
+									border-top: solid 1px var(--accents-2);
+								}
+							`}</style>
+						</>
+					)}
+				</Box.Content>
+			</Box>
 		</Page>
 	) : (
 		<p>One moment...</p>
@@ -150,7 +193,7 @@ const page = props => {
 };
 
 page.getInitialProps = async ctx => {
-	//Basic query parameter checks
+	// Basic query parameter checks
 	if (!ctx.query.client_id)
 		return {
 			error: "A 'client_id' must be specified with the ID of the application"
@@ -166,41 +209,53 @@ page.getInitialProps = async ctx => {
 	);
 	const redirectUri = ctx.query.redirect_uri;
 
-	//Verify Scopes
+	// Verify Scopes
 	for (const scope of scopes) {
-		if (typeof config.scopes[scope] === "undefined")
+		if (typeof config.scopes[scope] !== "string")
 			return {error: `'${scope}' is not a valid scope`};
 	}
 
-	//Get application data
-	const {sessionToken} = ctx.user;
-	var res;
+	// Get application data
+	let application;
 	try {
-		res = await axios.get(
-			`${config.apiUrl}/application/${encodeURIComponent(ctx.query.client_id)}`,
-			{
-				headers: {
-					authorization: sessionToken
+		application = (
+			await axios.get(
+				`${config.apiUrl}/application/${encodeURIComponent(
+					ctx.query.client_id
+				)}`,
+				{
+					headers: {
+						authorization: ctx.user.sessionToken
+					}
 				}
-			}
-		);
+			)
+		).data;
 	} catch (err) {
 		return {
 			error: "There was an issue obtaining data for the application specified"
 		};
 	}
 
-	const application = res.data;
 	if (!application.callbackUrls.includes(redirectUri))
 		return {
 			error: "The callback url specified is not registered for this application"
 		};
 
+	// Get Accounts
+	const accounts = (
+		await axios.get(`${config.apiUrl}/accounts`, {
+			headers: {
+				authorization: ctx.user.sessionToken
+			}
+		})
+	).data;
+
 	return {
 		application,
 		state,
 		scopes,
-		redirectUri
+		redirectUri,
+		accounts
 	};
 };
 

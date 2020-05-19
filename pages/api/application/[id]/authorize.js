@@ -12,7 +12,8 @@ export default async (req, res) => {
 	if (
 		!req.body ||
 		typeof req.body.scopes !== "string" ||
-		typeof req.body.redirectUri !== "string"
+		typeof req.body.redirectUri !== "string" ||
+		typeof req.body.user !== "string"
 	)
 		return res.status(400).json({err: "invalidBodyParameters"});
 
@@ -38,14 +39,33 @@ export default async (req, res) => {
 	if (!application.callbackUrls.includes(req.body.redirectUri))
 		return res.status(400).json({err: "invalidRedirectUri"});
 
+	// Get Primary Account
+	const primary = await user.getPrimary({
+		attributes: ["id"]
+	});
+
+	// Get Secondary Accounts
+	const secondaries = (
+		await (primary ? primary : user).getSecondaries({
+			attributes: ["id"]
+		})
+	).map(u => u.id);
+
+	// Check ID is in connected accounts
+	if (
+		req.body.user !== (primary ? primary : user).id &&
+		!secondaries.includes(req.body.user)
+	)
+		return res.status(400).json({err: "accountNotRelated"});
+
 	// Create code
 	const code = await db.AuthCode.create({
 		id: uuid(),
 		code: randomString(128),
 		redirectUri: req.body.redirectUri,
-		scopes
+		scopes,
+		userId: req.body.user
 	});
-	code.setUser(user);
 	code.setApplication(application);
 
 	res.json({code: code.code});

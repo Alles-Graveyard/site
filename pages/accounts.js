@@ -41,14 +41,8 @@ const page = props => {
 					</p>
 					<h3>Primary Account</h3>
 					<WideUser
-						user={props.accounts.primary ? props.accounts.primary : props.user}
-						onClick={() =>
-							switchUser(
-								props.accounts.primary
-									? props.accounts.primary.id
-									: props.user.id
-							)
-						}
+						user={props.accounts.primary}
+						onClick={() => switchUser(props.accounts.primary.id)}
 						style={{
 							cursor: "pointer"
 						}}

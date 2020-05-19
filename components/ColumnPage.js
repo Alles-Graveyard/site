@@ -1,6 +1,6 @@
 import Page from "./Page";
 
-export default ({children, ...props}) => (
+export default ({children, width, ...props}) => (
 	<Page {...props}>
 		<div className="container">
 			<div className="column">{children}</div>
@@ -14,7 +14,7 @@ export default ({children, ...props}) => (
 
 			.column {
 				width: 100%;
-				max-width: 375px;
+				max-width: ${width ? width : "100%"};
 			}
 		`}</style>
 	</Page>

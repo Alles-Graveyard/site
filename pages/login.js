@@ -11,7 +11,7 @@ export default withAuth(
 	withRouter(props => {
 		if (props.user) {
 			return (
-				<Page title="Sign in" user={props.user}>
+				<Page title="Sign in" user={props.user} width="375px">
 					<h2>Hang on a minute!</h2>
 					<p>You're already signed in!</p>
 
@@ -71,7 +71,7 @@ export default withAuth(
 			}, []);
 
 			return (
-				<Page title="Sign in">
+				<Page title="Sign in" width="375px">
 					<h2 style={{textAlign: "center"}}>Sign In</h2>
 
 					<Box

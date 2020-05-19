@@ -16,7 +16,14 @@ export default async (req, res) => {
 
 	// Response
 	res.json({
-		primary,
+		primary: primary
+			? primary
+			: {
+					id: user.id,
+					username: user.username,
+					name: user.name,
+					plus: user.plus
+			  },
 		secondaries
 	});
 };
