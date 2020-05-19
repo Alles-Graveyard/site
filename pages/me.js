@@ -1,6 +1,5 @@
 import Page from "../components/Page";
 import withAuth from "../util/withAuth";
-import config from "../config";
 import {useState, createRef} from "react";
 import axios from "axios";
 import {Input, Button, Box, Spacer, useTheme} from "@reactants/ui";
@@ -30,7 +29,7 @@ const page = props => {
 		formData.append("avatar", file);
 		e.target.value = null;
 		axios
-			.post(`${config.apiUrl}/avatar`, formData, {
+			.post(`${process.env.apiUrl}/avatar`, formData, {
 				headers: {
 					authorization: props.user.sessionToken
 				}
@@ -57,7 +56,7 @@ const page = props => {
 
 		axios
 			.post(
-				`${config.apiUrl}/updateProfile`,
+				`${process.env.apiUrl}/updateProfile`,
 				{
 					name: fullname,
 					nickname,
@@ -92,7 +91,7 @@ const page = props => {
 		if (newPassword === newPassword2) {
 			axios
 				.post(
-					`${config.apiUrl}/password`,
+					`${process.env.apiUrl}/password`,
 					{
 						oldPassword,
 						newPassword

@@ -1,6 +1,5 @@
 import nextCookie from "next-cookies";
 import axios from "axios";
-import config from "../config";
 import Router from "next/router";
 
 export default (WrappedComponent, allowGuest) => {
@@ -54,7 +53,7 @@ const auth = async ctx => {
 	if (!sessionToken) return;
 	var apiReq;
 	try {
-		apiReq = await axios.get(`${config.apiUrl}/me`, {
+		apiReq = await axios.get(`${process.env.apiUrl}/me`, {
 			headers: {
 				authorization: sessionToken
 			}

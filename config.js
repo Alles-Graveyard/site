@@ -1,13 +1,4 @@
-const {ORIGIN, MODE} = process.env;
-
 export default {
-	apiUrl: `${
-		ORIGIN
-			? ORIGIN
-			: MODE === "beta"
-			? "https://beta.alles.cx"
-			: "https://alles.cx"
-	}/api`,
 	scopes: {},
 	inputBounds: {
 		name: {

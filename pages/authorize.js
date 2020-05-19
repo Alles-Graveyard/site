@@ -18,7 +18,7 @@ const page = props => {
 		var res;
 		try {
 			res = await axios.post(
-				`${config.apiUrl}/application/${encodeURIComponent(
+				`${process.env.apiUrl}/application/${encodeURIComponent(
 					props.application.id
 				)}/authorize`,
 				{
@@ -220,7 +220,7 @@ page.getInitialProps = async ctx => {
 	try {
 		application = (
 			await axios.get(
-				`${config.apiUrl}/application/${encodeURIComponent(
+				`${process.env.apiUrl}/application/${encodeURIComponent(
 					ctx.query.client_id
 				)}`,
 				{
@@ -243,7 +243,7 @@ page.getInitialProps = async ctx => {
 
 	// Get Accounts
 	const accounts = (
-		await axios.get(`${config.apiUrl}/accounts`, {
+		await axios.get(`${process.env.apiUrl}/accounts`, {
 			headers: {
 				authorization: ctx.user.sessionToken
 			}

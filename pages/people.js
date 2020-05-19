@@ -1,6 +1,5 @@
 import Page from "../components/Page";
 import withAuth from "../util/withAuth";
-import config from "../config";
 import Link from "next/link";
 import axios from "axios";
 import {withRouter} from "next/router";
@@ -60,7 +59,7 @@ page.getInitialProps = async ctx => {
 
 	return (
 		await axios.get(
-			`${config.apiUrl}/users${
+			`${process.env.apiUrl}/users${
 				after
 					? `?after=${encodeURIComponent(after)}`
 					: before

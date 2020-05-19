@@ -1,6 +1,5 @@
 import Page from "../components/Page";
 import withAuth from "../util/withAuth";
-import config from "../config";
 import axios from "axios";
 import WideUser from "../components/WideUser";
 import {Box} from "@reactants/ui";
@@ -9,7 +8,7 @@ const page = props => {
 	const switchUser = id => {
 		axios
 			.post(
-				`${config.apiUrl}/accounts/switch/${id}`,
+				`${process.env.apiUrl}/accounts/switch/${id}`,
 				{},
 				{
 					headers: {
@@ -78,7 +77,7 @@ const page = props => {
 page.getInitialProps = async ctx => {
 	return {
 		accounts: (
-			await axios.get(`${config.apiUrl}/accounts`, {
+			await axios.get(`${process.env.apiUrl}/accounts`, {
 				headers: {
 					authorization: ctx.user.sessionToken
 				}

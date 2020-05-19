@@ -1,6 +1,5 @@
 import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
-import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {useState} from "react";
@@ -20,7 +19,7 @@ const page = props => {
 			setIsFollowing(!isFollowing);
 			axios
 				.post(
-					`${config.apiUrl}/users/${props.requestedUser.username}/${
+					`${process.env.apiUrl}/users/${props.requestedUser.username}/${
 						isFollowing ? "unfollow" : "follow"
 					}`,
 					{},
@@ -210,7 +209,7 @@ page.getInitialProps = async ctx => {
 		return {
 			requestedUser: (
 				await axios.get(
-					`${config.apiUrl}/users/${encodeURIComponent(
+					`${process.env.apiUrl}/users/${encodeURIComponent(
 						username.toLowerCase()
 					)}?posts`,
 					{

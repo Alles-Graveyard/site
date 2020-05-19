@@ -1,6 +1,5 @@
 import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
-import config from "../../config";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {Spacer} from "@reactants/ui";
@@ -102,7 +101,7 @@ page.getInitialProps = async ctx => {
 	try {
 		const post = (
 			await axios.get(
-				`${config.apiUrl}/post/${encodeURIComponent(slug)}?children`,
+				`${process.env.apiUrl}/post/${encodeURIComponent(slug)}?children`,
 				{
 					headers: {
 						authorization: sessionToken

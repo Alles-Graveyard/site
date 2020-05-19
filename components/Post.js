@@ -31,7 +31,7 @@ export default ({data, ...props}) => {
 
 		axios
 			.post(
-				`${config.apiUrl}/post/${data.slug}/vote`,
+				`${process.env.apiUrl}/post/${data.slug}/vote`,
 				{
 					vote: v
 				},
@@ -121,7 +121,7 @@ export default ({data, ...props}) => {
 						setRemoved(true);
 						axios
 							.post(
-								`${config.apiUrl}/post/${data.slug}/remove`,
+								`${process.env.apiUrl}/post/${data.slug}/remove`,
 								{},
 								{
 									headers: {
