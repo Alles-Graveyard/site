@@ -15,7 +15,7 @@ export default (WrappedComponent, allowGuest) => {
 	Wrapper.getInitialProps = async ctx => {
 		const user = await auth(ctx);
 
-		//Unauthorized Redirect
+		// Unauthorized Redirect
 		if (!user && !allowGuest) {
 			const redirectUrl = `/login?redirect=${encodeURIComponent(
 				ctx.req
@@ -33,13 +33,13 @@ export default (WrappedComponent, allowGuest) => {
 			return {user: null};
 		}
 
-		//Child getIntialProps
+		// Child getIntialProps
 		ctx.user = user;
 		const childProps = WrappedComponent.getInitialProps
 			? await WrappedComponent.getInitialProps(ctx)
 			: {};
 
-		//Return Props
+		// Return Props
 		return {
 			user,
 			...childProps

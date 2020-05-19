@@ -27,5 +27,6 @@ yarn-error.log*
 # jetbrains
 .idea/
 
-# credentials
+# other
 credentials.json
+docker-compose.yml

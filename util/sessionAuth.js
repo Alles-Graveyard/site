@@ -7,7 +7,7 @@ const fail = {
 };
 
 module.exports = async authHeader => {
-	//Parse Header
+	// Parse Header
 	if (typeof authHeader !== "string") return fail;
 	var token;
 	try {
@@ -16,7 +16,7 @@ module.exports = async authHeader => {
 		return fail;
 	}
 
-	//Get Session
+	// Get Session
 	const session = await db.Session.findOne({
 		where: {
 			id: token.session
@@ -24,8 +24,15 @@ module.exports = async authHeader => {
 	});
 	if (!session) return fail;
 
+	// Get User
+	const user = await session.getUser();
+	if (!user) return fail;
+
+	// Restrict Beta to Plus
+	if (process.env.MODE === "beta" && !user.plus) return fail;
+
 	return {
 		session,
-		user: await session.getUser()
+		user
 	};
 };

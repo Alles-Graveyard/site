@@ -6,3 +6,5 @@ services:
     restart: always
     ports:
       - 127.0.0.1:8001:3000
+    environment:
+      - MODE=stable
