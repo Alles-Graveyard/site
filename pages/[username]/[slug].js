@@ -26,33 +26,34 @@ const page = props => {
 					<React.Fragment key={p.slug}>
 						<Post
 							data={p}
-							self={props.user.id === p.author.id}
+							self={p.author && props.user.id === p.author.id}
 							sessionToken={props.user.sessionToken}
 						/>
 						<div className="chain"></div>
 					</React.Fragment>
 				))}
 
-				<Post
-					data={props.post}
-					self={props.user.id === props.post.author.id}
-					sessionToken={props.user.sessionToken}
-					expanded
-				/>
+				<React.Fragment key={props.post.slug}>
+					<Post
+						data={props.post}
+						self={props.user.id === props.post.author.id}
+						sessionToken={props.user.sessionToken}
+						expanded
+					/>
 
-				<Spacer y={2} />
+					<Spacer y={2} />
 
-				<PostField
-					placeholder={
-						props.user.id !== props.post.author.id
-							? `Reply to @${props.post.author.username}`
-							: "Got something else to say?"
-					}
-					button="Reply"
-					parent={props.post.slug}
-					sessionToken={props.user.sessionToken}
-					key={props.post.slug}
-				/>
+					<PostField
+						placeholder={
+							props.user.id !== props.post.author.id
+								? `Reply to @${props.post.author.username}`
+								: "Got something else to say?"
+						}
+						button="Reply"
+						parent={props.post.slug}
+						sessionToken={props.user.sessionToken}
+					/>
+				</React.Fragment>
 
 				<Spacer y={2} />
 

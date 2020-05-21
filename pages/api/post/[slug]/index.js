@@ -81,8 +81,7 @@ export default async (req, res) => {
 					// Missing Parent
 					ancestors.push({
 						slug: uuidTranslator.fromUUID(childId),
-						removed: true,
-						author: config.ghost
+						removed: true
 					});
 					break;
 				}
@@ -90,8 +89,7 @@ export default async (req, res) => {
 		} else {
 			ancestors.push({
 				slug: uuidTranslator.fromUUID(post.parentId),
-				removed: true,
-				author: config.ghost
+				removed: true
 			});
 		}
 	}
