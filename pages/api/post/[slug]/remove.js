@@ -1,5 +1,7 @@
 import db from "../../../../util/db";
 import sessionAuth from "../../../../util/sessionAuth";
+import credentials from "../../../../credentials";
+import log from "@alleshq/log";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
@@ -32,4 +34,15 @@ export default async (req, res) => {
 
 	// Response
 	res.json({});
+
+	// Log
+	log(
+		credentials.logarithm,
+		"post.delete",
+		{
+			id,
+			slug: req.query.slug
+		},
+		user.id
+	);
 };

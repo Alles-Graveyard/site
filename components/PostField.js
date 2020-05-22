@@ -28,12 +28,13 @@ export default props => {
 					}
 				}
 			)
-			.then(res => {
+			.then(res =>
 				Router.push(
 					"/[username]/[slug]",
 					`/${res.data.username}/${res.data.slug}`
-				);
-			});
+				)
+			)
+			.catch(() => setLoading(false));
 	};
 
 	const iconStyle = {

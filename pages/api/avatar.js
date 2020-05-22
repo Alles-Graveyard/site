@@ -6,6 +6,7 @@ import sharp from "sharp";
 import axios from "axios";
 import {literal} from "sequelize";
 import FormData from "form-data";
+import log from "@alleshq/log";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -53,7 +54,11 @@ export default async (req, res) => {
 				avatar: id
 			});
 
+			// Response
 			res.json({});
+
+			// Log
+			log(credentials.logarithm, "profile.avatar.update", {}, user.id);
 		} catch (e) {
 			res.status(500).json({err: "internalError"});
 		}

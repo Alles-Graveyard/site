@@ -8,6 +8,7 @@ import axios from "axios";
 import sharp from "sharp";
 import FormData from "form-data";
 import parseContent from "../../../util/parseContent";
+import log from "@alleshq/log";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
@@ -151,6 +152,7 @@ export default async (req, res) => {
 		taggedUsers
 	});
 	await post.setUser(user);
+	const slug = uuidTranslator.fromUUID(post.id);
 
 	// Parent
 	if (parent) await post.setParent(parent);
@@ -165,6 +167,17 @@ export default async (req, res) => {
 	// Response
 	res.json({
 		username: user.username,
-		slug: uuidTranslator.fromUUID(post.id)
+		slug
 	});
+
+	// Log
+	log(
+		credentials.logarithm,
+		"post.new",
+		{
+			id: post.id,
+			slug
+		},
+		user.id
+	);
 };

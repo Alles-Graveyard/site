@@ -1,5 +1,7 @@
 import config from "../../config";
+import credentials from "../../credentials";
 import sessionAuth from "../../util/sessionAuth";
+import log from "@alleshq/log";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -27,11 +29,38 @@ export default async (req, res) => {
 	)
 		return res.status(400).json({err: "invalidBodyParameters"});
 
+	// Log
+	if (user.name !== fullname) {
+		log(
+			credentials.logarithm,
+			"profile.name.update",
+			{
+				old: user.name,
+				new: fullname
+			},
+			user.id
+		);
+	}
+
+	if (user.nickname !== nickname) {
+		log(
+			credentials.logarithm,
+			"profile.nickname.update",
+			{
+				old: user.nickname,
+				new: nickname
+			},
+			user.id
+		);
+	}
+
+	// Update
 	await user.update({
 		name: fullname,
 		nickname,
 		about
 	});
 
+	// Response
 	res.json({});
 };
