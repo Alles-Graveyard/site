@@ -11,14 +11,14 @@ export default text => {
 			// Text
 			if (text[i] === "@") {
 				// Start of username
-				segments.push(segment);
+				if (segment.string) segments.push(segment);
 				segment = {
 					type: "username",
 					string: ""
 				};
 			} else if (text[i] === "#") {
 				// Start of tag
-				segments.push(segment);
+				if (segment.string) segments.push(segment);
 				segment = {
 					type: "tag",
 					string: ""
@@ -31,7 +31,7 @@ export default text => {
 			// Not Text
 			if (text[i].match(/[^a-zA-Z0-9]/)) {
 				// Non-Alphanumeric, switch back to string
-				segments.push(segment);
+				if (segment.string) segments.push(segment);
 				segment = {
 					type: "text",
 					string: text[i]
@@ -42,7 +42,7 @@ export default text => {
 			}
 		}
 	}
-	segments.push(segment);
+	if (segment.string) segments.push(segment);
 
 	return segments;
 };
