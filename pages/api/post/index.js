@@ -165,7 +165,6 @@ export default async (req, res) => {
 		)
 			taggedUsers.push(parentAuthor);
 	}
-	console.log(taggedUsers.map(t => t.username));
 
 	// Create Post
 	const post = await db.Post.create({
