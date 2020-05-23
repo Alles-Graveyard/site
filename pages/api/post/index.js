@@ -51,7 +51,7 @@ export default async (req, res) => {
 				}
 			)
 		).data;
-	} catch (e) {}
+	} catch (err) {}
 
 	// Update user reputation
 	await user.update({
@@ -117,7 +117,7 @@ export default async (req, res) => {
 					headers: formData.getHeaders()
 				})
 			).data;
-		} catch (e) {}
+		} catch (err) {}
 	}
 
 	// Parse Content

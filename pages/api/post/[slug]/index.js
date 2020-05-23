@@ -16,7 +16,7 @@ export default async (req, res) => {
 	let id;
 	try {
 		id = uuidTranslator.toUUID(req.query.slug);
-	} catch (e) {
+	} catch (err) {
 		return res.status(400).json({err: "invalidPost"});
 	}
 

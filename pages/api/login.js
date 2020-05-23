@@ -27,7 +27,7 @@ export default async (req, res) => {
 				}
 			});
 			if (!user) return res.status(401).json({err: "badToken"});
-		} catch (e) {
+		} catch (err) {
 			return res.status(401).json({err: "badToken"});
 		}
 	} else if (

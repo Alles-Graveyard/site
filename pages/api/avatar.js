@@ -59,10 +59,10 @@ export default async (req, res) => {
 
 			// Log
 			log(credentials.logarithm, "profile.avatar.update", {}, user.id);
-		} catch (e) {
+		} catch (err) {
 			res.status(500).json({err: "internalError"});
 		}
-	} catch (e) {
+	} catch (err) {
 		res.status(400).json({err: "badRequest"});
 	}
 };
