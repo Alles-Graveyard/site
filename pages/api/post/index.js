@@ -137,7 +137,7 @@ export default async (req, res) => {
 					}
 				});
 				if (taggedUser && !taggedUsers.includes(taggedUser.id))
-					taggedUsers.push(taggedUser.id);
+					taggedUsers.push(taggedUser);
 			}
 		})
 	);
@@ -147,12 +147,35 @@ export default async (req, res) => {
 		id: uuid(),
 		content,
 		score,
-		image: imageId,
-		tags,
-		taggedUsers
+		image: imageId
 	});
 	await post.setUser(user);
 	const slug = uuidTranslator.fromUUID(post.id);
+
+	// User Tags
+	await Promise.all(taggedUsers.map(u => post.addMention(u)));
+
+	// Tags
+	await Promise.all(
+		tags.map(async t => {
+			if (t.length <= 64) {
+				// Get Tag
+				let tag = await db.Tag.findOne({
+					where: {
+						id: t
+					}
+				});
+
+				// If tag does not exist, create
+				if (!tag) {
+					await db.Tag.create({id: t});
+				}
+
+				// Associate Tag
+				await tag.addPost(post);
+			}
+		})
+	);
 
 	// Parent
 	if (parent) await post.setParent(parent);
