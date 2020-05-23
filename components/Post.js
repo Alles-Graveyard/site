@@ -85,7 +85,13 @@ export default ({data, ...props}) => {
 				<Link href="/[username]" as={`/${data.author.username}`}>
 					<a onClick={e => e.stopPropagation()}>
 						<header>
-							<Avatar username={data.author.username} size={50} />
+							<Avatar
+								username={data.author.username}
+								size={50}
+								style={{
+									flexShrink: 0
+								}}
+							/>
 							<div>
 								<h1>
 									{data.author.name}
