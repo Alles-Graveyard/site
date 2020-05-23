@@ -19,45 +19,51 @@ const page = props => {
 					}
 				]}
 			>
-				<Box>
-					<Box.Content>
-						{props.tag.image ? <img src={props.tag.image} /> : <></>}
-						<h1>{props.tag.title}</h1>
-						{props.tag.description ? <p>{props.tag.description}</p> : <></>}
-						{props.tag.url ? (
-							<p className="url">
-								<a className="normal" href={props.tag.url}>
-									{props.tag.url}
-								</a>
-							</p>
-						) : (
-							<></>
-						)}
+				{props.tag.image || props.tag.description || props.tag.url ? (
+					<>
+						<Box>
+							<Box.Content>
+								{props.tag.image ? <img src={props.tag.image} /> : <></>}
+								<h1>{props.tag.title}</h1>
+								{props.tag.description ? <p>{props.tag.description}</p> : <></>}
+								{props.tag.url ? (
+									<p className="url">
+										<a className="normal" href={props.tag.url}>
+											{props.tag.url}
+										</a>
+									</p>
+								) : (
+									<></>
+								)}
 
-						<style jsx>{`
-							img {
-								width: 100%;
-								border-radius: var(--radius);
-							}
+								<style jsx>{`
+									img {
+										width: 100%;
+										border-radius: var(--radius);
+									}
 
-							h1 {
-								font-size: 30px;
-								margin: 10px 0;
-							}
+									h1 {
+										font-size: 30px;
+										margin: 10px 0;
+									}
 
-							p {
-								font-size: 15px;
-								margin: 0;
-							}
+									p {
+										font-size: 15px;
+										margin: 0;
+									}
 
-							.url {
-								margin-top: 20px;
-							}
-						`}</style>
-					</Box.Content>
-				</Box>
+									.url {
+										margin-top: 20px;
+									}
+								`}</style>
+							</Box.Content>
+						</Box>
 
-				<Spacer y={2} />
+						<Spacer y={2} />
+					</>
+				) : (
+					<></>
+				)}
 
 				<PostField
 					placeholder={`${
