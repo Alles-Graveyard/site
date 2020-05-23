@@ -1,8 +1,16 @@
 import Page from "../components/Page";
 import withAuth from "../util/withAuth";
-import {Box, Spacer} from "@reactants/ui";
+import {Box, Spacer, Input} from "@reactants/ui";
+import Tags from "../components/Tags";
+import {useState} from "react";
 
 export default withAuth(props => {
+	const [parseText, setParseText] = useState(
+		`${
+			props.user ? `@${props.user.username}, ` : ``
+		} Enter some #text and see what happens...`
+	);
+
 	return (
 		<Page
 			user={props.user}
@@ -23,6 +31,7 @@ export default withAuth(props => {
 			{props.user ? (
 				<>
 					<Spacer y={2} />
+
 					<Box>
 						<Box.Header>User Data</Box.Header>
 						<Box.Content>
@@ -39,6 +48,22 @@ export default withAuth(props => {
 			) : (
 				<></>
 			)}
+
+			<Spacer y={2} />
+
+			<Box
+				style={{
+					minHeight: 200
+				}}
+			>
+				<Box.Header>Content Parsing</Box.Header>
+				<Box.Content>
+					<Input onChange={e => setParseText(e.target.value)} fluid />
+					<p>
+						<Tags>{parseText.trim()}</Tags>
+					</p>
+				</Box.Content>
+			</Box>
 		</Page>
 	);
 }, true);
