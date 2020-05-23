@@ -167,9 +167,7 @@ export default async (req, res) => {
 				});
 
 				// If tag does not exist, create
-				if (!tag) {
-					await db.Tag.create({id: t});
-				}
+				if (!tag) tag = await db.Tag.create({id: t});
 
 				// Associate Tag
 				await tag.addPost(post);
