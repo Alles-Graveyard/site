@@ -5,8 +5,9 @@ import PostField from "../components/PostField";
 import Post from "../components/Post";
 import WideLink from "../components/WideLink";
 import {Box, Spacer} from "@reactants/ui";
+import axios from "axios";
 
-export default withAuth(props => {
+const page = props => {
 	return (
 		<Page user={props.user}>
 			<div className="top">
@@ -34,6 +35,7 @@ export default withAuth(props => {
 							Profile Page
 						</WideLink>
 						<WideLink href="/mentions">Mentions</WideLink>
+						<WideLink href="/accounts">Switch Accounts</WideLink>
 						<WideLink href="https://paper.alles.cx" basic>
 							Paper
 						</WideLink>
@@ -43,6 +45,26 @@ export default withAuth(props => {
 					</Box.Content>
 				</Box>
 			</div>
+
+			{props.feed.map(p => (
+				<React.Fragment key={`${p.type}-${p.slug}`}>
+					<Spacer y={2} />
+
+					<Post
+						data={p}
+						self={props.user.id === p.author.id}
+						sessionToken={props.user.sessionToken}
+					/>
+				</React.Fragment>
+			))}
+
+			<p className="follow">
+				Follow{" "}
+				<Link href="/people">
+					<a className="normal">people</a>
+				</Link>{" "}
+				to see their posts.
+			</p>
 
 			<style jsx>{`
 				.top {
@@ -58,7 +80,27 @@ export default withAuth(props => {
 					font-size: 30px;
 					margin-bottom: 20px;
 				}
+
+				.follow {
+					text-align: center;
+					font-style: italic;
+					color: var(--accents-6);
+				}
 			`}</style>
 		</Page>
 	);
-});
+};
+
+page.getInitialProps = async ctx => {
+	return {
+		feed: (
+			await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/feed`, {
+				headers: {
+					authorization: ctx.user.sessionToken
+				}
+			})
+		).data.feed
+	};
+};
+
+export default withAuth(page);
