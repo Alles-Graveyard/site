@@ -15,17 +15,27 @@ const page = props => {
 				}
 			]}
 		>
-			{props.mentions.map(p => (
-				<React.Fragment key={p.slug}>
-					<Spacer y={2} />
+			{props.mentions.length > 0 ? (
+				props.mentions.map(p => (
+					<React.Fragment key={p.slug}>
+						<Spacer y={2} />
 
-					<Post
-						data={p}
-						self={props.user.id === p.author.id}
-						sessionToken={props.user.sessionToken}
-					/>
-				</React.Fragment>
-			))}
+						<Post
+							data={p}
+							self={props.user.id === p.author.id}
+							sessionToken={props.user.sessionToken}
+						/>
+					</React.Fragment>
+				))
+			) : (
+				<p
+					style={{
+						textAlign: "center"
+					}}
+				>
+					No recent mentions.
+				</p>
+			)}
 		</Page>
 	);
 };
