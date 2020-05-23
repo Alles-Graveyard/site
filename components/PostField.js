@@ -12,7 +12,7 @@ export default props => {
 	const imageInput = createRef();
 
 	const submit = () => {
-		if (!content || content.length > config.maxPostLength) return;
+		if (!content || content.length > config.inputBounds.post.max) return;
 		setLoading(true);
 		axios
 			.post(
@@ -52,7 +52,7 @@ export default props => {
 		>
 			<Textarea
 				placeholder={props.placeholder}
-				maxLength={config.maxPostLength}
+				maxLength={config.inputBounds.post.max}
 				onChange={e => setContent(e.target.value.trim())}
 				style={{
 					background: "transparent",

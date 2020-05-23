@@ -16,10 +16,15 @@ export default {
 		password: {
 			min: 6,
 			max: 128
+		},
+		tag: {
+			max: 64
+		},
+		post: {
+			max: 500
 		}
 	},
 	usersResultLimit: 20,
-	maxPostLength: 300,
 	fileUploadUrl: "https://fs.alles.cx",
 	domain: "alles.cx",
 	ghost: {

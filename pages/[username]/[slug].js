@@ -1,12 +1,11 @@
 import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
 import axios from "axios";
-import {withRouter} from "next/router";
+import Router, {withRouter} from "next/router";
 import {Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 import NotFound from "../404";
-import Router from "next/router";
 
 const page = props => {
 	if (props.post) {
@@ -90,7 +89,7 @@ const page = props => {
 			</Page>
 		);
 	} else {
-		//User does not exist
+		// Not Found
 		return <NotFound />;
 	}
 };

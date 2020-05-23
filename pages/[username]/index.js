@@ -196,7 +196,7 @@ const page = props => {
 			</Page>
 		);
 	} else {
-		//User does not exist
+		// Not Found
 		return <NotFound />;
 	}
 };

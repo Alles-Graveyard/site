@@ -19,7 +19,7 @@ export default async (req, res) => {
 		return res.status(400).json({err: "badRequest"});
 
 	const content = req.body.content.trim();
-	if (content.length < 1 || content.length > config.maxPostLength)
+	if (content.length < 1 || content.length > config.inputBounds.post.max)
 		return res.status(400).json({err: "postLength"});
 
 	// Parent
@@ -158,7 +158,7 @@ export default async (req, res) => {
 	// Tags
 	await Promise.all(
 		tags.map(async t => {
-			if (t.length <= 64) {
+			if (t.length <= config.inputBounds.tag.max) {
 				// Get Tag
 				let tag = await db.Tag.findOne({
 					where: {
