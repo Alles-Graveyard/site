@@ -136,11 +136,36 @@ export default async (req, res) => {
 						username: segment.string
 					}
 				});
-				if (taggedUser && !taggedUsers.includes(taggedUser.id))
+				if (
+					taggedUser &&
+					!taggedUsers.map(t => t.id).includes(taggedUser.id) &&
+					taggedUser.id !== user.id
+				)
 					taggedUsers.push(taggedUser);
 			}
 		})
 	);
+
+	// Inherit User Tags
+	if (parent) {
+		const parentUserTags = await parent.getMentions();
+		parentUserTags.forEach(taggedUser => {
+			if (
+				!taggedUsers.map(t => t.id).includes(taggedUser.id) &&
+				taggedUser.id !== user.id
+			)
+				taggedUsers.push(taggedUser);
+		});
+
+		const parentAuthor = await parent.getUser();
+		if (
+			parentAuthor &&
+			!taggedUsers.map(t => t.id).includes(parentAuthor.id) &&
+			parentAuthor.id !== user.id
+		)
+			taggedUsers.push(parentAuthor);
+	}
+	console.log(taggedUsers.map(t => t.username));
 
 	// Create Post
 	const post = await db.Post.create({
