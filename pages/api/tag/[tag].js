@@ -1,5 +1,4 @@
 import db from "../../../util/db";
-import config from "../../../config";
 import sessionAuth from "../../../util/sessionAuth";
 import postData from "../../../util/postData";
 import {Op} from "sequelize";
