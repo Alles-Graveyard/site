@@ -6,19 +6,27 @@ export default text => {
 		string: ""
 	};
 
+	const endSegment = () => {
+		if (segment.string || segment.type === "text") segments.push(segment);
+		else if (segment.type === "username")
+			segments[segments.length - 1].string += "@";
+		else if (segment.type === "tag")
+			segments[segments.length - 1].string += "#";
+	};
+
 	for (let i = 0; i < text.length; i++) {
 		if (segment.type === "text") {
 			// Text
 			if (text[i] === "@") {
 				// Start of username
-				if (segment.string) segments.push(segment);
+				endSegment();
 				segment = {
 					type: "username",
 					string: ""
 				};
 			} else if (text[i] === "#") {
 				// Start of tag
-				if (segment.string) segments.push(segment);
+				endSegment();
 				segment = {
 					type: "tag",
 					string: ""
@@ -31,18 +39,19 @@ export default text => {
 			// Not Text
 			if (text[i].match(/[^a-zA-Z0-9]/)) {
 				// Non-Alphanumeric, switch back to string
-				if (segment.string) segments.push(segment);
+				endSegment();
 				segment = {
 					type: "text",
-					string: text[i]
+					string: ""
 				};
+				i -= 1;
 			} else {
 				// Continue
 				segment.string += text[i].toLowerCase();
 			}
 		}
 	}
-	if (segment.string) segments.push(segment);
+	endSegment();
 
 	return segments;
 };
