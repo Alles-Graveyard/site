@@ -119,7 +119,7 @@ const NavArrows = ({before, after}) => (
 
 			a {
 				display: block;
-				background: white;
+				background: var(--surface);
 				width: 30px;
 				height: 30px;
 				margin: 0 10px;
