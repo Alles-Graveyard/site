@@ -49,7 +49,7 @@ const page = props => {
 
 									p {
 										font-size: 15px;
-										margin: 0;
+										margin: 10px 0;
 									}
 
 									.url {
