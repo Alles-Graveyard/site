@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {X} from "react-feather";
+import {Box} from "@reactants/ui";
 
 export default props => {
 	const [closed, setClosed] = useState(true);
@@ -11,46 +12,44 @@ export default props => {
 	return closed ? (
 		<></>
 	) : (
-		<div className="banner">
-			<p>{props.message}</p>
-			<X
-				onClick={() => {
-					setClosed(true);
-				}}
+		<div>
+			<Box
 				style={{
-					display: "flex",
-					flexFlow: "column",
-					justifyContent: "center",
-					textAlign: "center",
-					width: 20,
-					height: 20,
-					cursor: "pointer",
-					padding: 10,
-					flexShrink: 0
+					width: "calc(100% - 40px)",
+					maxWidth: 800,
+					padding: "10px 20px",
+					boxSizing: "border-box",
+					background: "var(--surface)",
+					margin: "20px auto",
+					border: "solid 1px var(--accents-2)",
+					borderRadius: "var(--radius)",
+					display: "flex"
 				}}
-			/>
+			>
+				<p>{props.message}</p>
+				<X
+					onClick={() => {
+						setClosed(true);
+					}}
+					style={{
+						cursor: "pointer",
+						flexShrink: 0,
+						color: "var(--accents-6)"
+					}}
+				/>
+			</Box>
 
 			<style jsx>{`
-				.banner {
-					width: calc(100% - 40px);
-					padding: 10px 20px;
-					box-sizing: border-box;
+				div {
 					position: fixed;
 					bottom: 0;
-					background: white;
-					margin: 20px;
-					border: solid 1px var(--accents-2);
-					border-radius: 10px;
-					display: flex;
+					width: 100%;
 				}
 
-				.banner p {
+				p {
 					display: flex;
 					flex-flow: column;
 					justify-content: center;
-				}
-
-				.banner p {
 					margin: 0;
 					flex-grow: 1;
 				}
