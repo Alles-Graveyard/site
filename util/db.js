@@ -1,6 +1,6 @@
-const credentials = require("../credentials");
-const Sequelize = require("sequelize");
-const models = require("@alleshq/coredb-models");
+import credentials from "../credentials";
+import Sequelize from "sequelize";
+import models from "@alleshq/coredb-models";
 
 //Create Instance
 const sequelize = new Sequelize(
@@ -17,4 +17,4 @@ const sequelize = new Sequelize(
 	}
 );
 models(sequelize);
-module.exports = sequelize;
+export default sequelize;
