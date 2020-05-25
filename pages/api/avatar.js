@@ -70,7 +70,7 @@ export default async (req, res) => {
 const parseForm = req =>
 	new Promise((resolve, reject) => {
 		const form = formidable({
-			maxFileSize: 5 * 1024 * 1024
+			maxFileSize: conf.imageSize
 		});
 
 		form.parse(req, async (err, fields, file) => {

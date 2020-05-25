@@ -76,7 +76,7 @@ export default async (req, res) => {
 
 			// Metadata
 			const metadata = await sharp(img).metadata();
-			if (metadata.size > 1000000)
+			if (metadata.size > config.imageSize)
 				return res.status(400).json({err: "imageTooBig"});
 
 			// Create Text Overlay

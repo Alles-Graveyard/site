@@ -32,5 +32,6 @@ export default {
 		username: "ghost",
 		name: "Ghost 👻",
 		plus: false
-	}
+	},
+	imageSize: 5 * 1024 * 1024
 };
