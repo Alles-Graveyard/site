@@ -192,6 +192,7 @@ export default ({data, ...props}) => {
 
 				p.content {
 					white-space: pre-wrap;
+					word-wrap: break-word;
 				}
 
 				.image {
