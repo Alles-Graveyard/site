@@ -79,7 +79,7 @@ export default async (req, res) => {
 				parent = await parent.getParent();
 				if (!parent) {
 					// Missing Parent
-					ancestors.push({
+					ancestors.unshift({
 						slug: uuidTranslator.fromUUID(childId),
 						removed: true
 					});
@@ -87,7 +87,7 @@ export default async (req, res) => {
 				}
 			}
 		} else {
-			ancestors.push({
+			ancestors.unshift({
 				slug: uuidTranslator.fromUUID(post.parentId),
 				removed: true
 			});
