@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alleshq/coredb-models@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/coredb-models/-/coredb-models-0.1.0.tgz#f39bc0eb5a8ff4d454e36caf0ec51a5bc337d542"
+  integrity sha512-tcNTBts4v6eJ9O6IeiL3jFNIy5PKwLPJEgPJf5HMQ0pinwM3uRHAYq5hrWf1GgEMFsucus8pHuGYoKX3fENOWw==
+  dependencies:
+    prettier "^2.0.5"
+
 "@alleshq/log@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@alleshq/log/-/log-1.0.0.tgz#be0eea1b0bc7782fe67012b6ca2f32b2b5e78039"
@@ -2131,12 +2138,6 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
-
-"coredb-models@https://github.com/alleshq/coredb-models":
-  version "0.0.9"
-  resolved "https://github.com/alleshq/coredb-models#32cd804d51c987b6eb3b1ade9afeb29e08f95ac7"
-  dependencies:
-    prettier "^2.0.5"
 
 cosmiconfig@^5.0.0:
   version "5.2.1"
