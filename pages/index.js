@@ -6,8 +6,16 @@ import Post from "../components/Post";
 import WideLink from "../components/WideLink";
 import {Box, Spacer} from "@reactants/ui";
 import axios from "axios";
+import useMediaQuery from "../util/useMediaQuery";
+import {Settings, User, AtSign, Users} from "react-feather";
 
 const page = props => {
+	const wideScreen = useMediaQuery("(min-width: 840px)");
+
+	const iconButtonStyle = {
+		margin: "0 auto"
+	};
+
 	return (
 		<Page user={props.user}>
 			<div className="top">
@@ -17,35 +25,65 @@ const page = props => {
 						{props.user.plus ? <sup>+</sup> : <></>}
 					</h1>
 
+					{wideScreen ? (
+						<></>
+					) : (
+						<div className="iconRow">
+							<Link href="/me">
+								<a>
+									<Settings style={iconButtonStyle} />
+								</a>
+							</Link>
+
+							<Link href="/[username]" as={`/${props.user.username}`}>
+								<a>
+									<User style={iconButtonStyle} />
+								</a>
+							</Link>
+
+							<Link href="/mentions">
+								<a>
+									<AtSign style={iconButtonStyle} />
+								</a>
+							</Link>
+
+							<Link href="/accounts">
+								<a>
+									<Users style={iconButtonStyle} />
+								</a>
+							</Link>
+						</div>
+					)}
+
 					<PostField
 						placeholder="What's up?"
 						sessionToken={props.user.sessionToken}
 					/>
 				</div>
 
-				<Spacer x={2} />
+				{wideScreen ? (
+					<>
+						<Spacer x={2} />
 
-				<Box
-					style={{
-						width: 250,
-						flexShrink: 0
-					}}
-				>
-					<Box.Content>
-						<WideLink href="/me">My Account</WideLink>
-						<WideLink href="/[username]" as={`/${props.user.username}`}>
-							Profile Page
-						</WideLink>
-						<WideLink href="/mentions">Mentions</WideLink>
-						<WideLink href="/accounts">Switch Accounts</WideLink>
-						<WideLink href="https://paper.alles.cx" basic>
-							Paper
-						</WideLink>
-						<WideLink href="https://textbox.alles.cx" basic>
-							Textbox
-						</WideLink>
-					</Box.Content>
-				</Box>
+						<Box
+							style={{
+								width: 250,
+								flexShrink: 0
+							}}
+						>
+							<Box.Content>
+								<WideLink href="/me">My Account</WideLink>
+								<WideLink href="/[username]" as={`/${props.user.username}`}>
+									Profile Page
+								</WideLink>
+								<WideLink href="/mentions">Mentions</WideLink>
+								<WideLink href="/accounts">Switch Accounts</WideLink>
+							</Box.Content>
+						</Box>
+					</>
+				) : (
+					<></>
+				)}
 			</div>
 
 			{props.feed.map(p => (
@@ -81,6 +119,26 @@ const page = props => {
 				h1 {
 					font-size: 30px;
 					margin-bottom: 20px;
+				}
+
+				.iconRow {
+					margin-bottom: 20px;
+					display: flex;
+					flex-wrap: wrap;
+				}
+
+				.iconRow a {
+					background: var(--surface);
+					border-radius: var(--accents-6);
+					padding: 10px;
+					border-radius: 50%;
+					width: 50px;
+					height: 50px;
+					flex-shrink: 0;
+					display: flex;
+					flex-flow: column;
+					justify-content: center;
+					margin: 10px;
 				}
 
 				.follow {
