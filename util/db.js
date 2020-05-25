@@ -2,8 +2,7 @@ import credentials from "../credentials";
 import Sequelize from "sequelize";
 import models from "@alleshq/coredb-models";
 
-//Create Instance
-const sequelize = new Sequelize(
+const db = new Sequelize(
 	credentials.db.name,
 	credentials.db.username,
 	credentials.db.password,
@@ -16,5 +15,5 @@ const sequelize = new Sequelize(
 		}
 	}
 );
-models(sequelize);
-export default sequelize;
+models(db);
+export default db;
