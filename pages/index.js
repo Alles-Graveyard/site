@@ -147,7 +147,8 @@ const page = props => {
 
 				.iconRow a {
 					background: var(--surface);
-					border-radius: var(--accents-6);
+					border: solid 1px var(--accents-2);
+					border-radius: 50%;
 					padding: 10px;
 					border-radius: 50%;
 					width: 50px;
