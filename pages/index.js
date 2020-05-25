@@ -6,12 +6,9 @@ import Post from "../components/Post";
 import WideLink from "../components/WideLink";
 import {Box, Spacer} from "@reactants/ui";
 import axios from "axios";
-import useMediaQuery from "../util/useMediaQuery";
 import {Settings, User, AtSign, Users} from "react-feather";
 
 const page = props => {
-	const wideScreen = useMediaQuery("(min-width: 840px)");
-
 	const iconButtonStyle = {
 		margin: "0 auto"
 	};
@@ -25,35 +22,31 @@ const page = props => {
 						{props.user.plus ? <sup>+</sup> : <></>}
 					</h1>
 
-					{wideScreen ? (
-						<></>
-					) : (
-						<div className="iconRow">
-							<Link href="/me">
-								<a>
-									<Settings style={iconButtonStyle} />
-								</a>
-							</Link>
+					<div className="iconRow">
+						<Link href="/me">
+							<a>
+								<Settings style={iconButtonStyle} />
+							</a>
+						</Link>
 
-							<Link href="/[username]" as={`/${props.user.username}`}>
-								<a>
-									<User style={iconButtonStyle} />
-								</a>
-							</Link>
+						<Link href="/[username]" as={`/${props.user.username}`}>
+							<a>
+								<User style={iconButtonStyle} />
+							</a>
+						</Link>
 
-							<Link href="/mentions">
-								<a>
-									<AtSign style={iconButtonStyle} />
-								</a>
-							</Link>
+						<Link href="/mentions">
+							<a>
+								<AtSign style={iconButtonStyle} />
+							</a>
+						</Link>
 
-							<Link href="/accounts">
-								<a>
-									<Users style={iconButtonStyle} />
-								</a>
-							</Link>
-						</div>
-					)}
+						<Link href="/accounts">
+							<a>
+								<Users style={iconButtonStyle} />
+							</a>
+						</Link>
+					</div>
 
 					<PostField
 						placeholder="What's up?"
@@ -61,29 +54,25 @@ const page = props => {
 					/>
 				</div>
 
-				{wideScreen ? (
-					<>
-						<Spacer x={2} />
+				<div className="sidebar">
+					<Spacer x={2} />
 
-						<Box
-							style={{
-								width: 250,
-								flexShrink: 0
-							}}
-						>
-							<Box.Content>
-								<WideLink href="/me">My Account</WideLink>
-								<WideLink href="/[username]" as={`/${props.user.username}`}>
-									Profile Page
-								</WideLink>
-								<WideLink href="/mentions">Mentions</WideLink>
-								<WideLink href="/accounts">Switch Accounts</WideLink>
-							</Box.Content>
-						</Box>
-					</>
-				) : (
-					<></>
-				)}
+					<Box
+						style={{
+							width: 250,
+							flexShrink: 0
+						}}
+					>
+						<Box.Content>
+							<WideLink href="/me">My Account</WideLink>
+							<WideLink href="/[username]" as={`/${props.user.username}`}>
+								Profile Page
+							</WideLink>
+							<WideLink href="/mentions">Mentions</WideLink>
+							<WideLink href="/accounts">Switch Accounts</WideLink>
+						</Box.Content>
+					</Box>
+				</div>
 			</div>
 
 			{props.feed.map(p => (
@@ -139,6 +128,20 @@ const page = props => {
 					flex-flow: column;
 					justify-content: center;
 					margin: 10px;
+				}
+
+				.sidebar {
+					display: none;
+				}
+
+				@media screen and (min-width: 840px) {
+					.iconRow {
+						display: none;
+					}
+
+					.sidebar {
+						display: flex;
+					}
 				}
 
 				.follow {
