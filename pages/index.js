@@ -22,9 +22,11 @@ const page = props => {
 						sessionToken={props.user.sessionToken}
 					/>
 				</div>
+
+				<Spacer x={2} />
+
 				<Box
 					style={{
-						marginLeft: 20,
 						width: 250,
 						flexShrink: 0
 					}}
