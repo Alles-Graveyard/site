@@ -5,10 +5,33 @@ import PostField from "../components/PostField";
 import Post from "../components/Post";
 import WideLink from "../components/WideLink";
 import {Box, Spacer} from "@reactants/ui";
+import {useState, useEffect} from "react";
 import axios from "axios";
 import {Settings, User, AtSign, Users} from "react-feather";
 
 const page = props => {
+	const [feed, setFeed] = useState();
+
+	useEffect(() => {
+		const updateFeed = async () => {
+			try {
+				setFeed(
+					(
+						await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/feed`, {
+							headers: {
+								authorization: props.user.sessionToken
+							}
+						})
+					).data.feed
+				);
+			} catch (err) {}
+		};
+
+		updateFeed();
+		const interval = setInterval(updateFeed, 30000);
+		return () => clearInterval(interval);
+	}, []);
+
 	const iconButtonStyle = {
 		margin: "0 auto"
 	};
@@ -75,25 +98,31 @@ const page = props => {
 				</div>
 			</div>
 
-			{props.feed.map(p => (
-				<React.Fragment key={`${p.type}-${p.slug}`}>
-					<Spacer y={2} />
+			{feed ? (
+				feed.length > 0 ? (
+					feed.map(p => (
+						<React.Fragment key={`${p.type}-${p.slug}`}>
+							<Spacer y={2} />
 
-					<Post
-						data={p}
-						self={props.user.id === p.author.id}
-						sessionToken={props.user.sessionToken}
-					/>
-				</React.Fragment>
-			))}
-
-			<p className="follow">
-				Follow{" "}
-				<Link href="/people">
-					<a className="normal">people</a>
-				</Link>{" "}
-				to see their posts.
-			</p>
+							<Post
+								data={p}
+								self={props.user.id === p.author.id}
+								sessionToken={props.user.sessionToken}
+							/>
+						</React.Fragment>
+					))
+				) : (
+					<p className="feedText">
+						Follow{" "}
+						<Link href="/people">
+							<a className="normal">people</a>
+						</Link>{" "}
+						to see their posts.
+					</p>
+				)
+			) : (
+				<p className="feedText">Loading your feed...</p>
+			)}
 
 			<style jsx>{`
 				.top {
@@ -144,26 +173,15 @@ const page = props => {
 					}
 				}
 
-				.follow {
+				.feedText {
 					text-align: center;
 					font-style: italic;
 					color: var(--accents-6);
+					margin-top: 50px;
 				}
 			`}</style>
 		</Page>
 	);
-};
-
-page.getInitialProps = async ctx => {
-	return {
-		feed: (
-			await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/feed`, {
-				headers: {
-					authorization: ctx.user.sessionToken
-				}
-			})
-		).data.feed
-	};
 };
 
 export default withAuth(page);
