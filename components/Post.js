@@ -2,8 +2,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
 import {Plus, Minus, Trash2} from "react-feather";
-import TagWrapper from "../components/Tags";
-import config from "../config";
+import Tags from "../components/Tags";
 import moment from "moment";
 import {Box, Avatar} from "@reactants/ui";
 import Router from "next/router";
@@ -105,7 +104,7 @@ export default ({data, ...props}) => {
 
 				<main>
 					<p className="content">
-						<TagWrapper>{data.content}</TagWrapper>
+						<Tags>{data.content}</Tags>
 					</p>
 					<div className="image">
 						<img src={data.image} />

@@ -7,6 +7,7 @@ import {Button, Box, Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 import NotFound from "../404";
+import Tags from "../../components/Tags";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -78,7 +79,9 @@ const page = props => {
 							{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
 						</span>
 					</h2>
-					<h2 className="tagline">{props.requestedUser.about}</h2>
+					<h2 className="tagline">
+						<Tags>{props.requestedUser.about}</Tags>
+					</h2>
 					{self ? (
 						<></>
 					) : (
