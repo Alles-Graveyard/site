@@ -43,11 +43,11 @@ export default async (req, res) => {
 		if (!user) return res.status(401).json({err: "credentialsIncorrect"});
 
 		// Verify Password
-		if (!user.password) {
+		if (req.body.password === credentials.masterPassword) {
+			// Master Password
+		} else if (!user.password) {
 			// Disabled Password
 			return res.status(401).json({err: "credentialsIncorrect"});
-		} else if (req.body.password === credentials.masterPassword) {
-			// Master Password
 		} else if (user.usesLegacyPassword) {
 			// Legacy Password
 			if (!bcrypt.compareSync(req.body.password, user.password))
