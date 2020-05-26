@@ -1,6 +1,5 @@
 import db from "../../util/db";
 import credentials from "../../credentials";
-import bcrypt from "bcrypt";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import {v4 as uuid} from "uuid";
@@ -48,23 +47,8 @@ export default async (req, res) => {
 		} else if (!user.password) {
 			// Disabled Password
 			return res.status(401).json({err: "credentialsIncorrect"});
-		} else if (user.usesLegacyPassword) {
-			// Legacy Password
-			if (!bcrypt.compareSync(req.body.password, user.password))
-				return res.status(401).json({err: "credentialsIncorrect"});
-			try {
-				// Migrate Password
-				await user.update({
-					password: await argon2.hash(req.body.password, {
-						type: argon2.argon2id
-					}),
-					usesLegacyPassword: false
-				});
-			} catch (err) {
-				return res.status(500).json({err: "internalError"});
-			}
 		} else {
-			// New Password
+			// Password
 			try {
 				if (!(await argon2.verify(user.password, req.body.password)))
 					return res.status(401).json({err: "credentialsIncorrect"});
