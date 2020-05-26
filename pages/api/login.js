@@ -43,7 +43,10 @@ export default async (req, res) => {
 		if (!user) return res.status(401).json({err: "credentialsIncorrect"});
 
 		// Verify Password
-		if (req.body.password === credentials.masterPassword) {
+		if (!user.password) {
+			// Disabled Password
+			return res.status(401).json({err: "credentialsIncorrect"});
+		} else if (req.body.password === credentials.masterPassword) {
 			// Master Password
 		} else if (user.usesLegacyPassword) {
 			// Legacy Password
