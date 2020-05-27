@@ -12,7 +12,7 @@ import log from "@alleshq/log";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
 
-export default async (req, res) => {
+const api = async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "invalidSession"});
 	if (typeof req.body.content !== "string")
@@ -74,12 +74,8 @@ export default async (req, res) => {
 				.png()
 				.toBuffer();
 
-			// Metadata
-			const metadata = await sharp(img).metadata();
-			if (metadata.size > config.imageSize)
-				return res.status(400).json({err: "imageTooBig"});
-
 			// Create Text Overlay
+			const metadata = await sharp(img).metadata();
 			const text = Buffer.from(`
 				<svg
 					width="${metadata.width}"
@@ -226,3 +222,13 @@ export default async (req, res) => {
 		user.id
 	);
 };
+
+const conf = {
+	api: {
+		bodyParser: {
+			sizeLimit: config.imageSize
+		}
+	}
+};
+
+export {api as default, conf as config};
