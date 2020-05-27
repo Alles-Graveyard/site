@@ -15,7 +15,11 @@ export default async (req, res) => {
 			id: req.query.tag
 		}
 	});
-	if (!tag) return res.status(400).json({err: "invalidTag"});
+	if (!tag)
+		return res.json({
+			name: req.query.tag.replace(/[^a-zA-Z0-9]/g, "").toLowerCase(),
+			posts: []
+		});
 
 	// Posts
 	const posts = await Promise.all(
