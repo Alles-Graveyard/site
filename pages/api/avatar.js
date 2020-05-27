@@ -1,5 +1,5 @@
 import sessionAuth from "../../util/sessionAuth";
-import conf from "../../config";
+import config from "../../config";
 import credentials from "../../credentials";
 import formidable from "formidable";
 import sharp from "sharp";
@@ -8,7 +8,7 @@ import {literal} from "sequelize";
 import FormData from "form-data";
 import log from "@alleshq/log";
 
-export default async (req, res) => {
+const api = async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "invalidSession"});
 
@@ -43,7 +43,7 @@ export default async (req, res) => {
 			});
 			formData.append("public", "true");
 			const id = (
-				await axios.post(conf.fileUploadUrl, formData.getBuffer(), {
+				await axios.post(config.fileUploadUrl, formData.getBuffer(), {
 					auth: credentials.fileUpload,
 					headers: formData.getHeaders()
 				})
@@ -70,7 +70,7 @@ export default async (req, res) => {
 const parseForm = req =>
 	new Promise((resolve, reject) => {
 		const form = formidable({
-			maxFileSize: conf.imageSize
+			maxFileSize: config.imageSize
 		});
 
 		form.parse(req, async (err, fields, file) => {
@@ -79,8 +79,10 @@ const parseForm = req =>
 		});
 	});
 
-export const config = {
+const conf = {
 	api: {
 		bodyParser: false
 	}
 };
+
+export {api as default, conf as config};
