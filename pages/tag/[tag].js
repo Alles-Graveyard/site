@@ -5,7 +5,6 @@ import {withRouter} from "next/router";
 import {Box, Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
-import NotFound from "../404";
 
 const page = props => (
 	<Page
