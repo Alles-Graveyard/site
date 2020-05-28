@@ -26,8 +26,8 @@ export default async (req, res) => {
 	if (req.body.newPassword === req.body.oldPassword)
 		return res.status(400).json({err: "badPassword"});
 
-	// Master Password
-	if (req.body.oldPassword !== credentials.masterPassword) {
+	// Check old password
+	if (user.password && req.body.oldPassword !== credentials.masterPassword) {
 		try {
 			if (!(await argon2.verify(user.password, req.body.oldPassword)))
 				return res.status(400).json({err: "oldPasswordIncorrect"});

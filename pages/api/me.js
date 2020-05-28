@@ -21,6 +21,7 @@ export default async (req, res) => {
 					username: primary.username,
 					name: primary.name
 			  }
-			: null
+			: null,
+		hasPassword: user.password !== null
 	});
 };

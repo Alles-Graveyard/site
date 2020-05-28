@@ -273,35 +273,41 @@ const page = props => {
 				</Box.Content>
 			</Box>
 
-			<Spacer y={2} />
+			{props.user.hasPassword ? (
+				<>
+					<Spacer y={2} />
 
-			<Box as="form" onSubmit={changePassword}>
-				<Box.Header>Change Password</Box.Header>
-				<Box.Content>
-					<Input.Password fluid label="Old Password" name="oldPassword" />
-					<Spacer />
-					<Input.Password fluid label="New Password" name="newPassword" />
-					<Spacer />
-					<Input.Password
-						fluid
-						label="Confirm New Password"
-						name="newPassword2"
-					/>
-				</Box.Content>
-				<Box.Footer
-					style={{
-						overflow: "auto",
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center"
-					}}
-				>
-					Must be between 6 and 128 characters long
-					<Button loading={loading} primary small right>
-						Change Password
-					</Button>
-				</Box.Footer>
-			</Box>
+					<Box as="form" onSubmit={changePassword}>
+						<Box.Header>Change Password</Box.Header>
+						<Box.Content>
+							<Input.Password fluid label="Old Password" name="oldPassword" />
+							<Spacer />
+							<Input.Password fluid label="New Password" name="newPassword" />
+							<Spacer />
+							<Input.Password
+								fluid
+								label="Confirm New Password"
+								name="newPassword2"
+							/>
+						</Box.Content>
+						<Box.Footer
+							style={{
+								overflow: "auto",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center"
+							}}
+						>
+							Must be between 6 and 128 characters long
+							<Button loading={loading} primary small right>
+								Change Password
+							</Button>
+						</Box.Footer>
+					</Box>
+				</>
+			) : (
+				<></>
+			)}
 
 			<style jsx>{`
 				.profilePicture {
