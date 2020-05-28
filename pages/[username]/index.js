@@ -8,6 +8,7 @@ import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 import NotFound from "../404";
 import Tags from "../../components/Tags";
+import Link from "next/link";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -69,16 +70,35 @@ const page = props => {
 						{props.requestedUser.plus ? <sup>+</sup> : <></>}
 					</h1>
 					<h2 className="username">@{props.requestedUser.username}</h2>
-					<h2 className="counts">
-						<span>
-							<b>{props.requestedUser.followers}</b>{" "}
-							{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
-						</span>
-						<span>
-							<b>{props.requestedUser.rubies}</b>{" "}
-							{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
-						</span>
-					</h2>
+					{self ? (
+						<h2 className="counts">
+							<Link href="/followers">
+								<a>
+									<span>
+										<b>{props.requestedUser.followers}</b>{" "}
+										{props.requestedUser.followers === 1
+											? "Follower"
+											: "Followers"}
+									</span>
+								</a>
+							</Link>
+							<span>
+								<b>{props.requestedUser.rubies}</b>{" "}
+								{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
+							</span>
+						</h2>
+					) : (
+						<h2 className="counts">
+							<span>
+								<b>{props.requestedUser.followers}</b>{" "}
+								{props.requestedUser.followers === 1 ? "Follower" : "Followers"}
+							</span>
+							<span>
+								<b>{props.requestedUser.rubies}</b>{" "}
+								{props.requestedUser.rubies === 1 ? "Ruby" : "Rubies"}
+							</span>
+						</h2>
+					)}
 					<h2 className="tagline">
 						<Tags>{props.requestedUser.about}</Tags>
 					</h2>
