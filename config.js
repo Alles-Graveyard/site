@@ -24,7 +24,7 @@ export default {
 			max: 500
 		}
 	},
-	usersResultLimit: 20,
+	maxFollows: 250,
 	fileUploadUrl: "https://fs.alles.cx",
 	domain: "alles.cx",
 	ghost: {

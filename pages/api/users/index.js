@@ -1,5 +1,4 @@
 import db from "../../../util/db";
-import config from "../../../config";
 import sessionAuth from "../../../util/sessionAuth";
 import {Op} from "sequelize";
 
@@ -28,7 +27,7 @@ export default async (req, res) => {
 		where: dbQuery,
 		attributes: ["id", "username", "name", "plus"],
 		order: [["username", backwards ? "DESC" : "ASC"]],
-		limit: config.usersResultLimit
+		limit: 20
 	});
 	if (backwards) users.reverse();
 

@@ -1,5 +1,6 @@
 import db from "../../../../util/db";
 import sessionAuth from "../../../../util/sessionAuth";
+import config from "../../../../config";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -17,6 +18,10 @@ export default async (req, res) => {
 
 	// Same User
 	if (u.id === user.id) return res.status(400).json({err: "cannotFollowSelf"});
+
+	// Max Following
+	if ((await user.countFollowing()) >= config.maxFollows)
+		return res.status(400).json({err: "maxFollows"});
 
 	// Already Followed
 	if (await u.hasFollower(user)) return res.json({});
