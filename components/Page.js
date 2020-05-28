@@ -1,5 +1,3 @@
-import {useEffect} from "react";
-import consoleWarning from "../util/consoleWarning";
 import {Header, Breadcrumb, Avatar, ThemeScript} from "@reactants/ui";
 import Banner from "./Banner";
 import Link from "next/link";
@@ -7,8 +5,6 @@ import Head from "next/head";
 import {withRouter} from "next/router";
 
 export default withRouter(props => {
-	useEffect(consoleWarning, []);
-
 	const title = process.env.NEXT_PUBLIC_MODE === "beta" ? "Alles β" : "Alles";
 
 	return (
