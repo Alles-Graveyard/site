@@ -163,10 +163,13 @@ const page = props => {
 							<style jsx>{`
 								.applicationInfo {
 									min-height: 100px;
+									margin-bottom: 20px;
 								}
 
 								.scopes {
 									padding: 0 10px;
+									margin: 10px 0;
+									border: solid 1px var(--accents-2);
 								}
 
 								.scopes div {
