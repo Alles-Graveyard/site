@@ -170,6 +170,7 @@ const page = props => {
 									padding: 0 10px;
 									margin: 10px 0;
 									border: solid 1px var(--accents-2);
+									border-radius: var(--radius);
 								}
 
 								.scopes div {
