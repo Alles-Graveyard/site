@@ -12,7 +12,9 @@ export default ({user, style, ...props}) => (
 		{...props}
 	>
 		<div className="left">
-			<Avatar username={user.username} size={40} />
+			<div className="avatar">
+				<Avatar username={user.username} size={40} />
+			</div>
 			<h1>
 				{user.name}
 				{user.plus ? <sup>+</sup> : <></>}
@@ -21,6 +23,11 @@ export default ({user, style, ...props}) => (
 		<h2>@{user.username}</h2>
 
 		<style jsx>{`
+			.avatar {
+				margin: auto 0;
+				flex-shrink: 0;
+			}
+
 			h1 {
 				font-size: 20px;
 				font-weight: 500;
