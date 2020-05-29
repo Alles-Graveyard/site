@@ -6,6 +6,7 @@ export default ({user, style, ...props}) => (
 			display: "flex",
 			padding: 20,
 			margin: "20px 0",
+			overflow: "hidden",
 			...style
 		}}
 		{...props}
@@ -20,15 +21,6 @@ export default ({user, style, ...props}) => (
 		<h2>@{user.username}</h2>
 
 		<style jsx>{`
-			article {
-				display: flex;
-				padding: 20px;
-				margin: 20px 0;
-				border-radius: var(--radius);
-				border: solid 1px var(--accents-2);
-				overflow: hidden;
-			}
-
 			h1 {
 				font-size: 20px;
 				font-weight: 500;
