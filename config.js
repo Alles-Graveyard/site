@@ -1,5 +1,7 @@
 export default {
-	scopes: {},
+	scopes: {
+		primary: "View basic information about your primary account"
+	},
 	inputBounds: {
 		name: {
 			min: 1,
