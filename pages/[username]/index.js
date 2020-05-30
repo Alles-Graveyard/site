@@ -22,7 +22,7 @@ const page = props => {
 		useEffect(
 			() =>
 				setPride(
-					new Date().getMonth() === 4 &&
+					new Date().getMonth() === 5 &&
 						props.requestedUser.about.includes("🏳️‍🌈")
 				),
 			[]
