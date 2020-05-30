@@ -45,6 +45,7 @@ export default async (req, res) => {
 		joinDate: u.createdAt,
 		rubies: u.rubies,
 		plus: u.plus,
-		posts
+		posts,
+		color: "23529f"
 	});
 };

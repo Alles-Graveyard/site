@@ -2,7 +2,7 @@ import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
 import axios from "axios";
 import {withRouter} from "next/router";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Button, Box, Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
@@ -17,6 +17,33 @@ const page = props => {
 			props.requestedUser.isFollowing
 		);
 
+		// Pride Month
+		const [pride, setPride] = useState(false);
+		useEffect(
+			() =>
+				setPride(
+					new Date().getMonth() === 5 &&
+						props.requestedUser.about.includes("🏳️‍🌈")
+				),
+			[]
+		);
+
+		// Banner
+		const bannerStyle = {
+			height: 150,
+			borderBottomLeftRadius: 0,
+			borderBottomRightRadius: 0,
+			border: "none"
+		};
+		if (pride) {
+			bannerStyle.backgroundImage =
+				"linear-gradient(180deg, #f00000, #f00000 16.67%, #ff8000 16.67%, #ff8000 33.33%, #ffff00 33.33%, #ffff00 50%, #007940 50%, #007940 66.67%, #4040ff 66.67%, #4040ff 83.33%, #a000c0 83.33%, #a000c0)";
+			bannerStyle.backgroundRepeat = "no-repeat";
+		} else {
+			bannerStyle.backgroundColor = `#${props.requestedUser.color}`;
+		}
+
+		// Toggle Follow
 		const toggleFollow = () => {
 			setIsFollowing(!isFollowing);
 			axios
@@ -44,14 +71,7 @@ const page = props => {
 					}
 				]}
 			>
-				<Box
-					style={{
-						height: 150,
-						background: "var(--primary)",
-						borderBottomLeftRadius: 0,
-						borderBottomRightRadius: 0
-					}}
-				/>
+				<Box style={bannerStyle} />
 
 				<Box
 					style={{
@@ -148,9 +168,7 @@ const page = props => {
 				<style jsx global>{`
 					:root,
 					:root.dark-mode {
-						${props.requestedUser.color
-							? `--primary: ${props.requestedUser.color}`
-							: ``};
+						--primary: #${props.requestedUser.color};
 					}
 				`}</style>
 
