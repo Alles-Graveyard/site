@@ -22,26 +22,11 @@ const page = props => {
 		useEffect(
 			() =>
 				setPride(
-					new Date().getMonth() === 5 &&
+					new Date().getMonth() === 4 &&
 						props.requestedUser.about.includes("🏳️‍🌈")
 				),
 			[]
 		);
-
-		// Banner
-		const bannerStyle = {
-			height: 150,
-			borderBottomLeftRadius: 0,
-			borderBottomRightRadius: 0,
-			border: "none"
-		};
-		if (pride) {
-			bannerStyle.backgroundImage =
-				"linear-gradient(180deg, #f00000, #f00000 16.67%, #ff8000 16.67%, #ff8000 33.33%, #ffff00 33.33%, #ffff00 50%, #007940 50%, #007940 66.67%, #4040ff 66.67%, #4040ff 83.33%, #a000c0 83.33%, #a000c0)";
-			bannerStyle.backgroundRepeat = "no-repeat";
-		} else {
-			bannerStyle.backgroundColor = `#${props.requestedUser.color}`;
-		}
 
 		// Toggle Follow
 		const toggleFollow = () => {
@@ -71,7 +56,17 @@ const page = props => {
 					}
 				]}
 			>
-				<Box style={bannerStyle} />
+				<Box
+					style={{
+						height: 150,
+						borderBottomLeftRadius: 0,
+						borderBottomRightRadius: 0,
+						border: "none",
+						background: pride
+							? "linear-gradient(180deg, #f00000, #f00000 16.67%, #ff8000 16.67%, #ff8000 33.33%, #ffff00 33.33%, #ffff00 50%, #007940 50%, #007940 66.67%, #4040ff 66.67%, #4040ff 83.33%, #a000c0 83.33%, #a000c0)"
+							: "var(--primary)"
+					}}
+				/>
 
 				<Box
 					style={{
