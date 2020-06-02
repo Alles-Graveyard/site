@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@alleshq/coredb-models@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@alleshq/coredb-models/-/coredb-models-0.1.3.tgz#a1419bcbd1da9965b32647067147da9031f95130"
-  integrity sha512-MzKdX8gxWZ8VIR3NDj9Wel5+t+aeEcsxUVvx7cG/MhUbuShp5pYGCgcx2a7fuje88gKJL5aq62QZQo7c+C8dcw==
+"@alleshq/coredb-models@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@alleshq/coredb-models/-/coredb-models-0.1.5.tgz#148c333eea520ef87f025c471eb253b2d978f125"
+  integrity sha512-E1QSvZdEPTyZNX4nfinqXSX/R6jZ3nCS5UZoDRqMgCB88VatDcxVVmWlx2G6/c9Ae1c41P0YhehyCdqlgbSDvg==
   dependencies:
     prettier "^2.0.5"
 
