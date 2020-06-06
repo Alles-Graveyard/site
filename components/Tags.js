@@ -24,7 +24,7 @@ export default props => {
 				post: (
 					<Link href="/[username]/[slug]" as={`/_/${segment.string}`} key={i}>
 						<a className="normal" onClick={e => e.stopPropagation()}>
-							${segment.string}
+							%{segment.string}
 						</a>
 					</Link>
 				)
