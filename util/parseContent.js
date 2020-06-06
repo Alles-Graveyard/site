@@ -7,11 +7,19 @@ export default text => {
 	};
 
 	const endSegment = () => {
+		// Lowercase
+		if (segment.type === "tag" || segment.type === "username")
+			segment.string = segment.string.toLowerCase();
+
+		// Push to segments if string has value or is text
 		if (segment.string || segment.type === "text") segments.push(segment);
+		// No new segment, add character to end of previous
 		else if (segment.type === "username")
 			segments[segments.length - 1].string += "@";
 		else if (segment.type === "tag")
 			segments[segments.length - 1].string += "#";
+		else if (segment.type === "post")
+			segments[segments.length - 1].string += "$";
 	};
 
 	for (let i = 0; i < text.length; i++) {
@@ -31,6 +39,13 @@ export default text => {
 					type: "tag",
 					string: ""
 				};
+			} else if (text[i] === "$") {
+				// Start of post link
+				endSegment();
+				segment = {
+					type: "post",
+					string: ""
+				};
 			} else {
 				// Continue
 				segment.string += text[i];
@@ -47,7 +62,7 @@ export default text => {
 				i -= 1;
 			} else {
 				// Continue
-				segment.string += text[i].toLowerCase();
+				segment.string += text[i];
 			}
 		}
 	}
