@@ -19,7 +19,7 @@ export default text => {
 		else if (segment.type === "tag")
 			segments[segments.length - 1].string += "#";
 		else if (segment.type === "post")
-			segments[segments.length - 1].string += "$";
+			segments[segments.length - 1].string += "%";
 	};
 
 	for (let i = 0; i < text.length; i++) {
@@ -39,7 +39,7 @@ export default text => {
 					type: "tag",
 					string: ""
 				};
-			} else if (text[i] === "$") {
+			} else if (text[i] === "%") {
 				// Start of post link
 				endSegment();
 				segment = {
