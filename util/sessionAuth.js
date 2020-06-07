@@ -6,7 +6,7 @@ const fail = {
 	session: null
 };
 
-module.exports = async authHeader => {
+export default async authHeader => {
 	// Parse Header
 	if (typeof authHeader !== "string") return fail;
 	var token;
