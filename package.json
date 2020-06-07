@@ -9,7 +9,7 @@
 		"format": "prettier --write \"**/*.+(js|jsx|json|css)\""
 	},
 	"dependencies": {
-		"@alleshq/coredb-models": "^0.1.5",
+		"@alleshq/coredb-models": "^0.1.7",
 		"@alleshq/log": "^1.0.0",
 		"@reactants/ui": "^0.18.0",
 		"argon2": "^0.26.2",
