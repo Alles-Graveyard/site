@@ -41,15 +41,13 @@ const page = props => {
 };
 
 page.getInitialProps = async ctx => {
-	return {
-		mentions: (
-			await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/mentions`, {
-				headers: {
-					authorization: ctx.user.sessionToken
-				}
-			})
-		).data.mentions
-	};
+	return (
+		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/mentions`, {
+			headers: {
+				authorization: ctx.user.sessionToken
+			}
+		})
+	).data;
 };
 
 export default withAuth(page);
