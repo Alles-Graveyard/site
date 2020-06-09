@@ -6,6 +6,7 @@ import {Spacer} from "@reactants/ui";
 import Post from "../../components/Post";
 import PostField from "../../components/PostField";
 import NotFound from "../404";
+import Hr from "../../components/Hr";
 
 const page = props => {
 	if (props.post) {
@@ -56,6 +57,8 @@ const page = props => {
 
 				<Spacer y={2} />
 
+				<Hr margin="0" />
+
 				{props.post.replies.length > 0 ? (
 					<div className="replies">
 						{props.post.replies.map(p => (
@@ -82,7 +85,6 @@ const page = props => {
 					}
 
 					.replies {
-						border-top: solid 10px var(--accents-2);
 						padding: 0 20px;
 					}
 				`}</style>
