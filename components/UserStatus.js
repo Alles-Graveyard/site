@@ -20,8 +20,7 @@ export default ({id, ...props}) => {
 					height: 10px;
 					width: 10px;
 					border-radius: 50%;
-					border: solid 1px ${online ? "#07de40" : "#000000"};
-					background: ${online ? "#07de40" : "none"};
+					background: ${online ? "#07de40" : "#444444"};
 					display: inline-block;
 				}
 			`}</style>
