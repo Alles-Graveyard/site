@@ -1,14 +1,21 @@
 import {useState, useEffect} from "react";
+import axios from "axios";
 
 export default ({id, ...props}) => {
 	const [online, setOnline] = useState(false);
 
 	useEffect(() => {
-		const getStatus = () => {
-			setOnline(Math.floor(Math.random() * 2) === 0);
+		const getStatus = async () => {
+			try {
+				setOnline(
+					(await axios.get(`https://online.alles.cx/${id}`)).data === "🟢"
+				);
+			} catch (err) {
+				setOnline(false);
+			}
 		};
 
-		const interval = setInterval(getStatus, 1000);
+		const interval = setInterval(getStatus, 5000);
 		getStatus();
 		return () => clearInterval(interval);
 	}, []);
