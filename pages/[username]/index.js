@@ -9,6 +9,7 @@ import PostField from "../../components/PostField";
 import NotFound from "../404";
 import Tags from "../../components/Tags";
 import Link from "next/link";
+import UserStatus from "../../components/UserStatus";
 
 const page = props => {
 	if (props.requestedUser) {
@@ -84,7 +85,15 @@ const page = props => {
 						{props.requestedUser.name}
 						{props.requestedUser.plus ? <sup>+</sup> : <></>}
 					</h1>
-					<h2 className="username">@{props.requestedUser.username}</h2>
+					<h2 className="username">
+						@{props.requestedUser.username}{" "}
+						<UserStatus
+							id={props.requestedUser.id}
+							style={{
+								marginLeft: 2
+							}}
+						/>
+					</h2>
 					{self ? (
 						<h2 className="counts">
 							<Link href="/followers">
