@@ -3,9 +3,13 @@ import Banner from "./Banner";
 import Link from "next/link";
 import Head from "next/head";
 import {withRouter} from "next/router";
+import {useEffect} from "react";
+import setOnline from "../util/setOnline";
 
 export default withRouter(props => {
 	const title = process.env.NEXT_PUBLIC_MODE === "beta" ? "Alles β" : "Alles";
+
+	if (props.user) useEffect(() => setOnline(props.user.sessionToken));
 
 	return (
 		<>
