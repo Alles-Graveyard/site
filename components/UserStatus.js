@@ -8,7 +8,11 @@ export default ({id, ...props}) => {
 		const getStatus = async () => {
 			try {
 				setOnline(
-					(await axios.get(`https://online.alles.cx/${id}`)).data === "🟢"
+					(
+						await axios.get(
+							`https://online.alles.cx/${id}?t=${new Date().getTime()}`
+						)
+					).data === "🟢"
 				);
 			} catch (err) {
 				setOnline(false);
