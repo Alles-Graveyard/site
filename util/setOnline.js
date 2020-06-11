@@ -3,11 +3,15 @@ import axios from "axios";
 export default sessionToken => {
 	const setOnline = () => {
 		axios
-			.post("https://online.alles.cx", {
-				headers: {
-					authorization: sessionToken
+			.post(
+				"https://online.alles.cx",
+				{},
+				{
+					headers: {
+						authorization: sessionToken
+					}
 				}
-			})
+			)
 			.catch(() => {});
 	};
 
