@@ -1,11 +1,12 @@
 import Page from "../components/ColumnPage";
 import {useState, useEffect} from "react";
-import {withRouter} from "next/router";
+import Router, {withRouter} from "next/router";
 import withAuth from "../util/withAuth";
 import Cookies from "js-cookie";
 import config from "../config";
 import axios from "axios";
 import {Input, Button, Box, Spacer} from "@reactants/ui";
+import Link from "next/link";
 
 export default withAuth(
 	withRouter(props => {
@@ -30,7 +31,7 @@ export default withAuth(
 							: "Return to Homepage"}
 					</Button>
 					<Spacer y={0.5} />
-					<Button fluid secondary>
+					<Button fluid secondary onClick={() => Router.push("/accounts")}>
 						Switch Accounts
 					</Button>
 
@@ -79,7 +80,8 @@ export default withAuth(
 						onSubmit={e => {
 							e.preventDefault();
 							setError();
-							const username = e.target.username.value.trim().toLowerCase();
+
+							const username = e.target.username.value.trim();
 							const password = e.target.password.value;
 							if (!username || !password) return;
 
@@ -135,6 +137,12 @@ export default withAuth(
 
 							{error ? <p className="error">{error}</p> : <></>}
 						</Box.Content>
+						<Box.Footer>
+							Not got an account yet?{" "}
+							<Link href="/register">
+								<a className="normal">Join the community!</a>
+							</Link>
+						</Box.Footer>
 					</Box>
 
 					<Spacer y={2} />

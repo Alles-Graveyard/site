@@ -1,10 +1,9 @@
 import db from "../../util/db";
 import credentials from "../../credentials";
 import argon2 from "argon2";
-import jwt from "jsonwebtoken";
-import {v4 as uuid} from "uuid";
 import axios from "axios";
 import log from "@alleshq/log";
+import createSession from "../../util/createSession";
 
 export default async (req, res) => {
 	// Check Body
@@ -62,30 +61,19 @@ export default async (req, res) => {
 	if (process.env.NEXT_PUBLIC_MODE === "beta" && !user.plus)
 		return res.status(400).json({err: "plusMembersOnly"});
 
-	// Create Session
-	var address;
+	// Get Address
+	let address;
 	if (req.headers["x-forwarded-for"]) {
 		let ips = req.headers["x-forwarded-for"].split(", ");
 		address = ips[ips.length - 1];
 	} else {
 		address = req.connection.remoteAddress;
 	}
-	const session = await db.Session.create({
-		id: uuid(),
-		address
-	});
-	session.setUser(user);
-
-	// Sign Token
-	const token = jwt.sign(
-		{
-			session: session.id
-		},
-		credentials.jwtSecret
-	);
 
 	// Response
-	res.json({token});
+	res.json({
+		token: await createSession(user.id, address)
+	});
 
 	// Log
 	log(credentials.logarithm, "user.signIn", {address}, user.id);

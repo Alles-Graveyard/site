@@ -11,6 +11,10 @@ export default {
 			min: 1,
 			max: 50
 		},
+		username: {
+			min: 3,
+			max: 16
+		},
 		about: {
 			min: 1,
 			max: 125
