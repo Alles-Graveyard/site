@@ -13,6 +13,7 @@ export default ({data, ...props}) => {
 	const dateFormat = "MMM DD YYYY HH:mm";
 	const [date, setDate] = useState(dateFormat);
 	const [removed, setRemoved] = useState(data.removed);
+	const [imageFail, setImageFail] = useState(false);
 
 	useEffect(() => setDate(moment(data.createdAt).format(dateFormat)), []);
 
@@ -106,9 +107,13 @@ export default ({data, ...props}) => {
 					<p className="content">
 						<Tags>{data.content}</Tags>
 					</p>
-					<div className="image">
-						<img src={data.image} />
-					</div>
+					{!imageFail ? (
+						<div className="image">
+							<img src={data.image} onError={() => setImageFail(true)} />
+						</div>
+					) : (
+						<></>
+					)}
 				</main>
 
 				<footer>
