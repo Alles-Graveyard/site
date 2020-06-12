@@ -183,24 +183,26 @@ const page = props => {
 					</div>
 
 					<div className="quickInfo">
-						<a href="https://plus.alles.cx">
-							<div>
-								<PlusCircle />
-								<p>
-									{props.user.plus ? (
-										<>
-											Alles+ is <b>Active</b>
-										</>
-									) : (
-										<>
-											Try <b>Alles+</b>
-										</>
-									)}
-								</p>
-							</div>
-						</a>
+						<Link href="/comingsoon">
+							<a>
+								<div>
+									<PlusCircle />
+									<p>
+										{props.user.plus ? (
+											<>
+												Alles+ is <b>Active</b>
+											</>
+										) : (
+											<>
+												Try <b>Alles+</b>
+											</>
+										)}
+									</p>
+								</div>
+							</a>
+						</Link>
 
-						<Link href="/rubies">
+						<Link href="/comingsoon">
 							<a>
 								<div>
 									<Triangle />
