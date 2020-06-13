@@ -79,7 +79,7 @@ export default async (req, res) => {
 	// Create User
 	const user = await db.User.create({
 		id: uuid(),
-		username: req.body.username,
+		username: req.body.username.toLowerCase(),
 		name: req.body.fullname,
 		nickname: req.body.nickname,
 		about: `Hi! I'm ${req.body.nickname}!`,
