@@ -93,6 +93,7 @@ const page = props => {
 							</WideLink>
 							<WideLink href="/mentions">Mentions</WideLink>
 							<WideLink href="/accounts">Switch Accounts</WideLink>
+							<WideLink href="/people">Find People</WideLink>
 						</Box.Content>
 					</Box>
 				</div>
