@@ -75,10 +75,24 @@ export default withAuth(props => {
 								Router.push("/");
 							})
 							.catch(err => {
-								if (err.response.data.err === "credentialsIncorrect") {
+								if (err.response.data.err === "nameLength") {
 									setError(
-										"Your username or password doesn't seem to be right :/"
+										`Your name must be between ${config.inputBounds.name.min} and ${config.inputBounds.name.max} characters`
 									);
+								} else if (err.response.data.err === "usernameLength") {
+									setError(
+										`Your username must be between ${config.inputBounds.username.min} and ${config.inputBounds.username.max} characters`
+									);
+								} else if (err.response.data.err === "passwordLength") {
+									setError(
+										`Your password must be between ${config.inputBounds.password.min} and ${config.inputBounds.password.max} characters`
+									);
+								} else if (err.response.data.err === "usernameChars") {
+									setError(
+										"Your username can only contain letters and numbers, sorry"
+									);
+								} else if (err.response.data.err === "alreadyExists") {
+									setError("Sorry, someone's already taken this username");
 								} else {
 									setError("Uh oh. Something's gone wrong. Maybe try again?");
 								}
@@ -105,6 +119,7 @@ export default withAuth(props => {
 							placeholder="jessica"
 							fluid
 							onChange={() => setError(false)}
+							maxLength={config.inputBounds.username.max}
 						/>
 
 						<Spacer y={0.5} />
@@ -115,6 +130,7 @@ export default withAuth(props => {
 							placeholder="•••••••••••"
 							fluid
 							onChange={() => setError(false)}
+							maxLength={config.inputBounds.password.max}
 						/>
 
 						<Spacer y={1} />
