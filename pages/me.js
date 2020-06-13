@@ -269,6 +269,7 @@ const page = props => {
 			<Box>
 				<Box.Header>Apps &amp; Connections</Box.Header>
 				<Box.Content>
+					<WideLink href="/sessions">Sessions</WideLink>
 					<WideLink href="https://pulsar.alles.cx/clients" basic>
 						Pulsar Clients
 					</WideLink>

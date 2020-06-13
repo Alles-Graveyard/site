@@ -4,6 +4,7 @@ import argon2 from "argon2";
 import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
+import getAddress from "../../util/getAddress";
 
 export default async (req, res) => {
 	// Check Body
@@ -62,13 +63,7 @@ export default async (req, res) => {
 		return res.status(400).json({err: "plusMembersOnly"});
 
 	// Get Address
-	let address;
-	if (req.headers["x-forwarded-for"]) {
-		let ips = req.headers["x-forwarded-for"].split(", ");
-		address = ips[ips.length - 1];
-	} else {
-		address = req.connection.remoteAddress;
-	}
+	const address = getAddress(req);
 
 	// Response
 	res.json({

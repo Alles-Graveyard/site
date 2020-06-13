@@ -6,6 +6,7 @@ import {v4 as uuid} from "uuid";
 import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
+import getAddress from "../../util/getAddress";
 
 export default async (req, res) => {
 	// Disable registrations on beta site
@@ -68,13 +69,7 @@ export default async (req, res) => {
 	if (alreadyExists) return res.status(400).json({err: "alreadyExists"});
 
 	// Get Address
-	let address;
-	if (req.headers["x-forwarded-for"]) {
-		let ips = req.headers["x-forwarded-for"].split(", ");
-		address = ips[ips.length - 1];
-	} else {
-		address = req.connection.remoteAddress;
-	}
+	const address = getAddress(req);
 
 	// Create User
 	const user = await db.User.create({
