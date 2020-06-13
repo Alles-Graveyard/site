@@ -3,6 +3,7 @@ import config from "../../config";
 import credentials from "../../credentials";
 import argon2 from "argon2";
 import {v4 as uuid} from "uuid";
+import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
 
@@ -17,7 +18,8 @@ export default async (req, res) => {
 		typeof req.body.fullname !== "string" ||
 		typeof req.body.nickname !== "string" ||
 		typeof req.body.username !== "string" ||
-		typeof req.body.password !== "string"
+		typeof req.body.password !== "string" ||
+		typeof req.body.recaptcha !== "string"
 	)
 		return res.status(400).json({err: "invalidBodyParameters"});
 
@@ -44,6 +46,18 @@ export default async (req, res) => {
 
 	if (req.body.username.match(/[^a-zA-Z0-9]/))
 		return res.status(400).json({err: "usernameChars"});
+
+	// Verify Recaptcha
+	try {
+		const r = await axios.post(
+			`https://www.google.com/recaptcha/api/siteverify?secret=${
+				credentials.recaptchaSecret
+			}&response=${encodeURIComponent(req.body.recaptcha)}`
+		);
+		if (!r.data.success) throw "Failed verification";
+	} catch (e) {
+		return res.status(400).json({err: "recaptcha"});
+	}
 
 	// Check if user already exists
 	const alreadyExists = await db.User.findOne({

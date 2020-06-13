@@ -100,20 +100,22 @@ export default withAuth(props => {
 											);
 										} else if (err.response.data.err === "alreadyExists") {
 											setError("Sorry, someone's already taken this username");
+										} else if (err.response.data.err === "recaptcha") {
+											setError(
+												"Something went wrong while checking that you're human. Try again."
+											);
 										} else {
 											setError(
 												"Uh oh. Something's gone wrong. Maybe try again?"
 											);
 										}
 										setLoading(false);
-										recaptcha.current.reset();
 									});
 							})
 							.catch(() => {
 								setError(
 									"Something went wrong while checking that you're human. Try again."
 								);
-								recaptcha.current.reset();
 							});
 					}}
 				>
