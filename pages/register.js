@@ -1,5 +1,5 @@
 import Page from "../components/ColumnPage";
-import {useState} from "react";
+import {useState, createRef, useEffect} from "react";
 import Router from "next/router";
 import withAuth from "../util/withAuth";
 import Cookies from "js-cookie";
@@ -7,6 +7,7 @@ import config from "../config";
 import axios from "axios";
 import {Input, Button, Box, Spacer} from "@reactants/ui";
 import Link from "next/link";
+import Recaptcha from "react-google-recaptcha";
 
 export default withAuth(props => {
 	if (props.user) {
@@ -40,6 +41,7 @@ export default withAuth(props => {
 		// Not Signed in
 		const [error, setError] = useState();
 		const [loading, setLoading] = useState(false);
+		const recaptcha = createRef();
 
 		return (
 			<Page title="Join Alles!" width="375px">
@@ -57,46 +59,61 @@ export default withAuth(props => {
 						const password = e.target.password.value;
 						if (!fullname || !username || !password) return;
 
-						// Request
-						setLoading(true);
-						axios
-							.post(`${process.env.NEXT_PUBLIC_APIURL}/register`, {
-								fullname,
-								nickname: nickname ? nickname : fullname,
-								username,
-								password
+						// Do Recaptcha
+						recaptcha.current
+							.executeAsync()
+							.then(token => {
+								// Request
+								setLoading(true);
+								axios
+									.post(`${process.env.NEXT_PUBLIC_APIURL}/register`, {
+										fullname,
+										nickname: nickname ? nickname : fullname,
+										username,
+										password,
+										recaptcha: token
+									})
+									.then(res => {
+										Cookies.set("sessionToken", res.data.token, {
+											domain:
+												location.host === config.domain ? config.domain : null,
+											expires: 365
+										});
+										Router.push("/");
+									})
+									.catch(err => {
+										if (err.response.data.err === "nameLength") {
+											setError(
+												`Your name must be between ${config.inputBounds.name.min} and ${config.inputBounds.name.max} characters`
+											);
+										} else if (err.response.data.err === "usernameLength") {
+											setError(
+												`Your username must be between ${config.inputBounds.username.min} and ${config.inputBounds.username.max} characters`
+											);
+										} else if (err.response.data.err === "passwordLength") {
+											setError(
+												`Your password must be between ${config.inputBounds.password.min} and ${config.inputBounds.password.max} characters`
+											);
+										} else if (err.response.data.err === "usernameChars") {
+											setError(
+												"Your username can only contain letters and numbers, sorry"
+											);
+										} else if (err.response.data.err === "alreadyExists") {
+											setError("Sorry, someone's already taken this username");
+										} else {
+											setError(
+												"Uh oh. Something's gone wrong. Maybe try again?"
+											);
+										}
+										setLoading(false);
+										recaptcha.current.reset();
+									});
 							})
-							.then(res => {
-								Cookies.set("sessionToken", res.data.token, {
-									domain:
-										location.host === config.domain ? config.domain : null,
-									expires: 365
-								});
-								Router.push("/");
-							})
-							.catch(err => {
-								if (err.response.data.err === "nameLength") {
-									setError(
-										`Your name must be between ${config.inputBounds.name.min} and ${config.inputBounds.name.max} characters`
-									);
-								} else if (err.response.data.err === "usernameLength") {
-									setError(
-										`Your username must be between ${config.inputBounds.username.min} and ${config.inputBounds.username.max} characters`
-									);
-								} else if (err.response.data.err === "passwordLength") {
-									setError(
-										`Your password must be between ${config.inputBounds.password.min} and ${config.inputBounds.password.max} characters`
-									);
-								} else if (err.response.data.err === "usernameChars") {
-									setError(
-										"Your username can only contain letters and numbers, sorry"
-									);
-								} else if (err.response.data.err === "alreadyExists") {
-									setError("Sorry, someone's already taken this username");
-								} else {
-									setError("Uh oh. Something's gone wrong. Maybe try again?");
-								}
-								setLoading(false);
+							.catch(() => {
+								setError(
+									"Something went wrong while checking that you're human. Try again."
+								);
+								recaptcha.current.reset();
 							});
 					}}
 				>
@@ -155,6 +172,12 @@ export default withAuth(props => {
 						. By signing up, you're indicating that you agree to them :)
 					</Box.Footer>
 				</Box>
+
+				<Recaptcha
+					sitekey="6Lcq9KMZAAAAACHDAphzYjc88wLiI6D9C1C5CvfK"
+					ref={recaptcha}
+					size="invisible"
+				/>
 
 				<style jsx>{`
 					h2 {
