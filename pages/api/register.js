@@ -82,8 +82,6 @@ export default async (req, res) => {
 		credentials.logarithm,
 		"user.new",
 		{
-			id: user.id,
-			username: user.username,
 			address
 		},
 		user.id
