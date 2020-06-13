@@ -171,7 +171,11 @@ export default withAuth(props => {
 						<Link href="/docs/privacy">
 							<a className="normal">Privacy Policy</a>
 						</Link>
-						. By signing up, you're indicating that you agree to them :)
+						. By signing up, you're indicating that you agree to them. Please
+						note that you are only allowed{" "}
+						<strong>one primary account per person</strong>, and violation of
+						this rule could result in consequences to all of your accounts.
+						You'll be able to create secondary accounts soon :)
 					</Box.Footer>
 				</Box>
 
