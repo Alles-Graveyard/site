@@ -115,13 +115,7 @@ export default withAuth(
 						email <strong>archie@alles.cx</strong>.
 					</p>
 				</Box.Content>
-				<Box.Footer>
-					Last updated on June 13th 2020. Inspired by{" "}
-					<a href="https://omg.lol/privacy" className="normal">
-						omg.lol
-					</a>
-					.
-				</Box.Footer>
+				<Box.Footer>Last updated on June 13th 2020</Box.Footer>
 			</Box>
 		</Page>
 	),
