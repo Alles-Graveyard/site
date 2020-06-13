@@ -4,6 +4,7 @@ import axios from "axios";
 import {Box, Spacer} from "@reactants/ui";
 import {useState, useEffect} from "react";
 import moment from "moment";
+import {X} from "react-feather";
 
 const page = props => {
 	return (
@@ -17,10 +18,12 @@ const page = props => {
 			]}
 		>
 			{props.sessions.map(session => (
-				<React.Fragment key={session.id}>
-					<Spacer y={2} />
-					<Session session={session} s={props.user.session} />
-				</React.Fragment>
+				<Session
+					key={session.id}
+					session={session}
+					s={props.user.session}
+					token={props.user.sessionToken}
+				/>
 			))}
 		</Page>
 	);
@@ -38,7 +41,7 @@ page.getInitialProps = async ctx => {
 
 export default withAuth(page);
 
-const Session = ({session, s}) => {
+const Session = ({session, s, token}) => {
 	const [removed, setRemoved] = useState(false);
 	const [date, setDate] = useState();
 
@@ -47,44 +50,82 @@ const Session = ({session, s}) => {
 	return removed ? (
 		<></>
 	) : (
-		<Box>
-			<Box.Content
-				style={{
-					display: "flex"
-				}}
-			>
-				<h1>
-					{session.address}
-					{session.id === s
-						? " (this session)"
-						: session.thisNetwork
-						? " (this network)"
-						: ""}
-				</h1>
-				<h2>{date}</h2>
-			</Box.Content>
+		<>
+			<Spacer y={2} />
+			<Box>
+				<Box.Content
+					style={{
+						display: "flex"
+					}}
+				>
+					<h1>
+						{session.address}
+						{session.id === s
+							? " (this session)"
+							: session.thisNetwork
+							? " (this network)"
+							: ""}
+					</h1>
+					<h2>{date}</h2>
+					<div className="icon">
+						{session.id === s ? (
+							<></>
+						) : (
+							<X
+								style={{
+									color: "var(--accents-6)",
+									marginLeft: "auto",
+									cursor: "pointer"
+								}}
+								onClick={() => {
+									setRemoved(true);
 
-			<style jsx>{`
-				h1,
-				h2 {
-					margin: auto 0;
-				}
+									axios
+										.post(
+											`${process.env.NEXT_PUBLIC_APIURL}/sessions/revoke?id=${session.id}`,
+											{},
+											{
+												headers: {
+													authorization: token
+												}
+											}
+										)
+										.catch(() => {});
+								}}
+							/>
+						)}
+					</div>
+				</Box.Content>
 
-				h1 {
-					font-weight: 500;
-					font-size: 20px;
-					flex-grow: 1;
-					margin-right: 10px;
-					${session.id === s ? "color: var(--primary);" : ""}
-				}
+				<style jsx>{`
+					h1,
+					h2 {
+						margin: auto 0;
+					}
 
-				h2 {
-					font-size: 15px;
-					font-weight: 400;
-					color: var(--accents-6);
-					text-align: right;
-				}
-			`}</style>
-		</Box>
+					h1 {
+						font-weight: 500;
+						font-size: 20px;
+						flex-grow: 1;
+						margin-right: 10px;
+						${session.id === s ? "color: var(--primary);" : ""}
+					}
+
+					h2 {
+						font-size: 15px;
+						font-weight: 400;
+						color: var(--accents-6);
+						text-align: right;
+					}
+
+					.icon {
+						width: 50px;
+						display: flex;
+						flex-flow: column;
+						justify-content: center;
+					}
+				`}</style>
+			</Box>
+		</>
 	);
 };
