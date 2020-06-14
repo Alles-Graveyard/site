@@ -91,7 +91,7 @@ const page = props => {
 							<WideLink href="/[username]" as={`/${props.user.username}`}>
 								Profile Page
 							</WideLink>
-							<WideLink href="/mentions">Mentions</WideLink>
+							<WideLink href="/mentions">Notifications</WideLink>
 							<WideLink href="/accounts">Switch Accounts</WideLink>
 							<WideLink href="/people">Find People</WideLink>
 						</Box.Content>
