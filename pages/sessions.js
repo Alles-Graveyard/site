@@ -58,14 +58,7 @@ const Session = ({session, s, token}) => {
 						display: "flex"
 					}}
 				>
-					<h1>
-						{session.address}
-						{session.id === s
-							? " (this session)"
-							: session.thisNetwork
-							? " (this network)"
-							: ""}
-					</h1>
+					<h1>{session.address}</h1>
 					<h2>{date}</h2>
 					<div className="icon">
 						{session.id === s ? (

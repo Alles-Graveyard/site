@@ -1,5 +1,4 @@
 import sessionAuth from "../../../util/sessionAuth";
-import getAddress from "../../../util/getAddress";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -15,8 +14,7 @@ export default async (req, res) => {
 			return {
 				id: s.id,
 				address: s.address,
-				createdAt: s.createdAt,
-				thisNetwork: s.address === getAddress(req)
+				createdAt: s.createdAt
 			};
 		})
 	});
