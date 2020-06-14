@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import Link from "next/link";
 import {Plus, Minus, Trash2} from "react-feather";
-import Tags from "../components/Tags";
+import Tags from "./Tags";
 import moment from "moment";
 import {Box, Avatar} from "@reactants/ui";
 import Router from "next/router";
