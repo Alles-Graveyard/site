@@ -15,7 +15,6 @@ export default async (req, res) => {
 		}
 	});
 	if (!s) return res.status(400).json({err: "invalidSession"});
-	if (s.id === session.id) return res.status(400).json({err: "currentSession"});
 
 	// Remove Session
 	await s.destroy();

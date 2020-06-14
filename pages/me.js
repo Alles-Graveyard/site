@@ -312,6 +312,29 @@ const page = props => {
 				<></>
 			)}
 
+			<Spacer y={2} />
+
+			<Button
+				danger
+				fluid
+				onClick={async () => {
+					try {
+						await axios.post(
+							`${process.env.NEXT_PUBLIC_APIURL}/sessions/revoke?id=${props.user.session}`,
+							{},
+							{
+								headers: {
+									authorization: props.user.sessionToken
+								}
+							}
+						);
+					} catch (e) {}
+					window.location.href = "/";
+				}}
+			>
+				Sign out
+			</Button>
+
 			<style jsx>{`
 				.profilePicture {
 					border: solid 1px var(--accents-2);
