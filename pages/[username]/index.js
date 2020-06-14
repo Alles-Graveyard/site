@@ -83,7 +83,13 @@ const page = props => {
 					/>
 					<h1 className="name">
 						{props.requestedUser.name}
-						{props.requestedUser.plus ? <sup>+</sup> : <></>}
+						{props.requestedUser.username === "paul" ? (
+							<sup>-</sup>
+						) : props.requestedUser.plus ? (
+							<sup>+</sup>
+						) : (
+							<></>
+						)}
 					</h1>
 					<h2 className="username">
 						@{props.requestedUser.username}{" "}
