@@ -15,7 +15,7 @@ const page = props => {
 	if (props.requestedUser) {
 		const self = props.requestedUser.id === props.user.id;
 		const [isFollowing, setIsFollowing] = useState(
-			props.requestedUser.isFollowing
+			props.requestedUser.following
 		);
 
 		// Pride Month
@@ -81,6 +81,7 @@ const page = props => {
 						className="profilePicture"
 						src={`https://avatar.alles.cx/u/${props.requestedUser.username}`}
 					/>
+
 					<h1 className="name">
 						{props.requestedUser.name}
 						{props.requestedUser.username === "paul" ? (
@@ -91,6 +92,7 @@ const page = props => {
 							<></>
 						)}
 					</h1>
+
 					<h2 className="username">
 						@{props.requestedUser.username}{" "}
 						<UserStatus
@@ -100,6 +102,13 @@ const page = props => {
 							}}
 						/>
 					</h2>
+
+					{props.requestedUser.followingUser ? (
+						<div className="followsYou">Follows You</div>
+					) : (
+						<></>
+					)}
+
 					{self ? (
 						<h2 className="counts">
 							<Link href="/followers">
@@ -129,9 +138,11 @@ const page = props => {
 							</span>
 						</h2>
 					)}
+
 					<h2 className="tagline">
 						<Tags>{props.requestedUser.about}</Tags>
 					</h2>
+
 					{self ? (
 						<></>
 					) : (
@@ -218,6 +229,16 @@ const page = props => {
 						margin: 0;
 						margin-bottom: 5px;
 						color: var(--primary);
+					}
+
+					.followsYou {
+						border: solid 1px var(--accents-2);
+						border-radius: var(--radius);
+						width: fit-content;
+						padding: 5px 10px;
+						color: var(--accents-6);
+						font-size: 10px;
+						margin: 10px auto;
 					}
 
 					h2.counts {
