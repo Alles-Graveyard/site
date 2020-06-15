@@ -1,4 +1,5 @@
 import nextCookie from "next-cookies";
+import Cookies from "js-cookie";
 import axios from "axios";
 import Router from "next/router";
 
@@ -59,6 +60,7 @@ const auth = async ctx => {
 			}
 		});
 	} catch (err) {
+		if (sessionToken) Cookies.remove("sessionToken");
 		return;
 	}
 
