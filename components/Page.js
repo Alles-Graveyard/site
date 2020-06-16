@@ -15,6 +15,9 @@ export default withRouter(props => {
 		<>
 			<Head>
 				<title>{props.title ? `${title} • ${props.title}` : title}</title>
+				<meta name="apple-mobile-web-app-title" content="Alles" />
+				<meta name="apple-mobile-web-app-capable" content="yes">
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<ThemeScript />
 			</Head>
 
