@@ -22,31 +22,23 @@ export default async (req, res) => {
 		typeof req.body.password !== "string" ||
 		typeof req.body.recaptcha !== "string"
 	)
-		return res.status(400).json({err: "invalidBodyParameters"});
+		return res.status(400).json({err: "badRequest"});
 
-	if (
-		req.body.fullname.length < config.inputBounds.name.min ||
-		req.body.fullname.length > config.inputBounds.name.max
-	)
-		return res.status(400).json({err: "nameLength"});
-	if (
-		req.body.nickname.length < config.inputBounds.nickname.min ||
-		req.body.nickname.length > config.inputBounds.nickname.max
-	)
-		return res.status(400).json({err: "nicknameLength"});
-	if (
-		req.body.username.length < config.inputBounds.username.min ||
-		req.body.username.length > config.inputBounds.username.max
-	)
-		return res.status(400).json({err: "usernameLength"});
+	if (req.body.fullname.length < config.inputBounds.name.min)
+		return res.status(400).json({err: "profile.name.tooShort"});
+	if (req.body.fullname.length > config.inputBounds.name.max)
+		return res.status(400).json({err: "profile.name.tooLong"});
+	if (req.body.username.length < config.inputBounds.username.min)
+		return res.status(400).json({err: "profile.username.tooShort"});
+	if (req.body.username.length > config.inputBounds.username.max)
+		return res.status(400).json({err: "profile.username.tooLong"});
+	if (req.body.username.match(/[^a-zA-Z0-9]/))
+		return res.status(400).json({err: "profile.username.chars"});
 	if (
 		req.body.password.length < config.inputBounds.password.min ||
 		req.body.password.length > config.inputBounds.password.max
 	)
-		return res.status(400).json({err: "passwordLength"});
-
-	if (req.body.username.match(/[^a-zA-Z0-9]/))
-		return res.status(400).json({err: "usernameChars"});
+		return res.status(400).json({err: "user.password.requirements"});
 
 	// Verify Recaptcha
 	try {
@@ -57,7 +49,7 @@ export default async (req, res) => {
 		);
 		if (!r.data.success) throw "Failed verification";
 	} catch (e) {
-		return res.status(400).json({err: "recaptcha"});
+		return res.status(400).json({err: "bot"});
 	}
 
 	// Check if user already exists
@@ -66,7 +58,8 @@ export default async (req, res) => {
 			username: req.body.username
 		}
 	});
-	if (alreadyExists) return res.status(400).json({err: "alreadyExists"});
+	if (alreadyExists)
+		return res.status(400).json({err: "profile.username.unavailable"});
 
 	// Get Address
 	const address = getAddress(req);

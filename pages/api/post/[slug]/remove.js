@@ -16,7 +16,7 @@ export default async (req, res) => {
 	try {
 		id = uuidTranslator.toUUID(req.query.slug);
 	} catch (err) {
-		return res.status(400).json({err: "invalidPost"});
+		return res.status(400).json({err: "missingResource"});
 	}
 
 	// Get Post
@@ -25,9 +25,9 @@ export default async (req, res) => {
 			id
 		}
 	});
-	if (!post) return res.status(400).json({err: "invalidPost"});
+	if (!post) return res.status(400).json({err: "missingResource"});
 	if (post.userId !== user.id)
-		return res.status(400).json({err: "notYourPost"});
+		return res.status(400).json({err: "restrictedAccess"});
 
 	// Remove Post
 	await post.destroy();

@@ -20,7 +20,7 @@ const api = async (req, res) => {
 
 	const content = req.body.content.trim();
 	if (content.length < 1 || content.length > config.inputBounds.post.max)
-		return res.status(400).json({err: "postLength"});
+		return res.status(400).json({err: "post.content.length"});
 
 	// Parent
 	let parent;
@@ -31,7 +31,7 @@ const api = async (req, res) => {
 			}
 		});
 		if (!parent) {
-			return res.status(400).json({err: "invalidParent"});
+			return res.status(400).json({err: "post.invalidParent"});
 		}
 	}
 

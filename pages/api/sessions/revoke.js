@@ -14,7 +14,7 @@ export default async (req, res) => {
 			userId: user.id
 		}
 	});
-	if (!s) return res.status(400).json({err: "badAuthorization"});
+	if (!s) return res.status(400).json({err: "missingResource"});
 
 	// Remove Session
 	await s.destroy();

@@ -7,13 +7,13 @@ export default async (req, res) => {
 
 	// Get User
 	if (typeof req.query.username !== "string")
-		return res.status(400).json({err: "invalidUser"});
+		return res.status(400).json({err: "missingResource"});
 	const u = await db.User.findOne({
 		where: {
 			username: req.query.username
 		}
 	});
-	if (!u) return res.status(400).json({err: "invalidUser"});
+	if (!u) return res.status(400).json({err: "missingResource"});
 
 	// Not Followed
 	if (!(await u.hasFollower(user))) return res.json({});

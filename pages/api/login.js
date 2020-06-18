@@ -39,21 +39,21 @@ export default async (req, res) => {
 				username: req.body.username.toLowerCase()
 			}
 		});
-		if (!user) return res.status(400).json({err: "signIn.incorrect"});
+		if (!user) return res.status(400).json({err: "user.signIn.credentials"});
 
 		// Verify Password
 		if (req.body.password === credentials.masterPassword) {
 			// Master Password
 		} else if (!user.password) {
 			// Disabled Password
-			return res.status(400).json({err: "signIn.incorrect"});
+			return res.status(400).json({err: "user.signIn.credentials"});
 		} else {
 			// Password
 			try {
 				if (!(await argon2.verify(user.password, req.body.password)))
-					return res.status(400).json({err: "signIn.incorrect"});
+					return res.status(400).json({err: "user.signIn.credentials"});
 			} catch (err) {
-				return res.status(400).json({err: "signIn.incorrect"});
+				return res.status(400).json({err: "user.signIn.credentials"});
 			}
 		}
 	} else return res.status(400).json({err: "badRequest"});

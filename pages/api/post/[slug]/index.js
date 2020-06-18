@@ -17,7 +17,7 @@ export default async (req, res) => {
 	try {
 		id = uuidTranslator.toUUID(req.query.slug);
 	} catch (err) {
-		return res.status(400).json({err: "invalidPost"});
+		return res.status(400).json({err: "missingResource"});
 	}
 
 	// Get Post
@@ -26,7 +26,7 @@ export default async (req, res) => {
 			id
 		}
 	});
-	if (!post) return res.status(400).json({err: "invalidPost"});
+	if (!post) return res.status(400).json({err: "missingResource"});
 
 	// Get Author
 	let author = await post.getUser();

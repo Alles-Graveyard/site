@@ -15,29 +15,30 @@ export default async (req, res) => {
 		typeof req.body.redirectUri !== "string" ||
 		typeof req.body.user !== "string"
 	)
-		return res.status(400).json({err: "invalidBodyParameters"});
+		return res.status(400).json({err: "badRequest"});
 
 	// Verify Scopes
 	const scopes = [...new Set(req.body.scopes.split(" "))].filter(Boolean);
-	if (scopes.length > 50) return res.status(400).json({err: "tooManyScopes"});
+	if (scopes.length > 50)
+		return res.status(400).json({err: "application.scopes.tooMany"});
 	for (var i = 0; i < scopes.length; i++) {
 		if (scopes[i] && !config.validScopes.includes(scopes[i]))
-			return res.status(400).json({err: "invalidScope"});
+			return res.status(400).json({err: "application.scopes.invalid"});
 	}
 
 	// Get Application
 	if (typeof req.query.id !== "string")
-		return res.status(400).json({err: "invalidApplication"});
+		return res.status(400).json({err: "missingResource"});
 	const application = await db.Application.findOne({
 		where: {
 			id: req.query.id
 		}
 	});
-	if (!application) return res.status(400).json({err: "invalidApplication"});
+	if (!application) return res.status(400).json({err: "missingResource"});
 
 	// Verify Redirect URI
 	if (!application.callbackUrls.includes(req.body.redirectUri))
-		return res.status(400).json({err: "invalidRedirectUri"});
+		return res.status(400).json({err: "application.badRedirect"});
 
 	// Get Primary Account
 	const primary = await user.getPrimary({
@@ -56,7 +57,7 @@ export default async (req, res) => {
 		req.body.user !== (primary ? primary : user).id &&
 		!secondaries.includes(req.body.user)
 	)
-		return res.status(400).json({err: "accountNotRelated"});
+		return res.status(400).json({err: "restrictedAccess"});
 
 	// Create code
 	const code = await db.AuthCode.create({

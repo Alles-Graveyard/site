@@ -4,7 +4,7 @@ export default async (req, res) => {
 	const {user, session} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "badAuthorization"});
 	if (typeof req.query.id !== "string")
-		return res.status(400).json({err: "invalidQueryParameters"});
+		return res.status(400).json({err: "badRequest"});
 
 	// Get Primary Account
 	const primary = await user.getPrimary({
@@ -23,7 +23,7 @@ export default async (req, res) => {
 		req.query.id !== (primary ? primary : user).id &&
 		!secondaries.includes(req.query.id)
 	)
-		return res.status(400).json({err: "accountNotRelated"});
+		return res.status(400).json({err: "restrictedAccess"});
 
 	// Update Session
 	await session.update({

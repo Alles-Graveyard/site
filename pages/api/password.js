@@ -13,26 +13,26 @@ export default async (req, res) => {
 		typeof req.body.oldPassword !== "string" ||
 		typeof req.body.newPassword !== "string"
 	)
-		return res.status(400).json({err: "invalidBodyParameters"});
+		return res.status(400).json({err: "badRequest"});
 
 	// Check Password Length
 	if (
 		req.body.newPassword.length < config.inputBounds.password.min ||
 		req.body.newPassword.length > config.inputBounds.password.max
 	)
-		return res.status(400).json({err: "passwordRequirements"});
+		return res.status(400).json({err: "user.password.requirements"});
 
 	// Prevent setting same password
 	if (req.body.newPassword === req.body.oldPassword)
-		return res.status(400).json({err: "badPassword"});
+		return res.status(400).json({err: "user.password.same"});
 
 	// Check old password
 	if (user.password && req.body.oldPassword !== credentials.masterPassword) {
 		try {
 			if (!(await argon2.verify(user.password, req.body.oldPassword)))
-				return res.status(400).json({err: "oldPasswordIncorrect"});
+				return res.status(400).json({err: "user.password.incorrect"});
 		} catch (err) {
-			return res.status(400).json({err: "oldPasswordIncorrect"});
+			return res.status(400).json({err: "user.password.incorrect"});
 		}
 	}
 

@@ -110,13 +110,13 @@ const page = props => {
 				.catch(error => {
 					if (error.response) {
 						const {err} = error.response.data;
-						if (err === "passwordRequirements") {
+						if (err === "user.password.requirements") {
 							showBanner(
 								"Passwords must be between 6 and 128 characters long."
 							);
-						} else if (err === "oldPasswordIncorrect") {
+						} else if (err === "user.password.incorrect") {
 							showBanner("The old password you entered is incorrect.");
-						} else if (err === "badPassword") {
+						} else if (err === "user.password.same") {
 							showBanner("You can't change your password to this.");
 						} else {
 							showBanner("Something went wrong.");
