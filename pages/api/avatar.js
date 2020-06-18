@@ -10,7 +10,7 @@ import log from "@alleshq/log";
 
 const api = async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
-	if (!user) return res.status(401).json({err: "invalidSession"});
+	if (!user) return res.status(401).json({err: "badAuthorization"});
 
 	try {
 		// Parse Form

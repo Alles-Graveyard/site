@@ -4,7 +4,7 @@ import config from "../../../../config";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
-	if (!user) return res.status(401).json({err: "invalidSession"});
+	if (!user) return res.status(401).json({err: "badAuthorization"});
 
 	// Get User
 	if (typeof req.query.username !== "string")

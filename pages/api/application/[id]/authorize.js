@@ -6,7 +6,7 @@ import sessionAuth from "../../../../util/sessionAuth";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
-	if (!user) return res.status(401).json({err: "invalidSession"});
+	if (!user) return res.status(401).json({err: "badAuthorization"});
 
 	// Validate Body
 	if (

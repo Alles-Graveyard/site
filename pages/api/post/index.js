@@ -14,7 +14,7 @@ const uuidTranslator = shortUuid();
 
 const api = async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
-	if (!user) return res.status(401).json({err: "invalidSession"});
+	if (!user) return res.status(401).json({err: "badAuthorization"});
 	if (typeof req.body.content !== "string")
 		return res.status(400).json({err: "badRequest"});
 

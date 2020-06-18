@@ -2,7 +2,7 @@ import sessionAuth from "../../../util/sessionAuth";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
-	if (!user) return res.status(401).json({err: "invalidSession"});
+	if (!user) return res.status(401).json({err: "badAuthorization"});
 
 	// Get Primary Account
 	const primary = await user.getPrimary({
