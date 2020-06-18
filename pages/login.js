@@ -96,7 +96,7 @@ export default withAuth(
 									completeSignIn(res.data.token);
 								})
 								.catch(err => {
-									if (err.response.data.err === "credentialsIncorrect") {
+									if (err.response.data.err === "signIn.incorrect") {
 										setError(
 											"Your username or password doesn't seem to be right :/"
 										);

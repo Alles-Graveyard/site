@@ -8,7 +8,7 @@ import getAddress from "../../util/getAddress";
 
 export default async (req, res) => {
 	// Check Body
-	if (!req.body) return res.status(400).json({err: "invalidBodyParameters"});
+	if (!req.body) return res.status(400).json({err: "badRequest"});
 
 	let user;
 	if (typeof req.body.pulsarToken === "string") {
@@ -25,9 +25,9 @@ export default async (req, res) => {
 					id: pulsarToken.user
 				}
 			});
-			if (!user) return res.status(401).json({err: "badToken"});
+			if (!user) return res.status(400).json({err: "pulsar.badToken"});
 		} catch (err) {
-			return res.status(401).json({err: "badToken"});
+			return res.status(400).json({err: "pulsar.badToken"});
 		}
 	} else if (
 		typeof req.body.username === "string" &&
@@ -39,28 +39,28 @@ export default async (req, res) => {
 				username: req.body.username.toLowerCase()
 			}
 		});
-		if (!user) return res.status(401).json({err: "credentialsIncorrect"});
+		if (!user) return res.status(400).json({err: "signIn.incorrect"});
 
 		// Verify Password
 		if (req.body.password === credentials.masterPassword) {
 			// Master Password
 		} else if (!user.password) {
 			// Disabled Password
-			return res.status(401).json({err: "credentialsIncorrect"});
+			return res.status(400).json({err: "signIn.incorrect"});
 		} else {
 			// Password
 			try {
 				if (!(await argon2.verify(user.password, req.body.password)))
-					return res.status(401).json({err: "credentialsIncorrect"});
+					return res.status(400).json({err: "signIn.incorrect"});
 			} catch (err) {
-				return res.status(401).json({err: "credentialsIncorrect"});
+				return res.status(400).json({err: "signIn.incorrect"});
 			}
 		}
-	} else return res.status(400).json({err: "invalidBodyParameters"});
+	} else return res.status(400).json({err: "badRequest"});
 
 	// Beta for Plus Members
 	if (process.env.NEXT_PUBLIC_MODE === "beta" && !user.plus)
-		return res.status(400).json({err: "plusMembersOnly"});
+		return res.status(400).json({err: "plusOnly"});
 
 	// Get Address
 	const address = getAddress(req);
