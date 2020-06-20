@@ -4,6 +4,7 @@ import config from "../config";
 import axios from "axios";
 import {Image, X} from "react-feather";
 import Router from "next/router";
+import {Gluejar} from "@charliewilco/gluejar";
 
 export default props => {
 	const [content, setContent] = useState("");
@@ -37,6 +38,12 @@ export default props => {
 			.catch(() => setLoading(false));
 	};
 
+	const handleImageUpload = f => {
+		const reader = new FileReader();
+		reader.onload = e => setImage(e.target.result);
+		reader.readAsDataURL(f);
+	};
+
 	const iconStyle = {
 		color: "var(--accents-6)",
 		height: 20,
@@ -50,67 +57,84 @@ export default props => {
 				overflow: "hidden"
 			}}
 		>
-			<Textarea
-				placeholder={props.placeholder}
-				maxLength={config.inputBounds.post.max}
-				onChange={e => setContent(e.target.value.trim())}
-				style={{
-					background: "transparent",
-					height: 150
+			<Gluejar
+				onPaste={({images}) => {
+					if (images.length > 0 && !imageUpload) {
+						const blobUrl = images[images.length - 1];
+						axios
+							.get(blobUrl, {
+								responseType: "blob"
+							})
+							.then(res => handleImageUpload(res.data))
+							.catch(() => {});
+					}
 				}}
-			/>
-
-			{imageUpload ? (
-				<div className="image">
-					<img src={imageUpload} onError={() => setImage()} />
-					<X
-						style={{
-							position: "absolute",
-							top: 25,
-							right: 25,
-							background: "var(--accents-2)",
-							color: "var(--accents-6)",
-							borderRadius: "50%",
-							cursor: "pointer"
-						}}
-						onClick={() => setImage()}
-					/>
-				</div>
-			) : (
-				<></>
-			)}
-
-			<div className="icons">
-				<Image style={iconStyle} onClick={() => imageInput.current.click()} />
-			</div>
-
-			<input
-				ref={imageInput}
-				type="file"
-				accept="image/png, image/jpeg"
-				style={{
-					display: "none"
-				}}
-				onChange={e => {
-					const f = e.target.files[0];
-					const reader = new FileReader();
-					reader.onload = e => setImage(e.target.result);
-					reader.readAsDataURL(f);
-				}}
-			/>
-
-			<Button
-				primary
-				disabled={!content}
-				loading={loading}
-				onClick={submit}
-				style={{
-					width: "calc(100% - 40px)",
-					margin: 20
-				}}
+				onError={() => {}}
 			>
-				{props.button ? props.button : "Post"}
-			</Button>
+				{() => (
+					<>
+						<Textarea
+							placeholder={props.placeholder}
+							maxLength={config.inputBounds.post.max}
+							onChange={e => setContent(e.target.value.trim())}
+							style={{
+								background: "transparent",
+								height: 150
+							}}
+						/>
+
+						{imageUpload ? (
+							<div className="image">
+								<img src={imageUpload} onError={() => setImage()} />
+								<X
+									style={{
+										position: "absolute",
+										top: 25,
+										right: 25,
+										background: "var(--accents-2)",
+										color: "var(--accents-6)",
+										borderRadius: "50%",
+										cursor: "pointer"
+									}}
+									onClick={() => setImage()}
+								/>
+							</div>
+						) : (
+							<></>
+						)}
+
+						<div className="icons">
+							<Image
+								style={iconStyle}
+								onClick={() => imageInput.current.click()}
+							/>
+						</div>
+
+						<input
+							ref={imageInput}
+							type="file"
+							accept="image/png, image/jpeg"
+							style={{
+								display: "none"
+							}}
+							onChange={e => handleImageUpload(e.target.files[0])}
+						/>
+
+						<Button
+							primary
+							disabled={!content}
+							loading={loading}
+							onClick={submit}
+							style={{
+								width: "calc(100% - 40px)",
+								margin: 20
+							}}
+						>
+							{props.button ? props.button : "Post"}
+						</Button>
+					</>
+				)}
+			</Gluejar>
 
 			<style jsx>{`
 				.image {
