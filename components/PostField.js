@@ -10,6 +10,7 @@ export default props => {
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [imageUpload, setImage] = useState();
+	const [pastedImages, setPastedImages] = useState(0);
 	const imageInput = createRef();
 
 	const submit = () => {
@@ -59,7 +60,8 @@ export default props => {
 		>
 			<Gluejar
 				onPaste={({images}) => {
-					if (images.length > 0 && !imageUpload) {
+					setPastedImages(images.length);
+					if (images.length > pastedImages && !imageUpload) {
 						const blobUrl = images[images.length - 1];
 						axios
 							.get(blobUrl, {
