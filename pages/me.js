@@ -47,10 +47,9 @@ const page = props => {
 	// Update Profile
 	const updateProfile = e => {
 		e.preventDefault();
-		const form = e.target;
-		const fullname = form.name.value.trim();
-		const nickname = form.nickname.value.trim();
-		const about = form.about.value.trim();
+		const fullname = e.target.name.value.trim();
+		const nickname = e.target.nickname.value.trim();
+		const about = e.target.about.value.trim();
 		if (loading || !fullname || !nickname || !about) return;
 		setLoading(true);
 
