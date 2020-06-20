@@ -96,13 +96,14 @@ export default withAuth(
 									completeSignIn(res.data.token);
 								})
 								.catch(err => {
-									if (err.response.data.err === "user.signIn.credentials") {
+									if (err.response.data.err === "user.signIn.credentials")
 										setError(
 											"Your username or password doesn't seem to be right :/"
 										);
-									} else {
+									else if (err.response.data.err === "plusOnly")
+										setError("Sorry, only Alles+ members can use the beta!");
+									else
 										setError("Uh oh. Something's gone wrong. Maybe try again?");
-									}
 									setLoading(false);
 								});
 						}}
