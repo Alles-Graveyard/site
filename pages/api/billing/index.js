@@ -1,4 +1,3 @@
-import config from "../../../config";
 import credentials from "../../../credentials";
 import sessionAuth from "../../../util/sessionAuth";
 import Stripe from "stripe";
