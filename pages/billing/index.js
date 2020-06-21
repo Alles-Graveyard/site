@@ -3,7 +3,6 @@ import withAuth from "../../util/withAuth";
 import axios from "axios";
 import {Box, Spacer, Input, Button} from "@reactants/ui";
 import Link from "next/link";
-import Router from "next/router";
 import {useState} from "react";
 
 const page = props => {
@@ -39,8 +38,8 @@ const page = props => {
 					}
 				}
 			)
-			.then(() => Router.reload())
-			.catch(() => {
+			.then(() => location.reload())
+			.catch(err => {
 				showBanner("Something went wrong.");
 				setLoading(false);
 			});
