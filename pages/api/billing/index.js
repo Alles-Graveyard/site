@@ -21,7 +21,16 @@ export default async (req, res) => {
 	res.json({
 		billingData: {
 			name: customer.name,
-			email: customer.email
+			email: customer.email,
+			cards: customer.sources.data
+				.filter(source => source.object === "card")
+				.map(source => ({
+					id: source.id,
+					lastDigits: source.last4,
+					brand: source.brand,
+					expMonth: source.exp_month,
+					expYear: source.exp_year
+				}))
 		}
 	});
 };
