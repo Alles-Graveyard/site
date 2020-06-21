@@ -6,6 +6,7 @@ import {Input, Button, Box, Spacer, useTheme} from "@reactants/ui";
 import WideLink from "../components/WideLink";
 import Link from "next/link";
 import {PlusCircle, Triangle, Moon, Sun} from "react-feather";
+import config from "../config";
 
 const page = props => {
 	const [loading, setLoading] = useState(false);
@@ -225,7 +226,7 @@ const page = props => {
 						fluid
 						label="Name"
 						name="name"
-						maxLength="50"
+						maxLength={config.inputBounds.name.max}
 						placeholder="Jessica Adams"
 						initialValue={props.user.name}
 					/>
@@ -234,7 +235,7 @@ const page = props => {
 						fluid
 						label="Nickname"
 						name="nickname"
-						maxLength="50"
+						maxLength={config.inputBounds.nickname.max}
 						placeholder="Jessica"
 						initialValue={props.user.nickname}
 					/>
@@ -243,7 +244,7 @@ const page = props => {
 						fluid
 						label="About"
 						name="about"
-						maxLength="125"
+						maxLength={config.inputBounds.about.max}
 						placeholder="Hi, I'm Jessica! I'm 29 and work in the music industry, specifically modern classical music!"
 						initialValue={props.user.about}
 					/>
