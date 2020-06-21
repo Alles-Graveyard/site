@@ -19,7 +19,7 @@ export default async (req, res) => {
 				await db.Post.findAll({
 					where: {
 						userId: {
-							[Op.in]: following.map(f => f.id)
+							[Op.in]: [user.id, ...following.map(f => f.id)]
 						},
 						parentId: null,
 						createdAt: {
