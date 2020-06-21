@@ -89,43 +89,45 @@ export default withAuth(props => {
 									Router.push("/");
 								})
 								.catch(err => {
-									if (
-										err.response.data.err === "profile.name.tooShort" ||
-										err.response.data.err === "profile.name.tooLong"
-									) {
-										setError(
-											`Your name must be between ${config.inputBounds.name.min} and ${config.inputBounds.name.max} characters`
-										);
-									} else if (
-										err.response.data.err === "profile.username.tooShort" ||
-										err.response.data.err === "profile.username.tooLong"
-									) {
-										setError(
-											`Your username must be between ${config.inputBounds.username.min} and ${config.inputBounds.username.max} characters`
-										);
-									} else if (
-										err.response.data.err === "user.password.requirements"
-									) {
-										setError(
-											`Your password must be between ${config.inputBounds.password.min} and ${config.inputBounds.password.max} characters`
-										);
-									} else if (
-										err.response.data.err === "profile.username.chars"
-									) {
-										setError(
-											"Your username can only contain letters and numbers, sorry"
-										);
-									} else if (
-										err.response.data.err === "profile.username.unavailable"
-									) {
-										setError("Sorry, this username is unavailable");
-									} else if (err.response.data.err === "bot") {
-										setError(
-											"Something went wrong while checking that you're human. Try again."
-										);
-									} else {
+									if (err.response) {
+										if (
+											err.response.data.err === "profile.name.tooShort" ||
+											err.response.data.err === "profile.name.tooLong"
+										)
+											setError(
+												`Your name must be between ${config.inputBounds.name.min} and ${config.inputBounds.name.max} characters`
+											);
+										else if (
+											err.response.data.err === "profile.username.tooShort" ||
+											err.response.data.err === "profile.username.tooLong"
+										)
+											setError(
+												`Your username must be between ${config.inputBounds.username.min} and ${config.inputBounds.username.max} characters`
+											);
+										else if (
+											err.response.data.err === "user.password.requirements"
+										)
+											setError(
+												`Your password must be between ${config.inputBounds.password.min} and ${config.inputBounds.password.max} characters`
+											);
+										else if (err.response.data.err === "profile.username.chars")
+											setError(
+												"Your username can only contain letters and numbers, sorry"
+											);
+										else if (
+											err.response.data.err === "profile.username.unavailable"
+										)
+											setError("Sorry, this username is unavailable");
+										else if (err.response.data.err === "bot")
+											setError(
+												"Something went wrong while checking that you're human. Try again."
+											);
+										else
+											setError(
+												"Uh oh. Something's gone wrong. Maybe try again?"
+											);
+									} else
 										setError("Uh oh. Something's gone wrong. Maybe try again?");
-									}
 									setLoading(false);
 								});
 						}}
