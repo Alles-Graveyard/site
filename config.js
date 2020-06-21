@@ -28,6 +28,9 @@ export default {
 		},
 		post: {
 			max: 500
+		},
+		email: {
+			max: 100
 		}
 	},
 	maxFollows: 250,

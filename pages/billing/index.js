@@ -4,6 +4,7 @@ import axios from "axios";
 import {Box, Spacer, Input, Button} from "@reactants/ui";
 import Link from "next/link";
 import {useState} from "react";
+import config from "../../config";
 
 const page = props => {
 	const [loading, setLoading] = useState(false);
@@ -40,7 +41,9 @@ const page = props => {
 			)
 			.then(() => location.reload())
 			.catch(err => {
-				showBanner("Something went wrong.");
+				if (err.response && err.response.data.err === "email.invalid")
+					showBanner("That email isn't valid!");
+				else showBanner("Something went wrong.");
 				setLoading(false);
 			});
 	};
@@ -80,7 +83,7 @@ const page = props => {
 							fluid
 							label="Full Name"
 							name="name"
-							maxLength="50"
+							maxLength={config.inputBounds.name.max}
 							placeholder="Jessica Adams"
 							initialValue={props.user.name}
 						/>
@@ -89,7 +92,7 @@ const page = props => {
 							fluid
 							label="Billing Email"
 							name="email"
-							maxLength="50"
+							maxLength={config.inputBounds.email.max}
 							placeholder="jessica@alles.cx"
 						/>
 					</Box.Content>
