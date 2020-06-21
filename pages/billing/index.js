@@ -18,8 +18,8 @@ const page = props => {
 		});
 	};
 
-	// Register Billing
-	const registerBilling = e => {
+	// Update Billing
+	const updateBilling = e => {
 		e.preventDefault();
 		const fullname = e.target.name.value.trim();
 		const email = e.target.email.value.trim();
@@ -28,7 +28,7 @@ const page = props => {
 
 		axios
 			.post(
-				`${process.env.NEXT_PUBLIC_APIURL}/billing/register`,
+				`${process.env.NEXT_PUBLIC_APIURL}/billing/update`,
 				{
 					name: fullname,
 					email
@@ -39,7 +39,10 @@ const page = props => {
 					}
 				}
 			)
-			.then(() => location.reload())
+			.then(() => {
+				if (props.billingData) setLoading(false);
+				else location.reload();
+			})
 			.catch(err => {
 				if (err.response && err.response.data.err === "email.invalid")
 					showBanner("That email isn't valid!");
@@ -75,8 +78,46 @@ const page = props => {
 						Switch Accounts
 					</Button>
 				</>
+			) : props.billingData ? (
+				<>
+					<Box as="form" onSubmit={updateBilling}>
+						<Box.Header>Your Billing Info</Box.Header>
+						<Box.Content>
+							<Input
+								fluid
+								label="Full Name"
+								name="name"
+								maxLength={config.inputBounds.name.max}
+								placeholder="Jessica Adams"
+								initialValue={props.billingData.name}
+							/>
+							<Spacer />
+							<Input
+								fluid
+								label="Billing Email"
+								name="email"
+								maxLength={config.inputBounds.email.max}
+								placeholder="jessica@alles.cx"
+								initialValue={props.billingData.email}
+							/>
+						</Box.Content>
+						<Box.Footer
+							style={{
+								overflow: "auto",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center"
+							}}
+						>
+							<span></span>
+							<Button loading={loading} primary small right>
+								Update
+							</Button>
+						</Box.Footer>
+					</Box>
+				</>
 			) : (
-				<Box as="form" onSubmit={registerBilling}>
+				<Box as="form" onSubmit={updateBilling}>
 					<Box.Header>Set Up Billing</Box.Header>
 					<Box.Content>
 						<Input
@@ -124,7 +165,7 @@ const page = props => {
 
 page.getInitialProps = async ctx => {
 	return (
-		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/devOrgs`, {
+		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/billing`, {
 			headers: {
 				authorization: ctx.user.sessionToken
 			}
