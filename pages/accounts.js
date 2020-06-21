@@ -16,9 +16,7 @@ const page = props => {
 					}
 				}
 			)
-			.then(() => {
-				location.reload();
-			});
+			.then(() => location.reload());
 	};
 
 	return (
