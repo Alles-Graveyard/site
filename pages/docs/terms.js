@@ -53,6 +53,11 @@ export default withAuth(
 						required to by law.
 					</p>
 					<p>
+						We only allow individuals to have AllesIDs, and they may only have
+						one primary account per person. You may create multiple secondary
+						accounts (accounts that are connected to your primary account).
+					</p>
+					<p>
 						If you find a bug, we'd appreciate it if you contact us about it.
 						You can publicly disclose it on our platform, or create an issue on
 						our{" "}
@@ -72,7 +77,7 @@ export default withAuth(
 						<strong>archie@alles.cx</strong>.
 					</p>
 				</Box.Content>
-				<Box.Footer>Last updated on June 13th 2020</Box.Footer>
+				<Box.Footer>Last updated on June 21st 2020</Box.Footer>
 			</Box>
 		</Page>
 	),
