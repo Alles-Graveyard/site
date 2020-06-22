@@ -2,9 +2,9 @@ import Page from "../../components/Page";
 import withAuth from "../../util/withAuth";
 import axios from "axios";
 import {Box, Spacer, Input, Button} from "@reactants/ui";
-import Link from "next/link";
 import {useState} from "react";
 import config from "../../config";
+import Router from "next/router";
 
 const cardColors = {
 	"American Express": "#002663",
@@ -135,6 +135,25 @@ const page = props => {
 								<p>You don't have any cards.</p>
 							)}
 						</Box.Content>
+						<Box.Footer
+							style={{
+								overflow: "auto",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center"
+							}}
+						>
+							<span></span>
+							<Button
+								loading={loading}
+								onClick={() => Router.push("/billing/card/new")}
+								primary
+								small
+								right
+							>
+								Add a card
+							</Button>
+						</Box.Footer>
 					</Box>
 				</>
 			) : (
