@@ -1,7 +1,7 @@
 import Page from "../../../components/Page";
 import withAuth from "../../../util/withAuth";
 import axios from "axios";
-import {Box, Button} from "@reactants/ui";
+import {Box, Spacer, Input, Button} from "@reactants/ui";
 import {loadStripe} from "@stripe/stripe-js";
 import {
 	CardElement,
@@ -30,8 +30,7 @@ const page = props => (
 	>
 		{props.secret ? (
 			<Elements stripe={stripePromise}>
-				<Form />
-				<p>{props.secret}</p>
+				<Form secret={props.secret} />
 			</Elements>
 		) : (
 			<p>Please setup billing first.</p>
@@ -55,7 +54,7 @@ page.getInitialProps = async ctx => {
 
 export default withAuth(page);
 
-const Form = () => {
+const Form = ({secret}) => {
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setError] = useState();
 	const stripe = useStripe();
@@ -66,24 +65,37 @@ const Form = () => {
 		setLoading(true);
 		setError();
 
-		const {error, paymentMethod} = await stripe.createPaymentMethod({
-			type: "card",
-			card: elements.getElement(CardElement)
+		const cardName = e.target.name.value.trim();
+		if (!cardName) return setLoading(false);
+
+		const {setupIntent, error} = await stripe.confirmCardSetup(secret, {
+			payment_method: {
+				card: elements.getElement(CardElement),
+				billing_details: {
+					name: cardName
+				}
+			}
 		});
 
 		if (error) {
 			setError(error.message);
 			setLoading(false);
-			return;
-		}
-
-		console.log(paymentMethod);
+		} else Router.push("/billing");
 	};
 
 	return (
 		<Box as="form" onSubmit={handleSubmit}>
 			<Box.Header>Add a Card</Box.Header>
 			<Box.Content>
+				<Input
+					fluid
+					label="Cardholder Name"
+					name="name"
+					placeholder="Jessica Adams"
+				/>
+
+				<Spacer y={2} />
+
 				<CardElement />
 			</Box.Content>
 			<Box.Footer
