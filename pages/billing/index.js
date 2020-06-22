@@ -27,16 +27,14 @@ const page = props => {
 	// Update Billing
 	const updateBilling = e => {
 		e.preventDefault();
-		const fullname = e.target.name.value.trim();
 		const email = e.target.email.value.trim();
-		if (loading || !fullname || !email) return;
+		if (loading || !email) return;
 		setLoading(true);
 
 		axios
 			.post(
 				`${process.env.NEXT_PUBLIC_APIURL}/billing/update`,
 				{
-					name: fullname,
 					email
 				},
 				{
@@ -89,15 +87,6 @@ const page = props => {
 					<Box as="form" onSubmit={updateBilling}>
 						<Box.Header>Your Billing Info</Box.Header>
 						<Box.Content>
-							<Input
-								fluid
-								label="Full Name"
-								name="name"
-								maxLength={config.inputBounds.name.max}
-								placeholder="Jessica Adams"
-								initialValue={props.billingData.name}
-							/>
-							<Spacer />
 							<Input
 								fluid
 								label="Billing Email"
@@ -162,15 +151,6 @@ const page = props => {
 					<Box.Content>
 						<Input
 							fluid
-							label="Full Name"
-							name="name"
-							maxLength={config.inputBounds.name.max}
-							placeholder="Jessica Adams"
-							initialValue={props.user.name}
-						/>
-						<Spacer />
-						<Input
-							fluid
 							label="Billing Email"
 							name="email"
 							maxLength={config.inputBounds.email.max}
@@ -185,7 +165,13 @@ const page = props => {
 							alignItems: "center"
 						}}
 					>
-						<span></span>
+						<span>
+							We store your payment information securely in{" "}
+							<a href="https://stripe.com" className="normal">
+								Stripe
+							</a>
+							.
+						</span>
 						<Button loading={loading} primary small right>
 							Register
 						</Button>

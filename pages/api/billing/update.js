@@ -8,32 +8,19 @@ export default async (req, res) => {
 	if (!user) return res.status(401).json({err: "badAuthorization"});
 	if (user.primaryId) return res.status(400).json({err: "primaryOnly"});
 
-	if (
-		!req.body ||
-		typeof req.body.name !== "string" ||
-		typeof req.body.email !== "string"
-	)
+	if (!req.body || typeof req.body.email !== "string")
 		return res.status(400).json({err: "badRequest"});
 
-	const fullname = req.body.name.trim();
 	const email = req.body.email.trim().toLowerCase();
-	if (fullname.length < config.inputBounds.min)
-		return res.status(400).json({err: "profile.name.tooShort"});
-	if (fullname.length > config.inputBounds.max)
-		return res.status(400).json({err: "profile.name.tooLong"});
 	if (email.length > config.inputBounds.email.max || !validateEmail(email))
 		return res.status(400).json({err: "email.invalid"});
 
 	if (user.stripeCustomerId) {
 		// Update Customer
-		stripe.customers.update(user.stripeCustomerId, {
-			name: fullname,
-			email
-		});
+		stripe.customers.update(user.stripeCustomerId, {email});
 	} else {
 		// Create Customer
 		const customer = await stripe.customers.create({
-			name: fullname,
 			email,
 			metadata: {
 				userId: user.id
