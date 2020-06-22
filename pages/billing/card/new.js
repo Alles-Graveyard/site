@@ -28,21 +28,29 @@ const page = props => (
 			}
 		]}
 	>
-		<Elements stripe={stripePromise}>
-			<Form />
-			<p>{props.secret}</p>
-		</Elements>
+		{props.secret ? (
+			<Elements stripe={stripePromise}>
+				<Form />
+				<p>{props.secret}</p>
+			</Elements>
+		) : (
+			<p>Please setup billing first.</p>
+		)}
 	</Page>
 );
 
 page.getInitialProps = async ctx => {
-	return (
-		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/billing/setupIntent`, {
-			headers: {
-				authorization: ctx.user.sessionToken
-			}
-		})
-	).data;
+	try {
+		return (
+			await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/billing/setupIntent`, {
+				headers: {
+					authorization: ctx.user.sessionToken
+				}
+			})
+		).data;
+	} catch (err) {
+		return;
+	}
 };
 
 export default withAuth(page);
