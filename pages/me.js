@@ -183,7 +183,7 @@ const page = props => {
 					</div>
 
 					<div className="quickInfo">
-						<Link href="/comingsoon">
+						<Link href="/billing">
 							<a>
 								<div>
 									<PlusCircle />
