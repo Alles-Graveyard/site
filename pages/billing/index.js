@@ -154,6 +154,23 @@ const page = props => {
 								<strong>Status:</strong>{" "}
 								{props.user.plus ? "Active 😃" : "Inactive 😦"}
 							</p>
+							{props.user.plus && !props.billingData.hasSubscription ? (
+								<p style={{color: "var(--accents-6)", fontStyle: "italic"}}>
+									You have Alles+, but no active subscriptions!
+								</p>
+							) : (
+								<></>
+							)}
+							{!props.user.plus && props.billingData.hasSubscription ? (
+								<p style={{color: "var(--danger)"}}>
+									You have an active subscription, but Alles+ has not been
+									applied to your account! Please contact support to resolve
+									this issue. If you've just purchased Alles+, you might have to
+									wait a few minutes.
+								</p>
+							) : (
+								<></>
+							)}
 							<p>
 								Alles+ gives you a bunch of exclusive features across the Alles
 								platform, and it helps to support the development of Alles!
@@ -164,7 +181,7 @@ const page = props => {
 								which gives Alles+ to your primary account, and all of your
 								secondary accounts.
 							</p>
-							{props.user.plus ? (
+							{props.user.plus || props.billingData.hasSubscription ? (
 								<p>
 									To manage your Alles+ subscription, visit the Customer Portal.
 								</p>

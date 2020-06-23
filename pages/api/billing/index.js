@@ -12,13 +12,15 @@ export default async (req, res) => {
 			billingData: null
 		});
 
-	// Get Customer
+	// Get data from Stripe
 	const customer = await stripe.customers.retrieve(user.stripeCustomerId);
+	const subscriptions = await stripe.subscriptions.list();
 
 	// Response
 	res.json({
 		billingData: {
-			email: customer.email
+			email: customer.email,
+			hasSubscription: subscriptions.data.length > 0
 		}
 	});
 };
