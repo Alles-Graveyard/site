@@ -114,6 +114,40 @@ const page = props => {
 					<Spacer y={2} />
 
 					<Box>
+						<Box.Header>Customer Portal</Box.Header>
+						<Box.Content>
+							<p
+								style={{
+									marginBottom: 50,
+									textAlign: "center"
+								}}
+							>
+								You can manage your payment methods and subscriptions in the
+								customer portal.
+							</p>
+							<Button
+								loading={loading}
+								primary
+								fluid
+								onClick={() => {
+									setLoading(true);
+									axios
+										.get(`${process.env.NEXT_PUBLIC_APIURL}/billing/portal`, {
+											headers: {
+												authorization: props.user.sessionToken
+											}
+										})
+										.then(res => (location.href = res.data.url));
+								}}
+							>
+								Go
+							</Button>
+						</Box.Content>
+					</Box>
+
+					<Spacer y={2} />
+
+					<Box>
 						<Box.Header>Alles+</Box.Header>
 						<Box.Content>
 							<p>Coming soon...</p>
