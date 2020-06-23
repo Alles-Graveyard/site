@@ -15,6 +15,7 @@ const cardColors = {
 const page = props => {
 	const [loading, setLoading] = useState(false);
 	const [banner, setBanner] = useState();
+	const [plusActive, setPlusActive] = useState(props.user.plus);
 
 	// Show Banner
 	const showBanner = message => {
@@ -152,7 +153,7 @@ const page = props => {
 						<Box.Content>
 							<p>
 								<strong>Status:</strong>{" "}
-								{props.user.plus ? "Active 😃" : "Inactive 😦"}
+								{plusActive ? "Active 😃" : "Inactive 😦"}
 							</p>
 							{props.user.plus && !props.billingData.hasSubscription ? (
 								<p style={{color: "var(--accents-6)", fontStyle: "italic"}}>
@@ -189,6 +190,7 @@ const page = props => {
 								<GetPlus
 									sessionToken={props.user.sessionToken}
 									showBanner={showBanner}
+									onSubscribe={() => setPlusActive(true)}
 								/>
 							)}
 						</Box.Content>
@@ -257,7 +259,7 @@ const plans = {
 	"yearly-max": "🔥 Alles+ Max ($80/year)"
 };
 
-const GetPlus = ({sessionToken, showBanner}) => {
+const GetPlus = ({sessionToken, showBanner, onSubscribe}) => {
 	const [plan, setPlan] = useState();
 	const [loading, setLoading] = useState(false);
 	const [purchased, setPurchased] = useState(false);
@@ -281,7 +283,10 @@ const GetPlus = ({sessionToken, showBanner}) => {
 					}
 				}
 			)
-			.then(() => setPurchased(true))
+			.then(() => {
+				setPurchased(true);
+				onSubscribe();
+			})
 			.catch(() => {
 				setLoading(false);
 				showBanner("Something went wrong while subscribing to Alles+");
@@ -289,7 +294,26 @@ const GetPlus = ({sessionToken, showBanner}) => {
 	};
 
 	return purchased ? (
-		<></>
+		<div>
+			<p>
+				<strong>You are now subscribed to Alles+!</strong>
+			</p>
+
+			<p>
+				Welcome to the club! You can make changes to your subscription in the
+				Customer Portal.
+			</p>
+
+			<style jsx>{`
+				div {
+					margin-top: 50px;
+				}
+
+				p {
+					text-align: center;
+				}
+			`}</style>
+		</div>
 	) : plan ? (
 		<div>
 			<p>
