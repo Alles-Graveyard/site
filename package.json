@@ -13,8 +13,6 @@
 		"@alleshq/log": "^1.0.0",
 		"@charliewilco/gluejar": "^1.0.0",
 		"@reactants/ui": "^0.18.0",
-		"@stripe/react-stripe-js": "^1.1.2",
-		"@stripe/stripe-js": "^1.7.0",
 		"argon2": "^0.26.2",
 		"axios": "^0.19.1",
 		"form-data": "^3.0.0",

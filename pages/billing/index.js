@@ -114,35 +114,10 @@ const page = props => {
 					<Spacer y={2} />
 
 					<Box>
-						<Box.Header>Cards</Box.Header>
+						<Box.Header>Alles+</Box.Header>
 						<Box.Content>
-							{props.billingData.cards.length > 0 ? (
-								props.billingData.cards.map(card => (
-									<Card key={card.id} {...card} />
-								))
-							) : (
-								<p>You don't have any cards.</p>
-							)}
+							<p>Coming soon...</p>
 						</Box.Content>
-						<Box.Footer
-							style={{
-								overflow: "auto",
-								display: "flex",
-								justifyContent: "space-between",
-								alignItems: "center"
-							}}
-						>
-							<span></span>
-							<Button
-								loading={loading}
-								onClick={() => Router.push("/billing/card/new")}
-								primary
-								small
-								right
-							>
-								Add a card
-							</Button>
-						</Box.Footer>
 					</Box>
 				</>
 			) : (
@@ -200,61 +175,3 @@ page.getInitialProps = async ctx => {
 };
 
 export default withAuth(page);
-
-const Card = props => (
-	<article>
-		<div className="icon"></div>
-		<p className="main">
-			{props.brand} &bull;&bull;&bull;&bull; {props.lastDigits}
-		</p>
-		<p className="date">
-			Expires{" "}
-			{
-				[
-					"Jan",
-					"Feb",
-					"Mar",
-					"Apr",
-					"May",
-					"Jun",
-					"Jul",
-					"Aug",
-					"Sep",
-					"Oct",
-					"Nov",
-					"Dec"
-				][props.expMonth - 1]
-			}{" "}
-			{props.expYear}
-		</p>
-
-		<style jsx>{`
-			article {
-				display: flex;
-				margin: 10px 0;
-			}
-
-			.icon {
-				height: 1.5em;
-				width: 2.5em;
-				border-radius: 5px;
-				margin-right: 10px;
-				background: ${cardColors[props.brand]
-					? cardColors[props.brand]
-					: cardColors["Unknown"]};
-			}
-
-			p {
-				margin: auto 0;
-			}
-
-			.main {
-				flex-grow: 1;
-			}
-
-			.date {
-				margin-left: 10px;
-			}
-		`}</style>
-	</article>
-);
