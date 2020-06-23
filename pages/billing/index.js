@@ -150,7 +150,30 @@ const page = props => {
 					<Box>
 						<Box.Header>Alles+</Box.Header>
 						<Box.Content>
-							<p>Coming soon...</p>
+							<p>
+								<strong>Status:</strong>{" "}
+								{props.user.plus ? "Active 😃" : "Inactive 😦"}
+							</p>
+							<p>
+								Alles+ gives you a bunch of exclusive features across the Alles
+								platform, and it helps to support the development of Alles!
+							</p>
+							<p>
+								A standard Alles+ subscription only applies to your primary
+								account, but for only a little more, you can get Alles+ Max,
+								which gives Alles+ to your primary account, and all of your
+								secondary accounts.
+							</p>
+							{props.user.plus ? (
+								<p>
+									To manage your Alles+ subscription, visit the Customer Portal.
+								</p>
+							) : (
+								<GetPlus
+									sessionToken={props.user.sessionToken}
+									showBanner={showBanner}
+								/>
+							)}
 						</Box.Content>
 					</Box>
 				</>
@@ -209,3 +232,104 @@ page.getInitialProps = async ctx => {
 };
 
 export default withAuth(page);
+
+const plans = {
+	monthly: "Alles+ ($5/month)",
+	yearly: "Alles+ ($50/year)",
+	"monthly-max": "🔥 Alles+ Max ($8/month)",
+	"yearly-max": "🔥 Alles+ Max ($80/year)"
+};
+
+const GetPlus = ({sessionToken, showBanner}) => {
+	const [plan, setPlan] = useState();
+	const [loading, setLoading] = useState(false);
+	const [purchased, setPurchased] = useState(false);
+
+	const PlanButton = ({id}) => (
+		<Button fluid onClick={() => setPlan(id)}>
+			{plans[id]}
+		</Button>
+	);
+
+	const purchase = () => {
+		setLoading(true);
+
+		axios
+			.post(
+				`${process.env.NEXT_PUBLIC_APIURL}/billing/plus?plan=${plan}`,
+				{},
+				{
+					headers: {
+						authorization: sessionToken
+					}
+				}
+			)
+			.then(() => setPurchased(true))
+			.catch(() => {
+				setLoading(false);
+				showBanner("Something went wrong while subscribing to Alles+");
+			});
+	};
+
+	return purchased ? (
+		<></>
+	) : plan ? (
+		<div>
+			<p>
+				Are you sure you want to subscribe to <strong>{plans[plan]}</strong>?
+			</p>
+
+			<Button primary fluid onClick={() => purchase()} loading={loading}>
+				Let's do it!
+			</Button>
+
+			<Spacer y={0.5} />
+
+			<Button secondary fluid onClick={() => setPlan()} loading={loading}>
+				No, I don't want to support Alles
+			</Button>
+
+			<p className="footnote">
+				You will be charged the specified price immediately. The subscription
+				will automatically renew, but you can change plans or manage your
+				subscription in the Customer Portal.
+			</p>
+
+			<style jsx>{`
+				div {
+					margin-top: 50px;
+				}
+
+				p {
+					text-align: center;
+				}
+
+				.footnote {
+					font-size: 12px;
+					color: var(--accents-6);
+				}
+			`}</style>
+		</div>
+	) : (
+		<div>
+			<PlanButton id="monthly" />
+			<PlanButton id="yearly" />
+			<PlanButton id="monthly-max" />
+			<PlanButton id="yearly-max" />
+
+			<style jsx>{`
+				div {
+					margin-top: 50px;
+					display: grid;
+					grid-template-columns: calc(50% - 5px) calc(50% - 5px);
+					grid-template-rows: 50% 50%;
+					grid-gap: 10px;
+				}
+
+				.plan {
+					padding: 10px;
+				}
+			`}</style>
+		</div>
+	);
+};
