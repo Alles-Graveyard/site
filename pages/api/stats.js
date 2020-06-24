@@ -7,6 +7,7 @@ const updateStats = async () => {
 		updated: new Date().getTime(),
 		accounts: {
 			total: await db.User.count(),
+			plus: await db.User.count({where: {plus: true}}),
 			primary: await db.User.count({where: {primaryId: null}})
 		},
 		posts: {
