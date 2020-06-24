@@ -17,7 +17,10 @@ export default async (req, res) => {
 							{
 								userId: {
 									[Op.in]: literal(
-										`(select followingId from followerRelations where followerId = '${user.id}')`
+										// Yeah, I know, this doesn't look very safe but I spent hours trying to
+										// find a better solution. Sequelize doesn't seem to support replacements in
+										// literals here, and user ids will always be UUIDs, so it's good enough :/
+										`(select followingId from followerRelations where followerId = "${user.id}")`
 									)
 								}
 							},
