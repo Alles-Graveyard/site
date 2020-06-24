@@ -194,7 +194,7 @@ const page = props => {
 											</>
 										) : (
 											<>
-												Try <b>Alles+</b>
+												Get <b>Alles+</b>
 											</>
 										)}
 									</p>
