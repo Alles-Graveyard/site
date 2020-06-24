@@ -33,7 +33,6 @@ export default {
 			max: 100
 		}
 	},
-	maxFollows: 250,
 	fileUploadUrl: "https://fs.alles.cx",
 	domain: "alles.cx",
 	ghost: {
