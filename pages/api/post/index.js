@@ -68,38 +68,11 @@ const api = async (req, res) => {
 			// Resize
 			img = await sharp(img)
 				.resize({
-					width: 500,
+					width: user.plus ? 1000 : 500,
 					fit: "cover"
 				})
 				.png()
 				.toBuffer();
-
-			// Create Text Overlay
-			const metadata = await sharp(img).metadata();
-			const text = Buffer.from(`
-				<svg
-					width="${metadata.width}"
-					height="${metadata.height}"
-				>
-					<text
-						font-family="Rubik, sans-serif"
-						font-size="10"
-						x="10"
-						y="${metadata.height - 10}"
-						fill="#ffffff"
-					>@${user.username}</text>
-				</svg>
-			`);
-
-			// Composite Overlay
-			img = await sharp(img).composite([
-				{
-					input: text
-				}
-			]);
-
-			// Convert to png
-			img = await img.png().toBuffer();
 
 			// Upload to AllesFS
 			const formData = new FormData();
