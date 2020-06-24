@@ -41,5 +41,6 @@ export default {
 		name: "Ghost 👻",
 		plus: false
 	},
-	imageSize: 5 * 1024 * 1024
+	imageSize: 5 * 1024 * 1024,
+	maxFollows: 1000
 };
