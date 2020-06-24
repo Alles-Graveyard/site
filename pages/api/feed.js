@@ -17,7 +17,7 @@ export default async (req, res) => {
 							{
 								userId: {
 									[Op.in]: literal(
-										"(select followingId from followerRelations where followerId = '00000000-0000-0000-0000-000000000000')"
+										`(select followingId from followerRelations where followerId = '${user.id}')`
 									)
 								}
 							},
