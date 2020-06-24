@@ -14,7 +14,9 @@ export default async (req, res) => {
 
 	// Get data from Stripe
 	const customer = await stripe.customers.retrieve(user.stripeCustomerId);
-	const subscriptions = await stripe.subscriptions.list();
+	const subscriptions = await stripe.subscriptions.list({
+		customer: user.stripeCustomerId
+	});
 
 	// Response
 	res.json({

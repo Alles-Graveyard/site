@@ -13,7 +13,9 @@ export default async (req, res) => {
 		return res.status(400).json({err: "billing.invalidPlan"});
 
 	// Check for active subscription
-	const subscriptions = await stripe.subscriptions.list();
+	const subscriptions = await stripe.subscriptions.list({
+		customer: user.stripeCustomerId
+	});
 	if (user.plus || subscriptions.data.length > 0)
 		return res.status(400).json({err: "alreadySet"});
 
