@@ -4,13 +4,23 @@ import Link from "next/link";
 import PostField from "../components/PostField";
 import Post from "../components/Post";
 import WideLink from "../components/WideLink";
-import {Box, Spacer} from "@reactants/ui";
+import {Box, Spacer, Button} from "@reactants/ui";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Settings, User, AtSign, Users} from "react-feather";
+import {Settings, User, AtSign, Users, X} from "react-feather";
+import Router from "next/router";
 
 const page = props => {
 	const [feed, setFeed] = useState();
+	const [plusNotice, setPlusNotice] = useState(false);
+
+	useEffect(
+		() =>
+			setPlusNotice(
+				!props.user.plus && localStorage.getItem("plusNotice") !== "hidden"
+			),
+		[]
+	);
 
 	useEffect(() => {
 		const updateFeed = async () => {
@@ -98,6 +108,78 @@ const page = props => {
 					</Box>
 				</div>
 			</div>
+
+			{plusNotice ? (
+				<>
+					<Spacer y={2} />
+
+					<Box>
+						<Box.Content>
+							<X
+								style={{
+									float: "right",
+									cursor: "pointer",
+									color: "var(--accents-6)"
+								}}
+								onClick={() => {
+									setPlusNotice(false);
+									localStorage.setItem("plusNotice", "hidden");
+								}}
+							/>
+
+							<h3
+								style={{
+									margin: 0
+								}}
+							>
+								🔥 New stuff!
+							</h3>
+							<p>
+								You can now get Alles+ and help support development and cover
+								server costs, while getting tons of cool stuff, like access to
+								the beta. All subscription costs from June, July and August will
+								go towards good causes. In June, we're supporting{" "}
+								<a
+									href="https://thetrevorproject.org"
+									className="normal"
+									target="_blank"
+								>
+									The Trevor Project
+								</a>{" "}
+								and in July we'll be supporting{" "}
+								<a
+									href="https://archive.org"
+									className="normal"
+									target="_blank"
+								>
+									The Internet Archive
+								</a>
+								.
+							</p>
+						</Box.Content>
+						<Box.Footer
+							style={{
+								overflow: "auto",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center"
+							}}
+						>
+							<span></span>
+							<Button
+								primary
+								small
+								right
+								onClick={() => Router.push("/billing")}
+							>
+								Get Alles+
+							</Button>
+						</Box.Footer>
+					</Box>
+				</>
+			) : (
+				<></>
+			)}
 
 			{feed ? (
 				feed.length > 0 ? (
