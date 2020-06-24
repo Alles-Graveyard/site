@@ -50,7 +50,13 @@ export default withAuth(
 					</p>
 					<p>
 						We will generally not allow refunds for payments except when
-						required to by law.
+						required to by law. When you subscribe to Alles+, we'll charge you
+						immediately (though we may charge less than usual on the first
+						billing cycle if you are switching from another plan), and then at
+						the beginning of every new billing cycle. The subscription will
+						renew automatically, but you can cancel or update them from the
+						Customer Portal (which can be found on the billing page), as well as
+						manage your payment methods and view your billing history.
 					</p>
 					<p>
 						We only allow individuals to have AllesIDs, and they may only have
@@ -77,7 +83,7 @@ export default withAuth(
 						<strong>archie@alles.cx</strong>.
 					</p>
 				</Box.Content>
-				<Box.Footer>Last updated on June 21st 2020</Box.Footer>
+				<Box.Footer>Last updated on June 24th 2020</Box.Footer>
 			</Box>
 		</Page>
 	),
