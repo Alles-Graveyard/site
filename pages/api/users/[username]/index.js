@@ -47,6 +47,6 @@ export default async (req, res) => {
 		rubies: u.rubies,
 		plus: u.plus,
 		posts,
-		color: "23529f"
+		color: u.plus && u.color ? u.color : null
 	});
 };

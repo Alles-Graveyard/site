@@ -189,7 +189,7 @@ const page = props => {
 				<style jsx global>{`
 					:root,
 					:root.dark-mode {
-						--primary: #${props.requestedUser.color};
+						${props.requestedUser.color ? `--primary: #${props.requestedUser.color};` : ""}
 					}
 				`}</style>
 
