@@ -127,11 +127,11 @@ export default async (req, res) => {
 		image: post.image ? `https://fs.alles.cx/${post.image}` : null,
 		createdAt: post.createdAt,
 		score: upvotes - downvotes,
-		upvotes: author.id === user.id && user.plus ? upvotes : null,
-		downvotes: author.id === user.id && user.plus ? downvotes : null,
 		vote: vote ? ["down", "neutral", "up"].indexOf(vote.vote) - 1 : 0,
 		replyCount: await post.countChildren(),
 		replies,
-		ancestors
+		ancestors,
+		interactions:
+			author.id === user.id && user.plus ? await post.countViewers() : null
 	});
 };
