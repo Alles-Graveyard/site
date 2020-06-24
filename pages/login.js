@@ -133,7 +133,7 @@ export default withAuth(
 								onChange={() => setError(false)}
 							/>
 
-							<Spacer y={1} />
+							<Spacer />
 
 							<Button loading={loading} fluid primary>
 								Sign In

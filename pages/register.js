@@ -165,7 +165,7 @@ export default withAuth(props => {
 								maxLength={config.inputBounds.password.max}
 							/>
 
-							<Spacer y={1} />
+							<Spacer />
 
 							<div className="recaptcha">
 								<Recaptcha
@@ -184,7 +184,7 @@ export default withAuth(props => {
 								/>
 							</div>
 
-							<Spacer y={1} />
+							<Spacer />
 
 							<Button loading={loading} fluid primary>
 								Register
