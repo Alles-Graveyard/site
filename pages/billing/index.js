@@ -182,6 +182,10 @@ const page = props => {
 								which gives Alles+ to your primary account, and all of your
 								secondary accounts.
 							</p>
+							<p>
+								If you try to purchase a subscription without any payment
+								methods set up and you have no credit, it will probably fail.
+							</p>
 							{props.user.plus || props.billingData.hasSubscription ? (
 								<p>
 									To manage your Alles+ subscription, visit the Customer Portal.
