@@ -164,7 +164,9 @@ export default withAuth(
 									setError();
 									setPulsar(null);
 									axios
-										.get("http://localhost:2318/token")
+										.get("http://localhost:2318/token", {
+											timeout: 1000
+										})
 										.then(res => {
 											axios
 												.post(`${process.env.NEXT_PUBLIC_APIURL}/login`, {
