@@ -1,6 +1,5 @@
 import db from "../../util/db";
 import config from "../../config";
-import credentials from "../../credentials";
 import argon2 from "argon2";
 import {v4 as uuid} from "uuid";
 import axios from "axios";
@@ -44,7 +43,7 @@ export default async (req, res) => {
 	try {
 		const r = await axios.post(
 			`https://www.google.com/recaptcha/api/siteverify?secret=${
-				credentials.recaptchaSecret
+				process.env.RECAPTCHA_SECRET
 			}&response=${encodeURIComponent(req.body.recaptcha)}`
 		);
 		if (!r.data.success) throw "Failed verification";
@@ -81,7 +80,10 @@ export default async (req, res) => {
 
 	// Log
 	log(
-		credentials.logarithm,
+		{
+			id: process.env.LOGARITHM_ID,
+			secret: process.env.LOGARITHM_SECRET
+		},
 		"user.new",
 		{
 			address

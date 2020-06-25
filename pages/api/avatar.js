@@ -1,6 +1,5 @@
 import sessionAuth from "../../util/sessionAuth";
 import config from "../../config";
-import credentials from "../../credentials";
 import formidable from "formidable";
 import sharp from "sharp";
 import axios from "axios";
@@ -44,7 +43,10 @@ const api = async (req, res) => {
 			formData.append("public", "true");
 			const id = (
 				await axios.post(config.fileUploadUrl, formData.getBuffer(), {
-					auth: credentials.fileUpload,
+					auth: {
+						username: process.env.ALLESFS_ID,
+						password: process.env.ALLESFS_SECRET
+					},
 					headers: formData.getHeaders()
 				})
 			).data;
@@ -58,7 +60,15 @@ const api = async (req, res) => {
 			res.json({});
 
 			// Log
-			log(credentials.logarithm, "profile.avatar.update", {}, user.id);
+			log(
+				{
+					id: process.env.LOGARITHM_ID,
+					secret: process.env.LOGARITHM_SECRET
+				},
+				"profile.avatar.update",
+				{},
+				user.id
+			);
 		} catch (err) {
 			res.status(500).json({err: "internalError"});
 		}

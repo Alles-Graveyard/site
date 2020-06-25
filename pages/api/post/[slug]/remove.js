@@ -1,6 +1,5 @@
 import db from "../../../../util/db";
 import sessionAuth from "../../../../util/sessionAuth";
-import credentials from "../../../../credentials";
 import log from "@alleshq/log";
 import shortUuid from "short-uuid";
 const uuidTranslator = shortUuid();
@@ -37,7 +36,10 @@ export default async (req, res) => {
 
 	// Log
 	log(
-		credentials.logarithm,
+		{
+			id: process.env.LOGARITHM_ID,
+			secret: process.env.LOGARITHM_SECRET
+		},
 		"post.delete",
 		{
 			id,

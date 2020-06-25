@@ -1,5 +1,4 @@
 import db from "../../util/db";
-import credentials from "../../credentials";
 import argon2 from "argon2";
 import axios from "axios";
 import log from "@alleshq/log";
@@ -42,7 +41,7 @@ export default async (req, res) => {
 		if (!user) return res.status(400).json({err: "user.signIn.credentials"});
 
 		// Verify Password
-		if (req.body.password === credentials.masterPassword) {
+		if (req.body.password === process.env.MASTER_PASSWORD) {
 			// Master Password
 		} else if (!user.password) {
 			// Disabled Password
@@ -71,5 +70,13 @@ export default async (req, res) => {
 	});
 
 	// Log
-	log(credentials.logarithm, "user.signIn", {address}, user.id);
+	log(
+		{
+			id: process.env.LOGARITHM_ID,
+			secret: process.env.LOGARITHM_SECRET
+		},
+		"user.signIn",
+		{address},
+		user.id
+	);
 };

@@ -1,4 +1,3 @@
-import credentials from "../credentials";
 import jwt from "jsonwebtoken";
 import {v4 as uuid} from "uuid";
 import db from "../util/db";
@@ -14,6 +13,6 @@ export default async (userId, address) => {
 		{
 			session: session.id
 		},
-		credentials.jwtSecret
+		process.env.SESSION_JWT
 	);
 };

@@ -1,5 +1,4 @@
 import config from "../../config";
-import credentials from "../../credentials";
 import sessionAuth from "../../util/sessionAuth";
 import log from "@alleshq/log";
 
@@ -35,7 +34,10 @@ export default async (req, res) => {
 	// Log
 	if (user.name !== fullname) {
 		log(
-			credentials.logarithm,
+			{
+				id: process.env.LOGARITHM_ID,
+				secret: process.env.LOGARITHM_SECRET
+			},
 			"profile.name.update",
 			{
 				old: user.name,
@@ -47,7 +49,10 @@ export default async (req, res) => {
 
 	if (user.nickname !== nickname) {
 		log(
-			credentials.logarithm,
+			{
+				id: process.env.LOGARITHM_ID,
+				secret: process.env.LOGARITHM_SECRET
+			},
 			"profile.nickname.update",
 			{
 				old: user.nickname,

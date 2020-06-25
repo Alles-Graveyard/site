@@ -1,6 +1,5 @@
 import sessionAuth from "../../../util/sessionAuth";
 import config from "../../../config";
-import credentials from "../../../credentials";
 import db from "../../../util/db";
 import {literal} from "sequelize";
 import {v4 as uuid} from "uuid";
@@ -46,7 +45,7 @@ const api = async (req, res) => {
 				},
 				{
 					headers: {
-						authorization: credentials.contentScore
+						authorization: process.env.CONTENT_SCORE
 					}
 				}
 			)
@@ -82,7 +81,10 @@ const api = async (req, res) => {
 			formData.append("public", "true");
 			imageId = (
 				await axios.post(config.fileUploadUrl, formData.getBuffer(), {
-					auth: credentials.fileUpload,
+					auth: {
+						username: process.env.ALLESFS_ID,
+						password: process.env.ALLESFS_SECRET
+					},
 					headers: formData.getHeaders()
 				})
 			).data;
@@ -186,7 +188,10 @@ const api = async (req, res) => {
 
 	// Log
 	log(
-		credentials.logarithm,
+		{
+			id: process.env.LOGARITHM_ID,
+			secret: process.env.LOGARITHM_SECRET
+		},
 		"post.new",
 		{
 			id: post.id,

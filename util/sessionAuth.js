@@ -1,5 +1,4 @@
 import db from "../util/db";
-import credentials from "../credentials";
 import jwt from "jsonwebtoken";
 const fail = {
 	user: null,
@@ -11,7 +10,7 @@ export default async authHeader => {
 	if (typeof authHeader !== "string") return fail;
 	var token;
 	try {
-		token = jwt.verify(authHeader, credentials.jwtSecret);
+		token = jwt.verify(authHeader, process.env.SESSION_JWT);
 	} catch (err) {
 		return fail;
 	}
