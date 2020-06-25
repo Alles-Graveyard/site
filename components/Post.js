@@ -118,14 +118,13 @@ export default ({data, ...props}) => {
 
 				<footer>
 					<p>
-						{date} //{" "}
+						{date} // {data.replyCount}{" "}
+						{data.replyCount === 1 ? "Reply" : "Replies"}
 						{data.interactions
-							? `${data.interactions} ${
+							? ` // ${data.interactions} ${
 									data.interactions === 1 ? "Interaction" : "Interactions"
 							  }`
-							: `${data.replyCount} ${
-									data.replyCount === 1 ? "Reply" : "Replies"
-							  }`}
+							: ""}
 					</p>
 				</footer>
 			</div>
