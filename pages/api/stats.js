@@ -1,9 +1,9 @@
 import db from "../../util/db";
-let stats = {};
+let stats;
 
 // Update Stats
-const updateStats = async () => {
-	stats = {
+const getStats = async () => {
+	const data = {
 		updated: new Date().getTime(),
 		accounts: {
 			total: await db.User.count(),
@@ -21,13 +21,19 @@ const updateStats = async () => {
 		}
 	};
 
-	stats.accounts.secondary = stats.accounts.total - stats.accounts.primary;
-	stats.posts.average = Math.round(stats.posts.total / stats.accounts.total);
-	stats.interactions.neutral =
-		stats.interactions.total - stats.interactions.up - stats.interactions.down;
+	data.accounts.secondary = data.accounts.total - data.accounts.primary;
+	data.posts.average = Math.round(data.posts.total / data.accounts.total);
+	data.interactions.neutral =
+		data.interactions.total - data.interactions.up - data.interactions.down;
+
+	return data;
 };
-updateStats();
-setInterval(updateStats, 60000);
+
+// Interval
+setInterval(async () => (stats = await getStats()), 60000);
 
 // Response
-export default (req, res) => res.json(stats);
+export default async (req, res) => {
+	if (!stats) stats = await getStats();
+	res.json(stats);
+};
