@@ -14,7 +14,7 @@ export default async (req, res) => {
 		where: {
 			createdAt: {
 				[Op.gt]:
-					user.newNotifications > twoDaysAgo ? user.notifications : twoDaysAgo
+					user.newNotifications > twoDaysAgo ? user.newNotifications : twoDaysAgo
 			}
 		},
 		order: [["createdAt", "DESC"]]
