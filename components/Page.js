@@ -50,11 +50,22 @@ export default withRouter(props => {
 				</Breadcrumb>
 
 				{props.user ? (
-					<Link href="/me">
-						<a>
-							<Avatar username={props.user.username} size={50} />
-						</a>
-					</Link>
+					<div className="headerRight">
+						{props.user.notifications > 0 &&
+						props.router.pathname !== "/mentions" ? (
+							<Link href="/mentions">
+								<a className="notificationsCount">{props.user.notifications}</a>
+							</Link>
+						) : (
+							<></>
+						)}
+
+						<Link href="/me">
+							<a>
+								<Avatar username={props.user.username} size={50} />
+							</a>
+						</Link>
+					</div>
 				) : (
 					<></>
 				)}
@@ -73,6 +84,23 @@ export default withRouter(props => {
 					padding: 0 25px 50px;
 					max-width: 800px;
 					margin: 80px auto 0;
+				}
+
+				.headerRight {
+					display: flex;
+				}
+
+				.notificationsCount {
+					background: var(--primary);
+					width: 30px;
+					height: 30px;
+					color: white;
+					border-radius: 50%;
+					margin: 10px;
+					display: flex;
+					flex-flow: column;
+					justify-content: center;
+					text-align: center;
 				}
 			`}</style>
 

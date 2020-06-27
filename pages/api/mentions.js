@@ -6,6 +6,11 @@ export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "badAuthorization"});
 
+	// Mark as read
+	if (req.query.mark === "read") {
+		await user.update({newNotifications: new Date()});
+	}
+
 	// Response
 	res.json({
 		mentions: await Promise.all(

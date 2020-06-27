@@ -1,10 +1,26 @@
 import sessionAuth from "../../util/sessionAuth";
+import {Op} from "sequelize";
 
 export default async (req, res) => {
 	const {user, session} = await sessionAuth(req.headers.authorization);
 	if (!user) return res.status(401).json({err: "badAuthorization"});
 
+	// Get primary
 	const primary = await user.getPrimary();
+
+	// Count notifications
+	const twoDaysAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 2;
+	const notifications = await user.countMentions({
+		where: {
+			createdAt: {
+				[Op.gt]:
+					user.newNotifications > twoDaysAgo ? user.notifications : twoDaysAgo
+			}
+		},
+		order: [["createdAt", "DESC"]]
+	});
+
+	// Response
 	res.json({
 		id: user.id,
 		username: user.username,
@@ -23,6 +39,7 @@ export default async (req, res) => {
 			  }
 			: null,
 		hasPassword: user.password !== null,
-		session: session.id
+		session: session.id,
+		notifications: notifications > 100 ? 100 : notifications
 	});
 };
