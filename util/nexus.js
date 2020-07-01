@@ -15,10 +15,9 @@ export const request = async (method, url, data) =>
 	).data;
 
 // Get User
-export const getUserById = id =>
-	request("GET", `user?id=${encodeURIComponent(id)}`);
-export const getUserByUsername = username =>
-	request("GET", `user?username=${encodeURIComponent(username)}`);
+export const getUser = id => request("GET", `user/${encodeURIComponent(id)}`);
+export const getUserId = async username =>
+	(await request("GET", `username/${encodeURIComponent(username)}`)).id;
 
 // Validate password
 export const validatePassword = async (id, password) => {

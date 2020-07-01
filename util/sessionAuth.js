@@ -1,6 +1,6 @@
 import db from "./db";
 import jwt from "jsonwebtoken";
-import {getUserById} from "./nexus";
+import {getUser} from "./nexus";
 const fail = {
 	user: null,
 	session: null
@@ -27,7 +27,7 @@ export default async authHeader => {
 	// Get User
 	let user;
 	try {
-		user = await getUserById(session.userId);
+		user = await getUser(session.userId);
 	} catch (err) {
 		return fail;
 	}

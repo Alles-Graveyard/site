@@ -2,11 +2,7 @@ import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
 import getAddress from "../../util/getAddress";
-import {
-	getUserByUsername,
-	getUserById,
-	validatePassword
-} from "../../util/nexus";
+import {getUser, getUserId, validatePassword} from "../../util/nexus";
 
 export default async (req, res) => {
 	// Check Body
@@ -23,7 +19,7 @@ export default async (req, res) => {
 			).data;
 
 			// Get User
-			user = await getUserById(pulsarToken.user);
+			user = await getUser(pulsarToken.user);
 		} catch (err) {
 			return res.status(400).json({err: "pulsar.badToken"});
 		}
@@ -33,7 +29,7 @@ export default async (req, res) => {
 	) {
 		// Get User
 		try {
-			user = await getUserByUsername(req.body.username.toLowerCase());
+			user = await getUser(await getUserId(req.body.username.toLowerCase()));
 		} catch (err) {
 			return res.status(400).json({err: "user.signIn.credentials"});
 		}
