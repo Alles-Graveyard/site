@@ -16,7 +16,7 @@ export default async (req, res) => {
 		rubies: user.rubies,
 		createdAt: user.createdAt,
 		hasPassword: user.hasPassword,
-		session: session.id,
+		session,
 		notifications: 69
 	});
 };

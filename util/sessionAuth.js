@@ -1,6 +1,4 @@
-import db from "./db";
-import jwt from "jsonwebtoken";
-import {getUser} from "./nexus";
+import {getUser, getSessionFromToken} from "./nexus";
 const fail = {
 	user: null,
 	session: null
@@ -9,25 +7,19 @@ const fail = {
 export default async authHeader => {
 	// Parse Header
 	if (typeof authHeader !== "string") return fail;
-	var token;
+
+	// Get Session
+	let session;
 	try {
-		token = jwt.verify(authHeader, process.env.SESSION_JWT);
+		session = await getSessionFromToken(authHeader);
 	} catch (err) {
 		return fail;
 	}
 
-	// Get Session
-	const session = await db.Session.findOne({
-		where: {
-			id: token.session
-		}
-	});
-	if (!session) return fail;
-
 	// Get User
 	let user;
 	try {
-		user = await getUser(session.userId);
+		user = await getUser(session.user);
 	} catch (err) {
 		return fail;
 	}
@@ -37,7 +29,7 @@ export default async authHeader => {
 
 	// Return
 	return {
-		session,
+		session: session.id,
 		user
 	};
 };

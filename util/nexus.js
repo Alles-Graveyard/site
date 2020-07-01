@@ -36,3 +36,5 @@ export const validatePassword = async (id, password) => {
 export const createSession = async (id, address) =>
 	(await request("POST", `users/${encodeURIComponent(id)}/sessions`, {address}))
 		.token;
+export const getSessionFromToken = token =>
+	request("GET", `sessions/token/${encodeURIComponent(token)}`);
