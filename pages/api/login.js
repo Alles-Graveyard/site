@@ -1,9 +1,12 @@
-import db from "../../util/db";
 import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
 import getAddress from "../../util/getAddress";
-import {validatePassword} from "../../util/nexus";
+import {
+	getUserByUsername,
+	getUserById,
+	validatePassword
+} from "../../util/nexus";
 
 export default async (req, res) => {
 	// Check Body
@@ -19,12 +22,8 @@ export default async (req, res) => {
 				})
 			).data;
 
-			user = await db.User.findOne({
-				where: {
-					id: pulsarToken.user
-				}
-			});
-			if (!user) return res.status(400).json({err: "pulsar.badToken"});
+			// Get User
+			user = await getUserById(pulsarToken.user);
 		} catch (err) {
 			return res.status(400).json({err: "pulsar.badToken"});
 		}
@@ -33,15 +32,17 @@ export default async (req, res) => {
 		typeof req.body.password === "string"
 	) {
 		// Get User
-		user = await db.User.findOne({
-			where: {
-				username: req.body.username.toLowerCase()
-			}
-		});
-		if (!user) return res.status(400).json({err: "user.signIn.credentials"});
+		try {
+			user = await getUserByUsername(req.body.username.toLowerCase());
+		} catch (err) {
+			return res.status(400).json({err: "user.signIn.credentials"});
+		}
 
 		// Verify Password
-		if (!user.password || !(await validatePassword(user.id, req.body.password)))
+		if (
+			!user.hasPassword ||
+			!(await validatePassword(user.id, req.body.password))
+		)
 			return res.status(400).json({err: "user.signIn.credentials"});
 	} else return res.status(400).json({err: "badRequest"});
 
