@@ -1,5 +1,6 @@
-import db from "../util/db";
+import db from "./db";
 import jwt from "jsonwebtoken";
+import {getUserById} from "./nexus";
 const fail = {
 	user: null,
 	session: null
@@ -24,12 +25,17 @@ export default async authHeader => {
 	if (!session) return fail;
 
 	// Get User
-	const user = await session.getUser();
-	if (!user) return fail;
+	let user;
+	try {
+		user = await getUserById(session.userId);
+	} catch (err) {
+		return fail;
+	}
 
 	// Restrict Beta to Plus
 	if (process.env.NEXT_PUBLIC_MODE === "beta" && !user.plus) return fail;
 
+	// Return
 	return {
 		session,
 		user
