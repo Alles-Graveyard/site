@@ -1,8 +1,12 @@
 import axios from "axios";
 import log from "@alleshq/log";
-import createSession from "../../util/createSession";
 import getAddress from "../../util/getAddress";
-import {getUser, getUserId, validatePassword} from "../../util/nexus";
+import {
+	getUser,
+	getUserId,
+	validatePassword,
+	createSession
+} from "../../util/nexus";
 
 export default async (req, res) => {
 	// Check Body
@@ -49,10 +53,11 @@ export default async (req, res) => {
 	// Get Address
 	const address = getAddress(req);
 
+	// Create Session
+	const session = await createSession(user.id, address);
+
 	// Response
-	res.json({
-		token: await createSession(user.id, address)
-	});
+	res.json({token: session});
 
 	// Log
 	log(

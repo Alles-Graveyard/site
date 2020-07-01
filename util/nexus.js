@@ -15,7 +15,7 @@ export const request = async (method, url, data) =>
 	).data;
 
 // Get User
-export const getUser = id => request("GET", `user/${encodeURIComponent(id)}`);
+export const getUser = id => request("GET", `users/${encodeURIComponent(id)}`);
 export const getUserId = async username =>
 	(await request("GET", `username/${encodeURIComponent(username)}`)).id;
 
@@ -23,7 +23,7 @@ export const getUserId = async username =>
 export const validatePassword = async (id, password) => {
 	try {
 		return (
-			await request("POST", `user/${encodeURIComponent(id)}/password`, {
+			await request("POST", `users/${encodeURIComponent(id)}/password`, {
 				password
 			})
 		).matches;
@@ -31,3 +31,8 @@ export const validatePassword = async (id, password) => {
 		return false;
 	}
 };
+
+// Create session
+export const createSession = async (id, address) =>
+	(await request("POST", `users/${encodeURIComponent(id)}/sessions`, {address}))
+		.token;

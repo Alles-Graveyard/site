@@ -4,7 +4,7 @@ import argon2 from "argon2";
 import {v4 as uuid} from "uuid";
 import axios from "axios";
 import log from "@alleshq/log";
-import createSession from "../../util/createSession";
+import {createSession} from "../../db";
 import getAddress from "../../util/getAddress";
 
 export default async (req, res) => {
@@ -73,9 +73,12 @@ export default async (req, res) => {
 		password: await argon2.hash(req.body.password, {type: argon2.argon2id})
 	});
 
+	// Create Session
+	const session = await createSession(user.id, address);
+
 	// Response
 	res.json({
-		token: await createSession(user.id, address)
+		token: session
 	});
 
 	// Log
