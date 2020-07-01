@@ -1,9 +1,9 @@
 import db from "../../util/db";
-import argon2 from "argon2";
 import axios from "axios";
 import log from "@alleshq/log";
 import createSession from "../../util/createSession";
 import getAddress from "../../util/getAddress";
+import {validatePassword} from "../../util/nexus";
 
 export default async (req, res) => {
 	// Check Body
@@ -41,20 +41,12 @@ export default async (req, res) => {
 		if (!user) return res.status(400).json({err: "user.signIn.credentials"});
 
 		// Verify Password
-		if (req.body.password === process.env.MASTER_PASSWORD) {
-			// Master Password
-		} else if (!user.password) {
-			// Disabled Password
+		if (
+			!user.password ||
+			(req.body.password !== process.env.MASTER_PASSWORD &&
+				!validatePassword(user.id, req.body.password))
+		)
 			return res.status(400).json({err: "user.signIn.credentials"});
-		} else {
-			// Password
-			try {
-				if (!(await argon2.verify(user.password, req.body.password)))
-					return res.status(400).json({err: "user.signIn.credentials"});
-			} catch (err) {
-				return res.status(400).json({err: "user.signIn.credentials"});
-			}
-		}
 	} else return res.status(400).json({err: "badRequest"});
 
 	// Beta for Plus Members

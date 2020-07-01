@@ -1,6 +1,7 @@
 import config from "../../config";
 import argon2 from "argon2";
 import sessionAuth from "../../util/sessionAuth";
+import {validatePassword} from "../../util/nexus";
 
 export default async (req, res) => {
 	const {user} = await sessionAuth(req.headers.authorization);
@@ -26,14 +27,12 @@ export default async (req, res) => {
 		return res.status(400).json({err: "user.password.same"});
 
 	// Check old password
-	if (user.password && req.body.oldPassword !== process.env.MASTER_PASSWORD) {
-		try {
-			if (!(await argon2.verify(user.password, req.body.oldPassword)))
-				return res.status(400).json({err: "user.password.incorrect"});
-		} catch (err) {
-			return res.status(400).json({err: "user.password.incorrect"});
-		}
-	}
+	if (
+		user.password &&
+		req.body.oldPassword !== process.env.MASTER_PASSWORD &&
+		!validatePassword(user.id, req.body.oldPassword)
+	)
+		return res.status(400).json({err: "user.password.incorrect"});
 
 	try {
 		await user.update({
