@@ -41,11 +41,7 @@ export default async (req, res) => {
 		if (!user) return res.status(400).json({err: "user.signIn.credentials"});
 
 		// Verify Password
-		if (
-			!user.password ||
-			(req.body.password !== process.env.MASTER_PASSWORD &&
-				!validatePassword(user.id, req.body.password))
-		)
+		if (!user.password || !validatePassword(user.id, req.body.password))
 			return res.status(400).json({err: "user.signIn.credentials"});
 	} else return res.status(400).json({err: "badRequest"});
 
