@@ -20,19 +20,14 @@ export const getUserId = async username =>
 	(await request("GET", `username/${encodeURIComponent(username)}`)).id;
 
 // Validate password
-export const validatePassword = async (id, password) => {
-	try {
-		return (
-			await request("POST", `users/${encodeURIComponent(id)}/password`, {
-				password
-			})
-		).matches;
-	} catch (err) {
-		return false;
-	}
-};
+export const validatePassword = async (id, password) =>
+	(
+		await request("POST", `users/${encodeURIComponent(id)}/password`, {
+			password
+		})
+	).matches;
 
-// Create session
+// Sessions
 export const createSession = async (id, address) =>
 	(await request("POST", `users/${encodeURIComponent(id)}/sessions`, {address}))
 		.token;
