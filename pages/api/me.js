@@ -1,4 +1,5 @@
 import sessionAuth from "../../util/sessionAuth";
+import {countMentions} from "../../util/nexus";
 
 export default async (req, res) => {
 	const {user, session} = await sessionAuth(req.headers.authorization);
@@ -17,6 +18,6 @@ export default async (req, res) => {
 		createdAt: user.createdAt,
 		hasPassword: user.hasPassword,
 		session,
-		notifications: 69
+		notifications: await countMentions(user.id)
 	});
 };

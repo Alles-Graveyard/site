@@ -33,3 +33,11 @@ export const createSession = async (id, address) =>
 		.token;
 export const getSessionFromToken = token =>
 	request("GET", `sessions/token/${encodeURIComponent(token)}`);
+
+// Mentions
+export const getMentions = async id =>
+	(await request("GET", `mentions?user=${encodeURIComponent(id)}&markAsRead`))
+		.mentions;
+export const countMentions = async id =>
+	(await request("GET", `mentions/count?user=${encodeURIComponent(id)}`))
+		.mentions;

@@ -42,7 +42,7 @@ const page = props => {
 
 page.getInitialProps = async ctx => {
 	return (
-		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/mentions?mark=read`, {
+		await axios.get(`${process.env.NEXT_PUBLIC_APIURL}/mentions`, {
 			headers: {
 				authorization: ctx.user.sessionToken
 			}
